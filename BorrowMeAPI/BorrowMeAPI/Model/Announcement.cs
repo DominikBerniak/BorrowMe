@@ -1,8 +1,7 @@
-﻿using BorrowMeAPI.Model;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BorrowMeAPI.Services
+namespace BorrowMeAPI.Model
 {
     public class Announcement
     {

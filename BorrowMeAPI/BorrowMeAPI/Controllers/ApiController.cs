@@ -10,11 +10,11 @@ namespace BorrowMeAPI.Controllers
     {
         [Route("/api/Announcements")]
         [HttpGet]
-        public IActionResult GetAllDogs()
+        public IActionResult GetAllAnnouncements()
         {
             User user = new User()
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 FirstName = "Pablo",
                 LastName = "Picasso",
                 Email = "PPicasso@gmail.com",
@@ -23,22 +23,22 @@ namespace BorrowMeAPI.Controllers
             };
             Category category = new Category()
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 Name = "Narzędzia elektryczne"
             };
             City city = new City()
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 Name = "Bydgoszcz",
                 Voivodship = new Voivodship()
                 {
-                    Id = new Guid(),
+                    Id = Guid.NewGuid(),
                     Name = "chujwiejakie"
                 }
             };
             Announcement mock1 = new Announcement()
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 Title = "wiertara",
                 Description = "Super wiertara krórej używałem ze swoim starym",
                 PublishDate = DateTime.Now,
@@ -49,7 +49,7 @@ namespace BorrowMeAPI.Controllers
             };
             Announcement mock2 = new Announcement()
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 Title = "spawara",
                 Description = "Super spawara krórej używałem ze swoim starym",
                 PublishDate = DateTime.Now,
@@ -60,7 +60,7 @@ namespace BorrowMeAPI.Controllers
             };
             Announcement mock3 = new Announcement()
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 Title = "szlifiera",
                 Description = "Super szlifiera krórej używałem ze swoim starym",
                 PublishDate = DateTime.Now,

@@ -1,4 +1,6 @@
-﻿namespace BorrowMeAPI.Services
+﻿using BorrowMeAPI.Model;
+
+namespace BorrowMeAPI.Services
 {
     public interface IAnnouncementService
     {

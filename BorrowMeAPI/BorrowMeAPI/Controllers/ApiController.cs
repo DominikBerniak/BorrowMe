@@ -70,6 +70,7 @@ namespace BorrowMeAPI.Controllers
                 City = city
             };
 
+            //return Ok(user);
             return Ok(new List<Announcement>() { mock1, mock2, mock3});
         }
 

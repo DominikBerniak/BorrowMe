@@ -1,0 +1,41 @@
+#search-form {
+    margin-left: 15vw;
+}
+#search-form input{
+    outline: none;
+}
+
+#search-btn{
+    border-radius: 0;
+}
+#search-btn:active{
+    outline: none;
+}
+.navbar{
+    min-height: 90px;
+}
+
+#search-location-icon{
+    position: absolute;
+}
+#search-location-input{
+    padding-left: 2.5rem;
+}
+#navbar-user-section-container{
+    cursor: pointer;
+}
+#navbar-notifications-icon:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+#navbar-messages-icon:hover{
+    transform: scale(1.1);
+}
+
+#user-info-dropdown-container{
+    position: absolute;
+    top: 4.7rem;
+    right: 2rem;
+    width: 15%;
+    height: 15rem;
+}

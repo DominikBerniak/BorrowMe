@@ -42,7 +42,7 @@ namespace BorrowMeAPI.Controllers
                 Title = "wiertara",
                 Description = "Super wiertara krórej używałem ze swoim starym",
                 PublishDate = DateTime.Now,
-                PicturePath = @"C:\Users\MiniMonster\Documents\repos\BorrowMe\images\bobr.jpg",
+                PicturePath = @"http://192.168.1.33:8080\images\bobr.jpg",
                 Owner = user,
                 Category = category,
                 City = city
@@ -53,7 +53,7 @@ namespace BorrowMeAPI.Controllers
                 Title = "spawara",
                 Description = "Super spawara krórej używałem ze swoim starym",
                 PublishDate = DateTime.Now,
-                PicturePath = @"C:\Users\MiniMonster\Documents\repos\BorrowMe\images\zubr.jpg",
+                PicturePath = @"http://192.168.1.33:8080\images\zubr.jpg",
                 Owner = user,
                 Category = category,
                 City = city
@@ -64,7 +64,7 @@ namespace BorrowMeAPI.Controllers
                 Title = "szlifiera",
                 Description = "Super szlifiera krórej używałem ze swoim starym",
                 PublishDate = DateTime.Now,
-                PicturePath = @"C:\Users\MiniMonster\Documents\repos\BorrowMe\images\losiek.jpg",
+                PicturePath = @"http://192.168.1.33:8080\images\losiek.jpg",
                 Owner = user,
                 Category = category,
                 City = city

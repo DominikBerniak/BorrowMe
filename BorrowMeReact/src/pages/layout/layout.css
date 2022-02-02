@@ -43,3 +43,12 @@
 .no-underline {
     text-decoration: none;
 }
+
+.blue-text {
+    color: dodgerblue;
+}
+
+.dog-image {
+    display: flex;
+    justify-content: center;
+}

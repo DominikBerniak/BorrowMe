@@ -3,14 +3,14 @@ import { useState } from 'react';
 import Announcement from "./home/Announcement";
 
 const Home = ({toggleLoginStatus}) => {
-    const [announcements, setAnnouncemens] = useState([])
+    const [announcements, setAnnouncements] = useState([])
     const [isDataReady, setIsDataReady] = useState(false)
 
     useEffect(() => {
         const fetchAnnouncements = async () => {
             const res = await fetch('api/Announcements');
             const data = await res.json();
-            setAnnouncemens(data);
+            setAnnouncements(data);
             setIsDataReady(true);
         }
         fetchAnnouncements();
@@ -18,9 +18,9 @@ const Home = ({toggleLoginStatus}) => {
     }, [])
 
     return (
-        <div>
+        <div className="h-100">
             {isDataReady
-                ?   <div style={{display: 'flex', flexWrap: 'wrap', marginTop: '20px', justifyContent: 'center'}}>
+                ?   <div className="d-flex flex-wrap justify-content-center">
                         {announcements.map((announcement) => {
                             return(
                             <Announcement key={announcement.id} announcement={announcement} />

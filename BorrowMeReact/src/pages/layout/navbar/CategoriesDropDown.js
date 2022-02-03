@@ -30,7 +30,7 @@ const CategoriesDropDown = ({areCategoriesVisible}) => {
                         categories.slice(i, i + categoriesInRow)
                             .map(category => (
                                 <button key={category.id}
-                                     className="list-group-item btn btn-warning shadow-none border-1 col py-5 rounded">{category.name}</button>
+                                     className="list-group-item btn btn-success shadow-none border-1 col py-5 rounded">{category.name}</button>
                             ))
                     }
                 </div>

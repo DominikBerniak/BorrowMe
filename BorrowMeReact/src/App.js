@@ -5,7 +5,6 @@ import PageNotFound from "./pages/PageNotFound";
 import Home from "./pages/Home";
 import {useState} from "react";
 import Logout from "./pages/Logout";
-import ImageAPI from "./components/ImageAPI";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(true);

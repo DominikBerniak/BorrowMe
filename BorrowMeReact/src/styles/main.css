@@ -178,3 +178,9 @@
 .h-80{
     height: 80% !important;
 }
+
+#dog-container{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}

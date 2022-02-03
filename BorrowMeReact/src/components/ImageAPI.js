@@ -6,7 +6,6 @@ const ImageAPI = ({imageDirectory, imageName, classNames}) => {
     const url = `api/Images/${imageDirectory}/${imageName}`
 
     useEffect(() => {
-        console.log(imageDirectory+"/"+imageName)
         const fetchData = async () => {
             const [response, error] = await getImage(url)
             if (error)

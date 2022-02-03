@@ -1,13 +1,19 @@
 import ImageAPI from "../components/ImageAPI";
+import {useEffect} from "react";
 
 const PageNotFound = () => {
+    useEffect(()=>{
+        const footer = document.getElementById("footer");
+        const dog = document.getElementById("dog-container");
+        dog.style.bottom = footer.offsetHeight + "px";
+    })
     return (
-        <div>
-            <h3 className="text-center blue-text p-4" style={{marginTop: '40px'}}>
+        <div className="mt-4">
+            <h3 className="text-center blue-text mb-5">
                 Nie znaleziono strony o podanym adresie :(
             </h3>
-            <div className="dog-image" style={{marginTop: '182px'}}>
-                <ImageAPI imageDirectory="site-images" imageName="saddog.png" />
+            <div id="dog-container">
+                <ImageAPI imageDirectory="site-images" imageName="saddog.png" classNames="" />
             </div>
         </div>
     );

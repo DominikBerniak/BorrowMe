@@ -6,22 +6,34 @@ import {useEffect, useState} from "react";
 
 const Layout = ({isLoggedIn}) => {
     const [navBarHeight, setNavbarHeight] = useState({height: 0});
+    const [footerHeight, setFooterHeight] = useState({height: 0});
 
-    const setHeight = (height) => {
-        setNavbarHeight({height: height});
+    const setHeight = (type, height) => {
+        switch (type)
+        {
+            case "navbar":
+                setNavbarHeight({height: height});
+                break;
+            case "footer":
+                setFooterHeight({height: height});
+                break;
+        }
     }
 
     useEffect(() => {
-        document.getElementById("outlet-container").style.paddingTop = navBarHeight.height + "px";
+        const outletContainer = document.getElementById("outlet-container");
+        outletContainer.style.paddingTop = (navBarHeight.height + document.getElementById("categories-button").offsetHeight) + "px";
+        outletContainer.style.minHeight = (window.innerHeight - footerHeight.height) + "px";
+
         document.getElementById("categories").style.top = navBarHeight.height + "px";
-    }, [navBarHeight])
+    }, [navBarHeight, footerHeight])
     return (
         <>
             <Navbar setHeight={setHeight} isLoggedIn={isLoggedIn}/>
             <div id="outlet-container">
                 <Outlet/>
             </div>
-            <Footer/>
+            <Footer setHeight={setHeight} />
         </>
     );
 };

@@ -3,12 +3,11 @@ import UserSection from "./navbar/UserSection";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import Categories from "./navbar/Categories";
-import CategoriesButton from "./navbar/CategoriesButton";
 
 
 const Navbar = ({setHeight, isLoggedIn}) => {
     useEffect(()=>{
-        setHeight(document.getElementById("navbar").offsetHeight);
+        setHeight("navbar", document.getElementById("navbar").offsetHeight);
     },[])
     useEffect(()=>{
         function handleResize(){

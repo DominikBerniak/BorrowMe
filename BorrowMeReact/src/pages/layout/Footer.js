@@ -1,8 +1,12 @@
 import {Link} from "react-router-dom";
+import {useEffect} from "react";
 
-const Footer = () => {
+const Footer = ({setHeight}) => {
+    useEffect(()=>{
+        setHeight("footer", document.getElementById("footer").offsetHeight);
+    },[])
     return (
-        <div className="footer bg-dark text-left mt-auto">
+        <div id="footer" className="footer bg-dark text-left mt-auto">
             <div className="container p-4">
                 <div className="row">
                     <div className="col-auto">

@@ -1,8 +1,5 @@
 ﻿using BorrowMeAPI.Model;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
-using System;
-
 
 namespace BorrowMeAPI.Controllers
 {
@@ -10,6 +7,13 @@ namespace BorrowMeAPI.Controllers
     [ApiController]
     public class ApiController : ControllerBase
     {
+
+        private readonly ILogger _logger;
+
+        public ApiController(ILogger<ApiController> logger)
+        {
+            _logger = logger;
+        }
         [HttpGet("Announcements")]
         public IActionResult GetAllAnnouncements()
         {
@@ -72,7 +76,7 @@ namespace BorrowMeAPI.Controllers
             };
 
             //return Ok(user);
-            return Ok(new List<Announcement>() { mock1, mock2, mock3});
+            return Ok(new List<Announcement>() { mock1, mock2, mock3 });
         }
 
         [HttpGet("Cities")]
@@ -313,6 +317,21 @@ namespace BorrowMeAPI.Controllers
             };
 
             return Ok(cities);
+        }
+
+        [Route("Image/{directory}/{imageName}")]
+        [HttpGet]
+        public IActionResult GetImage(string directory, string imageName)
+        {
+            var filename = @$"E:\Codecool\ASP.NET\BorrowMe\Repository\BorrowMe\images\{directory}\{imageName}";
+            if (System.IO.File.Exists(filename))
+            {
+                return PhysicalFile(filename, "image / jpeg");
+            }
+            else
+            {
+                return NotFound("No such image!");
+            }
         }
 
 

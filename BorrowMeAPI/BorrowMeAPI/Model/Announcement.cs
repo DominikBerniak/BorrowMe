@@ -28,5 +28,6 @@ namespace BorrowMeAPI.Model
 
         [Required, ForeignKey("city_id")]
         public City City { get; set; }
+
     }
 }

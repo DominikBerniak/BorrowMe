@@ -8,7 +8,7 @@ const UserInfoPanel = ({showDropDownMenu, userData}) => {
              onMouseOver={showDropDownMenu} onClick={showDropDownMenu}>
             <div className="ps-4 pe-2 user-select-none">{userData.firstName}</div>
             <Avatar sx={{width: 45, height: 45}}>
-                <ImageAPI imageDirectory="user-images" imageName="bobr.jpg"/>
+                <ImageAPI imageDirectory="user-images" imageName="bobr.jpg" classNames="w-100 h-100"/>
             </Avatar>
         </div>
     );

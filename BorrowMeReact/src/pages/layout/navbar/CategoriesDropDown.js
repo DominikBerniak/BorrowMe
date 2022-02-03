@@ -1,95 +1,24 @@
 import {SlideDown} from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
-
-const categories = [
-    {
-        id: 1,
-        name: "Kategoria"
-    },
-    {
-        id: 2,
-        name: "Kategoria"
-    },
-    {
-        id: 3,
-        name: "Kategoria"
-    },
-    {
-        id: 4,
-        name: "Kategoria"
-    },
-    {
-        id: 5,
-        name: "Kategoria"
-    },
-    {
-        id: 6,
-        name: "Kategoria"
-    },
-    {
-        id: 7,
-        name: "Kategoria"
-    },
-    {
-        id: 8,
-        name: "Kategoria"
-    },
-    {
-        id: 9,
-        name: "Kategoria"
-    },
-    {
-        id: 10,
-        name: "Kategoria"
-    },
-    {
-        id: 11,
-        name: "Kategoria"
-    },
-    {
-        id: 12,
-        name: "Kategoria"
-    },
-    {
-        id: 13,
-        name: "Kategoria"
-    },
-    {
-        id: 14,
-        name: "Kategoria"
-    },
-    {
-        id: 15,
-        name: "Kategoria"
-    },
-    {
-        id: 16,
-        name: "Kategoria"
-    },
-    {
-        id: 17,
-        name: "Kategoria"
-    },
-    {
-        id: 18,
-        name: "Kategoria"
-    },
-    {
-        id: 19,
-        name: "Kategoria"
-    },
-    {
-        id: 20,
-        name: "Kategoria"
-    },
-    {
-        id: 21,
-        name: "Kategoria"
-    },
-]
+import {useEffect, useState} from "react";
+import {getData} from "../../../services/apiFetch";
 
 
 const CategoriesDropDown = ({areCategoriesVisible}) => {
+    const [isDataFetched, setIsDataFetched] = useState(false)
+    const [categories, setCategories] = useState([])
+
+    useEffect(() => {
+        if (!isDataFetched) {
+            getData("api/Categories")
+                .then(categories => {
+                    setCategories(categories);
+                })
+            setIsDataFetched(true);
+        }
+    }, [])
+
+
     const getGroupCategories = () => {
         const groupedCategories = [];
         const categoriesInRow = 5;
@@ -101,7 +30,7 @@ const CategoriesDropDown = ({areCategoriesVisible}) => {
                         categories.slice(i, i + categoriesInRow)
                             .map(category => (
                                 <button key={category.id}
-                                     className="list-group-item btn btn-warning shadow-none border-1 col py-5 rounded">{category.name + " " + category.id}</button>
+                                     className="list-group-item btn btn-warning shadow-none border-1 col py-5 rounded">{category.name}</button>
                             ))
                     }
                 </div>

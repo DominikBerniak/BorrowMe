@@ -1,3 +1,10 @@
+export async function getData(url)
+{
+    const response = await fetch(url);
+    return await response.json();
+}
+
+
 export async function getImage(url) {
     try {
         const response = await fetch(url, {

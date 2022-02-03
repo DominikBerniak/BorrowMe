@@ -335,6 +335,80 @@ namespace BorrowMeAPI.Controllers
             }
         }
 
+        [HttpGet("Categories")]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            Category category1 = new Category
+            {
+                Id = 1,
+                Name = "Elektronika"
+            };
+            Category category2 = new Category
+            {
+                Id = 2,
+                Name = "Dom i ogród"
+            };
+            Category category3 = new Category
+            {
+                Id = 3,
+                Name = "Motoryzacja"
+            };
+            Category category4 = new Category
+            {
+                Id = 4,
+                Name = "Rolnictwo"
+            };
+            Category category5 = new Category
+            {
+                Id = 5,
+                Name = "Dla zwierząt"
+            };
+            Category category6 = new Category
+            {
+                Id = 6,
+                Name = "Sport"
+            };
+            Category category7 = new Category
+            {
+                Id = 7,
+                Name = "Zdrowie"
+            };
+            Category category8 = new Category
+            {
+                Id = 8,
+                Name = "Pielęgnacja urody"
+            };
+            Category category9 = new Category
+            {
+                Id = 9,
+                Name = "Edukacja"
+            };
+            Category category10 = new Category
+            {
+                Id = 10,
+                Name = "Dla dzieci"
+            };
+            Category category11 = new Category
+            {
+                Id = 11,
+                Name = "Nieruchomości"
+            };
+            Category category12 = new Category
+            {
+                Id = 12,
+                Name = "Moda"
+            };
+
+
+
+            List<Category> categories = new List<Category>
+            {
+                category1, category2, category3, category4, category5, category6, category7, category8, category9, 
+                category10, category11, category12
+            };
+
+            return Ok(categories);
+        }
 
 
 

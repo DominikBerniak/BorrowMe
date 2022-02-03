@@ -7,7 +7,7 @@ namespace BorrowMeAPI.Model
     public class Notification
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required, Column("product_name"), StringLength(100)]
         public string ProductName { get; set; }

@@ -6,7 +6,7 @@ namespace BorrowMeAPI.Model
     public class Announcement
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required, StringLength(50)]
         public string Title { get; set; }

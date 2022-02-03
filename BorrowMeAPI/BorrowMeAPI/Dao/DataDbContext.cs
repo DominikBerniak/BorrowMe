@@ -13,6 +13,6 @@ namespace BorrowMeAPI.Dao
         public DbSet<Notification> Notification { get; set; }
         public DbSet<Reservation> Reservation { get; set; }
         public DbSet<User> User { get; set; }
-        public DbSet<Voivodship> Voivodship { get; set; }
+        public DbSet<Voivodeship> Voivodship { get; set; }
     }
 }

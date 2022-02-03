@@ -5,12 +5,12 @@ namespace BorrowMeAPI.Services.Interfaces
     public interface INotificationService
     {
         // GET all for userID
-        Notification GetAllNotifications(Guid userId);
+        Notification GetAllNotifications(int userId);
         
         // POST
         void AddNotification(Notification notification);
 
         // DELETE
-        void RemoveNotification(Guid userId, Guid notificationId);
+        void RemoveNotification(int userId, int notificationId);
     }
 }

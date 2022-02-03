@@ -6,7 +6,7 @@ namespace BorrowMeAPI.Model
     public class User
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required, StringLength(50), Column("first_name")]
         public string FirstName { get; set; }

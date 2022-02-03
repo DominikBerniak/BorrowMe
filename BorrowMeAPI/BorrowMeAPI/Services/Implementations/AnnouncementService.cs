@@ -9,12 +9,12 @@ namespace BorrowMeAPI.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public void DeleteAnnouncement(Guid id)
+        public void DeleteAnnouncement(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Announcement GetAnnouncement(Guid announcementId)
+        public Announcement GetAnnouncement(int announcementId)
         {
             throw new NotImplementedException();
         }
@@ -29,7 +29,7 @@ namespace BorrowMeAPI.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public void UpdateAnnouncement(Guid id, Announcement announcement)
+        public void UpdateAnnouncement(int id, Announcement announcement)
         {
             throw new NotImplementedException();
         }

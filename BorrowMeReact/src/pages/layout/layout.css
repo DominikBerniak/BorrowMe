@@ -22,7 +22,7 @@
     padding-left: 2.5rem;
 }
 #navbar-user-section-container{
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 #navbar-notifications-icon:hover{
     cursor: pointer;
@@ -39,3 +39,61 @@
     width: 15%;
     height: 15rem;
 }
+#user-info-dropdown-container :first-child{
+    border-radius: 0.35rem 0.35rem 0 0 !important;
+}
+#user-info-dropdown-container :last-child{
+    border-radius: 0 0 0.35rem 0.35rem !important;
+}
+
+#voivodeship-container{
+    z-index: 1;
+    display: none;
+    position: absolute;
+}
+#voivodeship-list button:last-child{
+    border-radius: 0 0 0.35rem 0.35rem !important;
+}
+
+#cities-container{
+    border-left: 1px solid #b6b6b6;
+    position: absolute;
+}
+#cities-container button{
+    width: 13rem;
+}
+#cities-container button:first-child{
+    border-radius: 0 0.35rem 0 0 !important;
+}
+#cities-container button:last-child{
+    border-radius: 0 0 0.35rem 0 !important;
+}
+#cities-container button:only-child{
+    border-radius: 0 0.35rem 0.35rem 0 !important;
+}
+
+.voivodeship-button:hover{
+    color: #fff;
+    background-color: #0b5ed7;
+}
+
+
+#categories{
+    position: fixed;
+    left: 0;
+}
+#categories-button{
+    background-color: #0d6efd;
+    color: white;
+    font-size: 0.9rem;
+    border-radius: 0 0 1.5rem 1.5rem !important;
+}
+#categories-button:active{
+
+}
+#categories-dropdown {
+
+}
+
+
+

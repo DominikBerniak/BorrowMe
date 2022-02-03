@@ -10,12 +10,12 @@ namespace BorrowMeAPI.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public Notification GetAllNotifications(Guid userId)
+        public Notification GetAllNotifications(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveNotification(Guid userId, Guid notificationId)
+        public void RemoveNotification(int userId, int notificationId)
         {
             throw new NotImplementedException();
         }

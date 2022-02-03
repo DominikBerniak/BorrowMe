@@ -8,7 +8,7 @@ namespace BorrowMeAPI.Services
         IEnumerable<Announcement> GetAnnouncements();
 
         // GET by ID
-        Announcement GetAnnouncement(Guid announcementId);
+        Announcement GetAnnouncement(int announcementId);
 
         // GET by Filters
         Announcement GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase);
@@ -19,13 +19,13 @@ namespace BorrowMeAPI.Services
 
 
         // PUT by ID
-        void UpdateAnnouncement(Guid id, Announcement announcement);
+        void UpdateAnnouncement(int id, Announcement announcement);
 
         // PATCH by ID
         // TO DO
 
         // DELETE by ID
-        void DeleteAnnouncement(Guid id);
+        void DeleteAnnouncement(int id);
 
 
         

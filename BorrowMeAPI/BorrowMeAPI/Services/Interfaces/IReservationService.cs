@@ -5,9 +5,9 @@ namespace BorrowMeAPI.Services
     public interface IReservationService
     {
         // POST
-        void AddReservation(Guid announcementId, Reservation reservation);
+        void AddReservation(int announcementId, Reservation reservation);
 
         // DELETE
-        void DeleteReservation(Guid announcementId, Reservation reservation);
+        void DeleteReservation(int announcementId, Reservation reservation);
     }
 }

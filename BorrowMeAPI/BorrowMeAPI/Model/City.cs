@@ -6,12 +6,12 @@ namespace BorrowMeAPI.Model
     public class City
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required, StringLength(50)]
         public string Name { get; set; }
 
         [Required, ForeignKey("voivodship_id")]
-        public Voivodship Voivodship { get; set; }
+        public Voivodeship Voivodeship { get; set; }
     }
 }

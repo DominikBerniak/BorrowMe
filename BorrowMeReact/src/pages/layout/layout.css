@@ -27,12 +27,14 @@
 #navbar-user-section-container{
     /*cursor: pointer;*/
 }
-#navbar-notifications-icon:hover{
-    cursor: pointer;
-    transform: scale(1.1);
+#navbar-notifications-icon:hover, #navbar-messages-icon:hover{
+    transform: scale(1.3);
 }
-#navbar-messages-icon:hover{
-    transform: scale(1.1);
+#navbar-add-icon, #navbar-notifications-icon, #navbar-messages-icon{
+    transition: transform 0.5s;
+}
+#navbar-add-icon:hover{
+    transform: scale(1.4);
 }
 
 #user-info-dropdown-container{
@@ -99,8 +101,4 @@
 }
 .no-underline {
     text-decoration: none;
-}
-
-.blue-text {
-    color: dimgrey;
 }

@@ -8,8 +8,8 @@ const PageNotFound = () => {
         dog.style.bottom = footer.offsetHeight + "px";
     })
     return (
-        <div className="mt-4">
-            <h3 className="text-center blue-text mb-5">
+        <div className="mt-5">
+            <h3 className="text-center text-grey">
                 Nie znaleziono strony o podanym adresie :(
             </h3>
             <div id="dog-container">

@@ -18,7 +18,8 @@ const Home = ({toggleLoginStatus}) => {
     }, [])
 
     return (
-        <div className="h-100">
+        <div className="p-5">
+            <h2 className="text-center">Promowane ogłoszenia</h2>
             {isDataReady
                 ?   <div className="d-flex flex-wrap justify-content-center">
                         {announcements.map((announcement) => {

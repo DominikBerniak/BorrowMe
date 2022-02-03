@@ -9,9 +9,12 @@ const UserInfoDropdown = ({hideDropDownMenu, userFirstName}) => {
                 <div className="list-group-item p-4 user-select-none" >
                     <p className="fw-bold">{userFirstName}</p>
                 </div>
-                <Link to="/" className="list-group-item">Link 1</Link>
-                <Link to="/" className="list-group-item">Link 2</Link>
-                <Link to="/" className="list-group-item">Link 3</Link>
+                <Link to="/" className="list-group-item">Mój profil</Link>
+                <Link to="/" className="list-group-item">Moje ogłoszenia</Link>
+                <Link to="/" className="list-group-item">Dodaj ogłoszenie</Link>
+                <Link to="/" className="list-group-item">Wiadomości</Link>
+                <div className="p-3 bg-light border border-top-0 border-bottom-0"></div>
+                <Link to="/logout" className="list-group-item text-center">Wyloguj się</Link>
         </div>
     );
 };

@@ -1,5 +1,6 @@
 ﻿using BorrowMeAPI.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using System;
 
 
@@ -42,7 +43,7 @@ namespace BorrowMeAPI.Controllers
                 Title = "wiertara",
                 Description = "Super wiertara krórej używałem ze swoim starym",
                 PublishDate = DateTime.Now,
-                PicturePath = @"C:\Users\MiniMonster\Documents\repos\BorrowMe\images\bobr.jpg",
+                PicturePath = @"http://192.168.1.33:8080\images\bobr.jpg",
                 Owner = user,
                 Category = category,
                 City = city
@@ -53,7 +54,7 @@ namespace BorrowMeAPI.Controllers
                 Title = "spawara",
                 Description = "Super spawara krórej używałem ze swoim starym",
                 PublishDate = DateTime.Now,
-                PicturePath = @"C:\Users\MiniMonster\Documents\repos\BorrowMe\images\zubr.jpg",
+                PicturePath = @"http://192.168.1.33:8080\images\zubr.jpg",
                 Owner = user,
                 Category = category,
                 City = city
@@ -64,7 +65,7 @@ namespace BorrowMeAPI.Controllers
                 Title = "szlifiera",
                 Description = "Super szlifiera krórej używałem ze swoim starym",
                 PublishDate = DateTime.Now,
-                PicturePath = @"C:\Users\MiniMonster\Documents\repos\BorrowMe\images\losiek.jpg",
+                PicturePath = @"http://192.168.1.33:8080\images\losiek.jpg",
                 Owner = user,
                 Category = category,
                 City = city
@@ -307,7 +308,7 @@ namespace BorrowMeAPI.Controllers
             List<City> cities = new List<City>
             {
                 city1, city2, city3, city4, city5, city6, city7, city8,
-                city9, city10, city11, city12, city13, city14, city15, 
+                city9, city10, city11, city12, city13, city14, city15,
                 city16, city17, city18, city19, city20, city21, city22
             };
 
@@ -320,19 +321,80 @@ namespace BorrowMeAPI.Controllers
 
 
         // /api/Announcements POST
+        [HttpPost("Announcements")]
+        public async Task<IActionResult> AddNewAnnouncement()
+        {
+            return Ok();
+        }
 
         // /api/Announcements/{id} GET
+        [HttpGet("Announcements/{id:int}")]
+        public async Task<IActionResult> GetAnnouncementById(int id)
+        {
+            return Ok();
+        }
+
         // /api/Announcements/{id} PUT
+        [HttpPut("Announcements/{id:int}")]
+        public async Task<IActionResult> EditWholeAnnouncement(int id)
+        {
+            return Ok();
+        }
+
         // /api/Announcements/{id} PATCH
+        [HttpPatch("Announcements/{id:int}")]
+        public IActionResult EditOneInAnnouncement(int id)
+        {
+            return Ok();
+        }
+
         // /api/Announcements/{id} DELETE
-        // /api/Announcements GET
-        // /api/Announcements/{category}/{voivodship}/{city}/{search_phrase} GET
+        [HttpDelete("Announcements/{id:int}")]
+        public async Task<IActionResult> DeleteAnnouncement(int id)
+        {
+            return Ok();
+        }
+
+        // /api/Announcements/{category}/{voivodeship}/{city}/{search_phrase} GET
+        [HttpGet("Announcements/{category}/{voivodeship}/{city}/{searchPhrase}")]
+        public async Task<IActionResult> GetAnnouncementByFilters(string category, string voivodeship, string city, string searchPhrase)
+        {
+            return Ok();
+        }
 
         // /api/Announcements/{id}/Reservation POST
+        [HttpPost("Announcements/{id}/Reservation")]
+        public async Task<IActionResult> AddNewReservation(int id)
+        {
+            return Ok();
+        }
+
         // /api/Announcements/{id}/Reservation DELETE
+        [HttpDelete("Announcements/{id}/Reservation")]
+        public async Task<IActionResult> DeleteReservation(int id)
+        {
+            return Ok();
+        }
 
         // /api/Notifications POST
+        [HttpPost("Notifications")]
+        public async Task<IActionResult> AddNewNotification([FromBody] Notification notification)
+        {
+            return Ok();
+        }
+
         // /api/Users/{user_id}/Notifications GET
+        [HttpGet("Users/{user_id}/Notifications")]
+        public async Task<IActionResult> GetAllUserNotifications(int userId)
+        {
+            return Ok();
+        }
+
         // /api/Users/{user_id}/Notifications/{id} DELETE
+        [HttpDelete("Users/{user_id}/Notifications")]
+        public async Task<IActionResult> DeleteUserNotification(int userId)
+        {
+            return Ok();
+        }
     }
 }

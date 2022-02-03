@@ -47,7 +47,7 @@ namespace BorrowMeAPI.Controllers
                 Title = "wiertara",
                 Description = "Super wiertara krórej używałem ze swoim starym",
                 PublishDate = DateTime.Now,
-                PicturePath = @"http://192.168.1.33:8080\images\bobr.jpg",
+                PictureLocation = new PicturePath("site-images", "bobr.jpg"),
                 Owner = user,
                 Category = category,
                 City = city
@@ -58,7 +58,7 @@ namespace BorrowMeAPI.Controllers
                 Title = "spawara",
                 Description = "Super spawara krórej używałem ze swoim starym",
                 PublishDate = DateTime.Now,
-                PicturePath = @"http://192.168.1.33:8080\images\zubr.jpg",
+                PictureLocation = new PicturePath("site-images", "losiek.jpg"),
                 Owner = user,
                 Category = category,
                 City = city
@@ -69,7 +69,7 @@ namespace BorrowMeAPI.Controllers
                 Title = "szlifiera",
                 Description = "Super szlifiera krórej używałem ze swoim starym",
                 PublishDate = DateTime.Now,
-                PicturePath = @"http://192.168.1.33:8080\images\losiek.jpg",
+                PictureLocation = new PicturePath("site-images", "saddog.png"),
                 Owner = user,
                 Category = category,
                 City = city
@@ -323,7 +323,8 @@ namespace BorrowMeAPI.Controllers
         [HttpGet]
         public IActionResult GetImage(string directory, string imageName)
         {
-            var filename = @$"E:\Codecool\ASP.NET\BorrowMe\Repository\BorrowMe\images\{directory}\{imageName}";
+            //var filename = @$"E:\Codecool\ASP.NET\BorrowMe\Repository\BorrowMe\images\{directory}\{imageName}";
+            var filename = @$"C:\Users\MiniMonster\Documents\repos\BorrowMe\images\{directory}\{imageName}";
             if (System.IO.File.Exists(filename))
             {
                 return PhysicalFile(filename, "image / jpeg");

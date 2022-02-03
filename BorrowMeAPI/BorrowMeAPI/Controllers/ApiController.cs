@@ -320,30 +320,6 @@ namespace BorrowMeAPI.Controllers
             return Ok(cities);
         }
 
-        [HttpGet("Categories")]
-        public async Task<IActionResult> GetAllCategories()
-        {
-            Category category1 = new Category
-            {
-                Id = 1,
-                Name = "Kategoria 1"
-            };
-            Category category2 = new Category
-            {
-                Id = 2,
-                Name = "Kategoria 2"
-            };
-
-
-
-            List<Category> categories = new List<Category>
-            {
-                category1,category2
-            };
-
-            return Ok(categories);
-        }
-
         [Route("Image/{directory}/{imageName}")]
         [HttpGet]
         public IActionResult GetImage(string directory, string imageName)
@@ -434,11 +410,7 @@ namespace BorrowMeAPI.Controllers
 
             return Ok(categories);
         }
-
-
-
-
-
+        
         // /api/Announcements POST
         [HttpPost("Announcements")]
         public async Task<IActionResult> AddNewAnnouncement()

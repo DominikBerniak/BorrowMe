@@ -18,6 +18,7 @@ namespace BorrowMeAPI.Controllers
         [HttpGet("Announcements")]
         public IActionResult GetAllAnnouncements()
         {
+            #region GenerateMockAnnouncements
             User user = new User()
             {
                 Id = 1,
@@ -32,57 +33,209 @@ namespace BorrowMeAPI.Controllers
                 Id = 1,
                 Name = "Narzędzia elektryczne"
             };
-            City city = new City()
+            Voivodeship voivodeship = new Voivodeship()
             {
                 Id = 1,
-                Name = "Bydgoszcz",
-                Voivodeship = new Voivodeship()
-                {
-                    Id = 1,
-                    Name = "chujwiejakie"
-                }
+                Name = "małopolskie"
             };
+
             Announcement mock1 = new Announcement()
             {
                 Id = 1,
-                Title = "wiertara",
-                Description = "Super wiertara krórej używałem ze swoim starym",
+                Title = "Zakrętarka udarowa DeWalt",
+                Description = "Super wiertara",
                 PublishDate = DateTime.Now,
-                PictureLocation = new PicturePath("site-images", "bobr.jpg"),
+                PictureLocation = new PicturePath("site-images", "zakretarka.png"),
                 Owner = user,
                 Category = category,
-                City = city
-            };
-            Announcement mock2 = new Announcement()
-            {
-                Id = 2,
-                Title = "spawara",
-                Description = "Super spawara krórej używałem ze swoim starym",
-                PublishDate = DateTime.Now,
-                PictureLocation = new PicturePath("site-images", "losiek.jpg"),
-                Owner = user,
-                Category = category,
-                City = city
-            };
-            Announcement mock3 = new Announcement()
-            {
-                Id = 3,
-                Title = "szlifiera",
-                Description = "Super szlifiera krórej używałem ze swoim starym",
-                PublishDate = DateTime.Now,
-                PictureLocation = new PicturePath("site-images", "saddog.png"),
-                Owner = user,
-                Category = category,
-                City = city
+                City = new City()
+                {
+                    Id = 1,
+                    Name = "Kraków",
+                    Voivodeship = voivodeship
+                }
             };
 
+            Announcement mock2 = new Announcement()
+            {
+                Id = 1,
+                Title = "Spawarka MIG 325",
+                Description = "Super wiertara",
+                PublishDate = DateTime.Now,
+                PictureLocation = new PicturePath("site-images", "spawarka.png"),
+                Owner = user,
+                Category = category,
+                City = new City()
+                {
+                    Id = 1,
+                    Name = "Skawina",
+                    Voivodeship = voivodeship
+                }
+            };
+
+            Announcement mock3 = new Announcement()
+            {
+                Id = 1,
+                Title = "Betoniarka 150L",
+                Description = "Super wiertara",
+                PublishDate = DateTime.Now,
+                PictureLocation = new PicturePath("site-images", "betoniarka.png"),
+                Owner = user,
+                Category = category,
+                City = new City()
+                {
+                    Id = 1,
+                    Name = "Inwałd",
+                    Voivodeship = voivodeship
+                }
+            };
+
+            Announcement mock4 = new Announcement()
+            {
+                Id = 1,
+                Title = "Kosa spalinowa Stihl",
+                Description = "Super wiertara",
+                PublishDate = DateTime.Now,
+                PictureLocation = new PicturePath("site-images", "podkaszarka.png"),
+                Owner = user,
+                Category = category,
+                City = new City()
+                {
+                    Id = 1,
+                    Name = "Bochnia",
+                    Voivodeship = voivodeship
+                }
+            };
+
+            Announcement mock5 = new Announcement()
+            {
+                Id = 1,
+                Title = "Sekator teleskopowy",
+                Description = "Super wiertara",
+                PublishDate = DateTime.Now,
+                PictureLocation = new PicturePath("site-images", "sekator.png"),
+                Owner = user,
+                Category = category,
+                City = new City()
+                {
+                    Id = 1,
+                    Name = "Targowisko",
+                    Voivodeship = voivodeship
+                }
+            };
+
+            Announcement mock6 = new Announcement()
+            {
+                Id = 1,
+                Title = "Wiertarka udarowa makita",
+                Description = "Super wiertara",
+                PublishDate = DateTime.Now,
+                PictureLocation = new PicturePath("site-images", "makita.png"),
+                Owner = user,
+                Category = category,
+                City = new City()
+                {
+                    Id = 1,
+                    Name = "Kraków",
+                    Voivodeship = voivodeship
+                }
+            };
+
+            Announcement mock7 = new Announcement()
+            {
+                Id = 1,
+                Title = "Szlifierka taśmowa 'czołg' Parksite",
+                Description = "Super wiertara",
+                PublishDate = DateTime.Now,
+                PictureLocation = new PicturePath("site-images", "czolg.png"),
+                Owner = user,
+                Category = category,
+                City = new City()
+                {
+                    Id = 1,
+                    Name = "Brzesko",
+                    Voivodeship = voivodeship
+                }
+            };
+
+            Announcement mock8 = new Announcement()
+            {
+                Id = 1,
+                Title = "Opryskiwacz ciśnieniowy matabi",
+                Description = "Super wiertara",
+                PublishDate = DateTime.Now,
+                PictureLocation = new PicturePath("site-images", "opryskiwacz.png"),
+                Owner = user,
+                Category = category,
+                City = new City()
+                {
+                    Id = 1,
+                    Name = "Tarnów",
+                    Voivodeship = voivodeship
+                }
+            };
+
+            Announcement mock9 = new Announcement()
+            {
+                Id = 1,
+                Title = "Nożyce elektrycze do żywopłotu",
+                Description = "Super wiertara",
+                PublishDate = DateTime.Now,
+                PictureLocation = new PicturePath("site-images", "nozyce.png"),
+                Owner = user,
+                Category = category,
+                City = new City()
+                {
+                    Id = 1,
+                    Name = "Bochnia",
+                    Voivodeship = voivodeship
+                }
+            };
+
+            Announcement mock10 = new Announcement()
+            {
+                Id = 1,
+                Title = "Myjka ciśnieniowa Karcher",
+                Description = "Super wiertara",
+                PublishDate = DateTime.Now,
+                PictureLocation = new PicturePath("site-images", "karcher.png"),
+                Owner = user,
+                Category = category,
+                City = new City()
+                {
+                    Id = 1,
+                    Name = "Kraków",
+                    Voivodeship = voivodeship
+                }
+            };
+
+            Announcement mock11 = new Announcement()
+            {
+                Id = 1,
+                Title = "Taczka ogrodowa",
+                Description = "Super wiertara",
+                PublishDate = DateTime.Now,
+                PictureLocation = new PicturePath("site-images", "taczka.png"),
+                Owner = user,
+                Category = category,
+                City = new City()
+                {
+                    Id = 1,
+                    Name = "Kraków",
+                    Voivodeship = voivodeship
+                }
+            };
+
+            #endregion
+
             //return Ok(user);
-            return Ok(new List<Announcement>() { mock1, mock2, mock3 });
+            return Ok(new List<Announcement>() { mock1, mock2, mock3, mock4, mock5, mock6, mock7, mock8, mock9, mock10, mock11 });
         }
 
         [HttpGet("Cities")]
         public async Task<IActionResult> GetAllCities()
         {
+            #region GenerateMockCities
             Voivodeship voivodship1 = new Voivodeship
             {
                 Id = 1,
@@ -316,6 +469,7 @@ namespace BorrowMeAPI.Controllers
                 city9, city10, city11, city12, city13, city14, city15,
                 city16, city17, city18, city19, city20, city21, city22
             };
+            #endregion
 
             return Ok(cities);
         }
@@ -339,6 +493,7 @@ namespace BorrowMeAPI.Controllers
         [HttpGet("Categories")]
         public async Task<IActionResult> GetAllCategories()
         {
+            #region GenerateMockCategories
             Category category1 = new Category
             {
                 Id = 1,
@@ -407,6 +562,7 @@ namespace BorrowMeAPI.Controllers
                 category1, category2, category3, category4, category5, category6, category7, category8, category9, 
                 category10, category11, category12
             };
+            #endregion
 
             return Ok(categories);
         }

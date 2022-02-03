@@ -20,7 +20,7 @@ const Navbar = ({setHeight, isLoggedIn}) => {
         }
     })
     return (
-        <nav id="navbar" className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top h-9 ">
+        <nav id="navbar" className="navbar navbar-expand-lg navbar-dark fixed-top h-9 ">
             <div className="container-fluid h-100">
                 <Link className="navbar-brand ms-3" to="/">BorrowMe</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"

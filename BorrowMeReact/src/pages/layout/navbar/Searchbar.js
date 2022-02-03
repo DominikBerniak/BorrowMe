@@ -1,6 +1,7 @@
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import {useEffect, useState} from "react";
 import VoivodeshipsDropdown from "./VoivodeshipsDropdown";
+import {getData} from "../../../services/apiFetch"
 
 const Searchbar = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
@@ -11,13 +12,9 @@ const Searchbar = () => {
     const [isDataFetched, setIsDataFetched] = useState(false);
     const [citySearchElemParams, setCitySearchElemParams] = useState({});
 
-    const fetchCities = async () => {
-        const res = await fetch("api/Cities");
-        return await res.json();
-    }
     useEffect(() => {
         if (!isDataFetched) {
-            fetchCities()
+            getData("api/Cities")
                 .then(cities => {
                     setCities(cities);
                 })

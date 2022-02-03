@@ -344,12 +344,12 @@ namespace BorrowMeAPI.Controllers
             return Ok(categories);
         }
 
-        [Route("Image/{directory}/{imageName}")]
+        [Route("Images/{directory}/{imageName}")]
         [HttpGet]
         public IActionResult GetImage(string directory, string imageName)
         {
-            //var filename = @$"E:\Codecool\ASP.NET\BorrowMe\Repository\BorrowMe\images\{directory}\{imageName}";
-            var filename = @$"C:\Users\MiniMonster\Documents\repos\BorrowMe\images\{directory}\{imageName}";
+            var filename = @$"E:\Codecool\ASP.NET\BorrowMe\Repository\BorrowMe\images\{directory}\{imageName}";
+            //var filename = @$"C:\Users\MiniMonster\Documents\repos\BorrowMe\images\{directory}\{imageName}";
             if (System.IO.File.Exists(filename))
             {
                 return PhysicalFile(filename, "image / jpeg");

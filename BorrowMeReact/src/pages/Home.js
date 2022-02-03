@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from 'react';
-import Announcement from "./layout/home/Announcement";
+import Announcement from "./home/Announcement";
 
 const Home = ({toggleLoginStatus}) => {
     const [announcements, setAnnouncemens] = useState([])

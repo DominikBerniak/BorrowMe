@@ -3,9 +3,10 @@ import {getImage} from "../services/apiFetch";
 
 const ImageAPI = ({imageDirectory, imageName, classNames}) => {
     const [screenShot, setScreenshot] = useState(undefined)
-    const url = `api/Image/${imageDirectory}/${imageName}`
+    const url = `api/Images/${imageDirectory}/${imageName}`
 
     useEffect(() => {
+        console.log(imageDirectory+"/"+imageName)
         const fetchData = async () => {
             const [response, error] = await getImage(url)
             if (error)

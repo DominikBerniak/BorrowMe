@@ -18,7 +18,7 @@ namespace BorrowMeAPI.Model
         public DateTime PublishDate { get; set; }
 
         [Column("picture_path"), StringLength(100)]
-        public string? PicturePath { get; set; }
+        public PicturePath PictureLocation { get; set; }
 
         [Required, ForeignKey("owner_id")]
         public User Owner { get; set; }
@@ -28,6 +28,5 @@ namespace BorrowMeAPI.Model
 
         [Required, ForeignKey("city_id")]
         public City City { get; set; }
-
     }
 }

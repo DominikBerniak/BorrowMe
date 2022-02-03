@@ -18,9 +18,9 @@ const Home = ({toggleLoginStatus}) => {
     }, [])
 
     return (
-        <div style={{height: "150vh"}}>
+        <div>
             {isDataReady
-                ?   <div style={{display: 'flex', flexWrap: 'wrap', marginTop: '100px'}}>
+                ?   <div style={{display: 'flex', flexWrap: 'wrap', marginTop: '20px', justifyContent: 'center'}}>
                         {announcements.map((announcement) => {
                             return(
                             <Announcement key={announcement.id} announcement={announcement} />

@@ -1,15 +1,15 @@
 import '../../../styles/announcement.css'
+import ImageAPI from "../../../components/ImageAPI";
 
 const Announcement = ({ announcement }) => {
   return (
     <div className='announcement'>
+      {console.log(announcement)}
       <div className="title">
         <b>{announcement.title}</b>
       </div>
       <div className="picture">
-        <a href={announcement.picturePath}>
-          <img src={announcement.picturePath} />
-        </a>
+        <ImageAPI imageDirectory={announcement.pictureLocation.directoryName} imageName={announcement.pictureLocation.fileName} />
       </div>
       <div className="informations-row-1">
         <div className="price">

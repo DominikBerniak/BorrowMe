@@ -39,7 +39,7 @@ const VoivodeshipsDropdown = ({ hideVoivodeshipList, handleVoivodeshipClick, han
             </div>
             <div id="cities-container" className="list-group">
                 {filteredCities.map(city =>
-                    <button key={city.id} className="list-group-item btn btn-primary rounded-0 shadow-none "
+                    <button key={city.id} className="list-group-item btn city-button rounded-0 shadow-none "
                             onClick={(e) => handleCityClick(e, city)
                     }>
                         {city.name}

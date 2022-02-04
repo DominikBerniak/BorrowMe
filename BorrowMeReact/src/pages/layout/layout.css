@@ -77,9 +77,10 @@
     border-radius: 0 0.35rem 0.35rem 0 !important;
 }
 
-.voivodeship-button:hover{
+.voivodeship-button:hover, .city-button:hover{
     color: #fff;
-    background-color: #0b5ed7;
+    /*background-color: #0b5ed7;*/
+    background-color: #5b5b5b;
 }
 
 #categories{

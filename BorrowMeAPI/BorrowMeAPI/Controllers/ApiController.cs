@@ -58,7 +58,7 @@ namespace BorrowMeAPI.Controllers
 
             Announcement mock2 = new Announcement()
             {
-                Id = 1,
+                Id = 2,
                 Title = "Spawarka MIG 325",
                 Description = "Super wiertara",
                 PublishDate = DateTime.Now,
@@ -75,7 +75,7 @@ namespace BorrowMeAPI.Controllers
 
             Announcement mock3 = new Announcement()
             {
-                Id = 1,
+                Id = 3,
                 Title = "Betoniarka 150L",
                 Description = "Super wiertara",
                 PublishDate = DateTime.Now,
@@ -92,7 +92,7 @@ namespace BorrowMeAPI.Controllers
 
             Announcement mock4 = new Announcement()
             {
-                Id = 1,
+                Id = 4,
                 Title = "Kosa spalinowa Stihl",
                 Description = "Super wiertara",
                 PublishDate = DateTime.Now,
@@ -109,7 +109,7 @@ namespace BorrowMeAPI.Controllers
 
             Announcement mock5 = new Announcement()
             {
-                Id = 1,
+                Id = 5,
                 Title = "Sekator teleskopowy",
                 Description = "Super wiertara",
                 PublishDate = DateTime.Now,
@@ -126,7 +126,7 @@ namespace BorrowMeAPI.Controllers
 
             Announcement mock6 = new Announcement()
             {
-                Id = 1,
+                Id = 6,
                 Title = "Wiertarka udarowa makita",
                 Description = "Super wiertara",
                 PublishDate = DateTime.Now,
@@ -143,7 +143,7 @@ namespace BorrowMeAPI.Controllers
 
             Announcement mock7 = new Announcement()
             {
-                Id = 1,
+                Id = 7,
                 Title = "Szlifierka taśmowa 'czołg' Parksite",
                 Description = "Super wiertara",
                 PublishDate = DateTime.Now,
@@ -160,7 +160,7 @@ namespace BorrowMeAPI.Controllers
 
             Announcement mock8 = new Announcement()
             {
-                Id = 1,
+                Id = 8,
                 Title = "Opryskiwacz ciśnieniowy matabi",
                 Description = "Super wiertara",
                 PublishDate = DateTime.Now,
@@ -177,7 +177,7 @@ namespace BorrowMeAPI.Controllers
 
             Announcement mock9 = new Announcement()
             {
-                Id = 1,
+                Id = 9,
                 Title = "Nożyce elektrycze do żywopłotu",
                 Description = "Super wiertara",
                 PublishDate = DateTime.Now,
@@ -194,7 +194,7 @@ namespace BorrowMeAPI.Controllers
 
             Announcement mock10 = new Announcement()
             {
-                Id = 1,
+                Id = 10,
                 Title = "Myjka ciśnieniowa Karcher",
                 Description = "Super wiertara",
                 PublishDate = DateTime.Now,
@@ -211,7 +211,7 @@ namespace BorrowMeAPI.Controllers
 
             Announcement mock11 = new Announcement()
             {
-                Id = 1,
+                Id = 11,
                 Title = "Taczka ogrodowa",
                 Description = "Super wiertara",
                 PublishDate = DateTime.Now,

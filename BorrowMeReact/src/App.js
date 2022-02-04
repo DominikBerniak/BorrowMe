@@ -5,6 +5,7 @@ import PageNotFound from "./pages/PageNotFound";
 import Home from "./pages/Home";
 import {useState} from "react";
 import Logout from "./pages/Logout";
+import SearchResults from "./pages/SearchResults";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -17,6 +18,7 @@ function App() {
         <Routes>
             <Route path="/" element={<Layout isLoggedIn={isLoggedIn}/>}>
                 <Route index element={<Home toggleLoginStatus={toggleLoginStatus}/>}/>
+                <Route path="search-results" element={<SearchResults />}/>
                 <Route path="logout" element={<Logout toggleLoginStatus={toggleLoginStatus}/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Route>

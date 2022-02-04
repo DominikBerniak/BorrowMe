@@ -7,7 +7,8 @@ const UserInfoDropdown = ({hideDropDownMenu, userFirstName}) => {
     return (
         <div id="user-info-dropdown-container" className="list-group rounded-0" ref={ref}>
                 <div className="list-group-item p-4 user-select-none" >
-                    <p className="fw-bold">{userFirstName}</p>
+                    <p className="fw-bold">{userFirstName},</p>
+                    fajnie, że jesteś!
                 </div>
                 <Link to="/" className="list-group-item">Mój profil</Link>
                 <Link to="/" className="list-group-item">Moje ogłoszenia</Link>

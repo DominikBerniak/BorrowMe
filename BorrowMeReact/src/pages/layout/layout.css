@@ -1,3 +1,8 @@
+#outlet-container{
+
+}
+
+
 #search-form {
     margin-left: 15vw;
 }
@@ -11,12 +16,13 @@
 #search-btn:active{
     outline: none;
 }
-#navbar{
+
+#navbar-main{
     background-color: #363636;
+    min-height: 80px;
+    max-height: 110px;
 }
-.navbar{
-    min-height: 90px;
-}
+
 
 #search-location-icon{
     position: absolute;
@@ -50,11 +56,8 @@
 #user-info-dropdown-container :last-child{
     border-radius: 0 0 0.35rem 0.35rem !important;
 }
-
-#voivodeship-container{
-    z-index: 1;
-    display: none;
-    position: absolute;
+#city-search-container{
+ z-index: 1;
 }
 #voivodeship-list button:last-child{
     border-radius: 0 0 0.35rem 0.35rem !important;
@@ -76,7 +79,9 @@
 #cities-container button:only-child{
     border-radius: 0 0.35rem 0.35rem 0 !important;
 }
-
+.voivodeship-button{
+    overflow-wrap: break-word;
+}
 .voivodeship-button:hover, .city-button:hover{
     color: #fff;
     /*background-color: #0b5ed7;*/
@@ -84,8 +89,7 @@
 }
 
 #categories{
-    position: fixed;
-    left: 0;
+
 }
 #categories-button{
     /*background-color: #0d6efd;*/
@@ -103,3 +107,4 @@
 .no-underline {
     text-decoration: none;
 }
+

@@ -9,11 +9,11 @@ import {useState} from "react";
 
 const userData = {
     firstName: "Dominik",
-    avatarPath: "../../../images/bobr.jpg"
+    avatarName: "bobr.jpg"
 }
 
 
-const UserSection = ({isLoggedIn}) => {
+const UserSection = () => {
     const [isMenuDown, setIsMenuDown] = useState(false);
 
     const showDropDownMenu = (e) => {
@@ -27,27 +27,20 @@ const UserSection = ({isLoggedIn}) => {
 
     return (
         <div id="navbar-user-section-container" className="d-flex ms-auto me-3 h-60 align-items-center">
-            {isLoggedIn &&
-                <>
-                    <Link to="/">
-                        <AddIcon id="navbar-add-icon" sx={{fontSize: 35, color: "#ffffff"}} className="me-4"/>
-                    </Link>
-                    <Link to="/">
-                        <EmailOutlinedIcon id="navbar-messages-icon" sx={{fontSize: 35, color: "#ffffff"}}
-                                           className="me-4"/>
-                    </Link>
-                    <Link to="/">
-                    <NotificationsOutlinedIcon sx={{fontSize: 35, color: "#ffffff"}} className="me-5"
-                                               id="navbar-notifications-icon"/>
-                    </Link>
-                    <UserInfoPanel showDropDownMenu={showDropDownMenu} userData={userData}/>
-                    {isMenuDown &&
-                        <UserInfoDropdown hideDropDownMenu={hideDropDownMenu} userFirstName={userData.firstName}/>
-                    }
-                </>
-            }
-            {!isLoggedIn &&
-                <Link to="/" className="btn btn-primary">Login</Link>
+            <Link to="/">
+                <AddIcon id="navbar-add-icon" sx={{fontSize: 35, color: "#ffffff"}} className="me-4"/>
+            </Link>
+            <Link to="/">
+                <EmailOutlinedIcon id="navbar-messages-icon" sx={{fontSize: 35, color: "#ffffff"}}
+                                   className="me-4"/>
+            </Link>
+            <Link to="/">
+                <NotificationsOutlinedIcon sx={{fontSize: 35, color: "#ffffff"}} className="me-5"
+                                           id="navbar-notifications-icon"/>
+            </Link>
+            <UserInfoPanel showDropDownMenu={showDropDownMenu} userData={userData}/>
+            {isMenuDown &&
+                <UserInfoDropdown hideDropDownMenu={hideDropDownMenu} userFirstName={userData.firstName}/>
             }
         </div>
     );

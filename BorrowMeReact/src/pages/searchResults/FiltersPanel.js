@@ -1,7 +1,7 @@
 const FiltersPanel = () => {
     return (
-        <div>
-            
+        <div id="filters-container">
+            Filtry
         </div>
     );
 };

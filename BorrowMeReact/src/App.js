@@ -3,23 +3,18 @@ import "./styles/main.css"
 import Layout from "./pages/Layout";
 import PageNotFound from "./pages/PageNotFound";
 import Home from "./pages/Home";
-import {useState} from "react";
-import Logout from "./pages/Logout";
 import SearchResults from "./pages/SearchResults";
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
-
-    const toggleLoginStatus = (isLogged) => {
-        setIsLoggedIn(isLogged)
-    }
-
     return (
         <Routes>
-            <Route path="/" element={<Layout isLoggedIn={isLoggedIn}/>}>
-                <Route index element={<Home toggleLoginStatus={toggleLoginStatus}/>}/>
+            <Route path="/" element={<Layout />}>
+                <Route index element={<Home />}/>
                 <Route path="search-results" element={<SearchResults />}/>
-                <Route path="logout" element={<Logout toggleLoginStatus={toggleLoginStatus}/>}/>
+                <Route path="search-results/:categoryParam" element={<SearchResults />}/>
+                <Route path="search-results/:categoryParam/:voivodeshipParam" element={<SearchResults />}/>
+                <Route path="search-results/:categoryParam/:voivodeshipParam/:cityParam" element={<SearchResults />}/>
+
                 <Route path="*" element={<PageNotFound/>}/>
             </Route>
         </Routes>

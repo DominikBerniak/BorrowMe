@@ -1,34 +1,33 @@
-import { useEffect } from "react";
-import { useState } from 'react';
+import {useEffect} from "react";
+import {useState} from 'react';
 import Announcement from "./home/Announcement";
+import Spinner from "../components/Spinner";
+import {getData} from "../services/apiFetch";
 
-const Home = ({toggleLoginStatus}) => {
-    const [announcements, setAnnouncements] = useState([])
-    const [isDataReady, setIsDataReady] = useState(false)
+const Home = () => {
+    const [announcements, setAnnouncements] = useState()
 
     useEffect(() => {
-        const fetchAnnouncements = async () => {
-            const res = await fetch('api/Announcements');
-            const data = await res.json();
-            setAnnouncements(data);
-            setIsDataReady(true);
-        }
-        fetchAnnouncements();
-        toggleLoginStatus(true);
+        getData("/api/Announcements")
+            .then(announcements=>{
+                setAnnouncements(announcements);
+            })
     }, [])
 
     return (
-        <div className="p-5">
+        <div>
             <h2 className="text-center">Promowane ogłoszenia</h2>
-            {isDataReady
-                ?   <div className="d-flex flex-wrap justify-content-center">
-                        {announcements.map((announcement) => {
-                            return(
-                            <Announcement key={announcement.id} announcement={announcement} />
-                            )
-                        })}
-                    </div>
-                : <></>}
+            {announcements
+                ? <div className="d-flex flex-wrap justify-content-center">
+                    {announcements.map((announcement) => {
+                        return (
+                            <Announcement key={announcement.id} announcement={announcement}/>
+                        )
+                    })}
+                </div>
+                :
+                <Spinner/>
+            }
         </div>
     );
 };

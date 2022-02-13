@@ -2,38 +2,25 @@ import {Outlet} from "react-router-dom";
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer"
 import "./layout/layout.css"
-import {useEffect, useState} from "react";
+import {useEffect, useRef} from "react";
 
-const Layout = ({isLoggedIn}) => {
-    const [navBarHeight, setNavbarHeight] = useState({height: 0});
-    const [footerHeight, setFooterHeight] = useState({height: 0});
-
-    const setHeight = (type, height) => {
-        switch (type)
-        {
-            case "navbar":
-                setNavbarHeight({height: height});
-                break;
-            case "footer":
-                setFooterHeight({height: height});
-                break;
-        }
-    }
+const Layout = () => {
+    const navbarRef = useRef();
+    const navbarCategoriesRef = useRef();
+    const footerRef = useRef();
+    const outletRef = useRef();
 
     useEffect(() => {
-        const outletContainer = document.getElementById("outlet-container");
-        outletContainer.style.paddingTop = (navBarHeight.height + document.getElementById("categories-button").offsetHeight) + "px";
-        outletContainer.style.minHeight = (window.innerHeight - footerHeight.height) + "px";
-
-        document.getElementById("categories").style.top = navBarHeight.height + "px";
-    }, [navBarHeight, footerHeight])
+        outletRef.current.style.paddingTop = (navbarRef.current.clientHeight + navbarCategoriesRef.current.clientHeight) + "px";
+        outletRef.current.style.minHeight = (window.innerHeight - footerRef.current.clientHeight) + "px";
+    }, [])
     return (
         <>
-            <Navbar setHeight={setHeight} isLoggedIn={isLoggedIn}/>
-            <div id="outlet-container">
+            <Navbar navBarRef={navbarRef} navbarCategoriesRef={navbarCategoriesRef}/>
+            <div id="outlet-container" ref={outletRef} className="mt-5 d-flex flex-column">
                 <Outlet/>
             </div>
-            <Footer setHeight={setHeight} />
+            <Footer footerRef={footerRef} />
         </>
     );
 };

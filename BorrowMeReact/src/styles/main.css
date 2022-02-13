@@ -88,7 +88,9 @@
 .w-80{
     width: 80% !important;
 }
-
+.w-90{
+    width: 90% !important;
+}
 
 
 .h-1{
@@ -178,13 +180,24 @@
 .h-80{
     height: 80% !important;
 }
+.h-90{
+    height: 90% !important;
+}
 
 #dog-container{
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    /*position: absolute;*/
+    /*left: 50%;*/
+    /*transform: translateX(-50%);*/
 }
 
 .text-grey {
     color: dimgrey;
+}
+
+
+/*FLEX*/
+
+.flex-25
+{
+    flex: 0 0 25%;
 }

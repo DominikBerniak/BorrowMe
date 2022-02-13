@@ -2,30 +2,47 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import {useEffect, useState} from "react";
 import VoivodeshipsDropdown from "./VoivodeshipsDropdown";
 import {getData} from "../../../services/apiFetch"
+import {search} from "../../../features/search";
+import {useNavigate} from "react-router-dom";
 
 const Searchbar = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
-    const [searchCity, setSearchCity] = useState("");
-    const [cities, setCities] = useState([]);
+    const [searchLocation, setSearchLocation] = useState({
+        city: "",
+        voivodeship: "",
+        input: ""
+    });
+    const [searchCategory, setSearchCategory] = useState("all");
+    const [cities, setCities] = useState();
     const [filteredCities, setFilteredCities] = useState([]);
-    const [isVoivodeshipListVisible, setIsVoivodeshipListVisible] = useState(false);
-    const [isDataFetched, setIsDataFetched] = useState(false);
-    const [citySearchElemParams, setCitySearchElemParams] = useState({});
+    const [areVoivodeshipsVisible, setAreVoivodeshipsVisible] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isDataFetched) {
-            getData("api/Cities")
+        if (!cities) {
+            getData("/api/Cities")
                 .then(cities => {
                     setCities(cities);
                 })
-
-
-            setIsDataFetched(true);
         }
-    }, [])
-    const handleSubmit = (e) => {
+    }, [cities])
+
+    const handleSearchSubmit = (e) => {
         e.preventDefault();
-        console.log("Szukany przdmiot: " + searchPhrase + " w lokalizacji: " + searchCity)
+        let voivodeshipParam = searchLocation.voivodeship !== "" ? searchLocation.voivodeship + "/" : "";
+        let cityParam = searchLocation.city !== "" ? searchLocation.city + "/" : "";
+        let searchPhraseParam = searchPhrase !== "" ? searchPhrase : "";
+        let categoryParam = (searchCategory !== "" && voivodeshipParam !== "") || (searchCategory !=="" && cityParam !== "") ? searchCategory +"/" : "";
+
+        let isBackslashNeeded = categoryParam !== "" || voivodeshipParam !== "" || cityParam !== "";
+        if (searchPhraseParam === "") {
+            navigate(`/search-results${isBackslashNeeded ? "/" : ""}${categoryParam}${voivodeshipParam}${cityParam}`);
+        } else {
+            navigate({
+                pathname: `/search-results${isBackslashNeeded ? "/" : ""}${categoryParam}${voivodeshipParam}${cityParam}`,
+                search: `?search=${searchPhraseParam}`
+            });
+        }
     }
 
     const handleInputChange = (e, type) => {
@@ -34,45 +51,67 @@ const Searchbar = () => {
             case "phrase":
                 setSearchPhrase(inputValue);
                 break;
-            case "city":
-                setSearchCity(inputValue);
+            case "location":
+                handleLocationChange(inputValue)
                 break;
             default:
                 break;
         }
     }
 
-    const showVoivodeshipList = (e) => {
-        if (!isVoivodeshipListVisible) {
-            setIsVoivodeshipListVisible(true);
-            setCitySearchElemParams({
-                leftOffset: e.target.offsetLeft,
-                topOffset: e.target.offsetTop,
-                width: e.target.offsetWidth,
-                height: e.target.offsetHeight
-            })
+    const handleLocationChange = (searchValue) => {
+        if (searchValue.length > 2) {
+            getData(`/api/Cities/${searchValue}`)
+                .then(cities => {
+                    if (cities.length === 1) {
+                        setSearchLocation({
+                            city: cities[0].name,
+                            voivodeship: cities[0].voivodeship.name,
+                            input: `${cities[0].name}, ${cities[0].voivodeship.name}`
+                        });
+                    }
+                })
+        }
+
+        setSearchLocation({
+            city: "",
+            voivodeship: "",
+            input: searchValue
+        });
+    }
+
+    const showVoivodeshipList = () => {
+        if (!areVoivodeshipsVisible) {
+            setAreVoivodeshipsVisible(true);
         }
     }
-    const hideVoivodeshipList = () => {
-        if (isVoivodeshipListVisible) {
-            setIsVoivodeshipListVisible(false);
-            setFilteredCities([])
-            setCitySearchElemParams({})
+    const hideVoivodeshipDropdown = () => {
+        if (areVoivodeshipsVisible) {
+            setAreVoivodeshipsVisible(false)
+            setFilteredCities([]);
         }
     }
 
-    const handleVoivodeshipClick = (e, option) => {
-        if (option.id === 0) {
-            setSearchCity("");
+    const handleVoivodeshipClick = (e, voivodeship) => {
+        if (voivodeship.id === 0) {
+            setSearchLocation({
+                city: "",
+                voivodeship: "",
+                input: ""
+            });
         } else {
-            setSearchCity(option.name)
+            setSearchLocation({
+                city: "",
+                voivodeship: voivodeship.name,
+                input: voivodeship.name
+            })
         }
-        hideVoivodeshipList();
+        hideVoivodeshipDropdown();
     }
 
     const handleVoivodeshipHover = (e, option) => {
         if (option.id === 0) {
-            setFilteredCities([])
+            setFilteredCities([]);
             return;
         }
         setFilteredCities(
@@ -82,31 +121,36 @@ const Searchbar = () => {
     }
 
     const handleCityClick = (e, city) => {
-        setSearchCity(`${city.name}, ${city.voivodeship.name}`)
-        hideVoivodeshipList();
+        setSearchLocation({
+            city: city.name,
+            voivodeship: city.voivodeship.name,
+            input: `${city.name}, ${city.voivodeship.name}`
+        });
+        hideVoivodeshipDropdown();
     }
 
     return (
-        <form id="search-form" className="d-flex w-60 h-60" onSubmit={handleSubmit}>
+        <form id="search-form" className="d-flex w-60 h-60" onSubmit={handleSearchSubmit}>
             <input type="text" aria-label="Item name" className="w-50 px-3 border-0 rounded-start border-end"
                    placeholder="Co chcesz pożyczyć?" value={searchPhrase}
                    onChange={(e) => handleInputChange(e, "phrase")}/>
-            <div className="d-flex w-30 align-items-center">
+            <div id="city-search-container" className="d-flex w-30 align-items-center flex-wrap">
                 <LocationOnOutlinedIcon className="ps-1" id="search-location-icon"
                                         sx={{fontSize: 35, color: "#8c8c8c"}}/>
                 <input id="search-location-input" type="text" aria-label="Location" className="border-0 w-100 h-100"
-                       placeholder="Cała Polska" value={searchCity} onChange={(e) => handleInputChange(e, "city")}
+                       placeholder="Cała Polska" value={searchLocation.input}
+                       onChange={(e) => handleInputChange(e, "location")}
                        onClick={(e) => showVoivodeshipList(e)} autoComplete="off"/>
+                {areVoivodeshipsVisible &&
+                    <VoivodeshipsDropdown hideVoivodeshipDropdown={hideVoivodeshipDropdown}
+                                          handleVoivodeshipClick={handleVoivodeshipClick}
+                                          handleVoivodeshipHover={handleVoivodeshipHover}
+                                          filteredCities={filteredCities}
+                                          handleCityClick={handleCityClick}/>
+                }
             </div>
             <button id="search-btn" className="btn btn-outline-light rounded-end shadow-none" type="submit">Szukaj
             </button>
-            {isVoivodeshipListVisible &&
-                <VoivodeshipsDropdown hideVoivodeshipList={hideVoivodeshipList}
-                                      handleVoivodeshipClick={handleVoivodeshipClick}
-                                      handleVoivodeshipHover={handleVoivodeshipHover} filteredCities={filteredCities}
-                                      citySearchPosition={citySearchElemParams}
-                                      handleCityClick={handleCityClick}/>
-            }
         </form>
     );
 };

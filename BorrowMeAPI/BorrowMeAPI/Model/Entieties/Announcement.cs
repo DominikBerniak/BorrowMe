@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BorrowMeAPI.Model
 {
-    public class Announcement
+    public class Announcement : EntityBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -27,7 +27,6 @@ namespace BorrowMeAPI.Model
         public decimal? Price { get; set; }
         [StringLength(50)]
         public string? OtherPaymentType { get; set; }
-        public List<Reservation>? Reservations { get; set; } = new List<Reservation>();
     }
 
     public enum PaymentType

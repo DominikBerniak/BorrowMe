@@ -1,5 +1,10 @@
 global using BorrowMeAPI.Dao;
 global using Microsoft.EntityFrameworkCore;
+using BorrowMeAPI.Model;
+using BorrowMeAPI.Repositories;
+using BorrowMeAPI.Services;
+using BorrowMeAPI.Services.Implementations;
+using BorrowMeAPI.Services.Interfaces;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +19,14 @@ builder.Services.AddDbContext<DataDbContext>(options =>
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddTransient<DataDbContext, DataDbContext>();
+builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
+builder.Services.AddTransient<IRepository<Announcement>, Repository<Announcement>>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddTransient<IRepository<MainCategory>, Repository<MainCategory>>();
+builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddTransient<IRepository<City>, Repository<City>>();
 
 var app = builder.Build();
 

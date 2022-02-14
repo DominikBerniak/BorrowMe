@@ -9,7 +9,7 @@ const CategoriesDropDown = ({areCategoriesVisible}) => {
 
     useEffect(() => {
         if (!categories) {
-            getData("/api/Categories")
+            getData("/Categories")
                 .then(categories => {
                     setCategories(categories);
                 })

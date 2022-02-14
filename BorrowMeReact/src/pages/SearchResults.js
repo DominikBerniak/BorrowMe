@@ -43,8 +43,8 @@ const SearchResults = () => {
             let category = categoryParam ? categoryParam : "all";
             let voivodeship = voivodeshipParam ? voivodeshipParam : "all";
             let city = cityParam ? cityParam : "all";
-            console.log(`/Api/Announcements/${category}/${voivodeship}/${city}/${searchPhrase}/${pageNumber}`)
-            getData(`/Api/Announcements/${category}/${voivodeship}/${city}/${searchPhrase}/${pageNumber}`)
+            console.log(`/Announcements/${category}/${voivodeship}/${city}/${searchPhrase}/${pageNumber}`)
+            getData(`/Announcements/${category}/${voivodeship}/${city}/${searchPhrase}/${pageNumber}`)
                 .then(data => {
                     setAnnouncements(data.announcements)
                     setNumberOfPages(data.numberOfPages);

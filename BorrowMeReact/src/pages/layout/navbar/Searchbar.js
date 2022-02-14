@@ -20,7 +20,7 @@ const Searchbar = () => {
 
     useEffect(() => {
         if (!cities) {
-            getData("/api/Cities")
+            getData("/Cities")
                 .then(cities => {
                     setCities(cities);
                 })
@@ -61,7 +61,7 @@ const Searchbar = () => {
 
     const handleLocationChange = (searchValue) => {
         if (searchValue.length > 2) {
-            getData(`/api/Cities/${searchValue}`)
+            getData(`/Cities/${searchValue}`)
                 .then(cities => {
                     if (cities.length === 1) {
                         setSearchLocation({

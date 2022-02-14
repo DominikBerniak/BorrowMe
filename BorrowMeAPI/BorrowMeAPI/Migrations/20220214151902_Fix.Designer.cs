@@ -4,6 +4,7 @@ using BorrowMeAPI.Dao;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BorrowMeAPI.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    partial class DataDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220214151902_Fix")]
+    partial class Fix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -340,7 +342,7 @@ namespace BorrowMeAPI.Migrations
             modelBuilder.Entity("BorrowMeAPI.Model.Reservation", b =>
                 {
                     b.HasOne("BorrowMeAPI.Model.Announcement", "Announcement")
-                        .WithMany()
+                        .WithMany("Reservations")
                         .HasForeignKey("AnnouncementId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -369,6 +371,8 @@ namespace BorrowMeAPI.Migrations
             modelBuilder.Entity("BorrowMeAPI.Model.Announcement", b =>
                 {
                     b.Navigation("PictureLocations");
+
+                    b.Navigation("Reservations");
                 });
 
             modelBuilder.Entity("BorrowMeAPI.Model.MainCategory", b =>

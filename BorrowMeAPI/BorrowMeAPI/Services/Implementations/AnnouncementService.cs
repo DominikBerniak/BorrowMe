@@ -1,22 +1,30 @@
 ﻿using BorrowMeAPI.Model;
+using BorrowMeAPI.Repositories;
+using BorrowMeAPI.Services.Interfaces;
 
 namespace BorrowMeAPI.Services.Implementations
 {
     public class AnnouncementService : IAnnouncementService
     {
-        public void AddAnnouncement()
+        private readonly IRepository<Announcement> _repository;
+        public AnnouncementService(IRepository<Announcement> repository)
         {
-            throw new NotImplementedException();
+            _repository = repository;
+        }
+
+        public void AddAnnouncement(Announcement announcement)
+        {
+            _repository.Add(announcement);
         }
 
         public void DeleteAnnouncement(int id)
         {
-            throw new NotImplementedException();
+            _repository.Delete(_repository.GetById(id));
         }
 
         public Announcement GetAnnouncement(int announcementId)
         {
-            throw new NotImplementedException();
+            return _repository.GetById(announcementId);
         }
 
         public Announcement GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase)
@@ -26,12 +34,12 @@ namespace BorrowMeAPI.Services.Implementations
 
         public IEnumerable<Announcement> GetAnnouncements()
         {
-            throw new NotImplementedException();
+            return _repository.GetAll();
         }
 
-        public void UpdateAnnouncement(int id, Announcement announcement)
+        public void UpdateAnnouncement(Announcement announcement)
         {
-            throw new NotImplementedException();
+            _repository.Edit(announcement);
         }
     }
 }

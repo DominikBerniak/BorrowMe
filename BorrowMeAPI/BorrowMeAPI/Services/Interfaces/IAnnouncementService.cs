@@ -1,6 +1,6 @@
 ﻿using BorrowMeAPI.Model;
 
-namespace BorrowMeAPI.Services
+namespace BorrowMeAPI.Services.Interfaces
 {
     public interface IAnnouncementService
     {
@@ -15,11 +15,11 @@ namespace BorrowMeAPI.Services
 
 
         // POST
-        void AddAnnouncement();
+        void AddAnnouncement(Announcement announcement);
 
 
         // PUT by ID
-        void UpdateAnnouncement(int id, Announcement announcement);
+        void UpdateAnnouncement(Announcement announcement);
 
         // PATCH by ID
         // TO DO
@@ -28,7 +28,7 @@ namespace BorrowMeAPI.Services
         void DeleteAnnouncement(int id);
 
 
-        
+
 
     }
 }

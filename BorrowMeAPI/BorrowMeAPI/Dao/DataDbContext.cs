@@ -1,4 +1,6 @@
 ﻿using BorrowMeAPI.Model;
+using BorrowMeAPI.Model.Entieties;
+
 namespace BorrowMeAPI.Dao
 {
     public class DataDbContext : DbContext
@@ -6,13 +8,25 @@ namespace BorrowMeAPI.Dao
         public DataDbContext(DbContextOptions<DataDbContext> options) : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
 
-        public DbSet<Announcement> Announcement { get; set; }
-        public DbSet<Category> Category { get; set; }
-        public DbSet<City> City { get; set; }
-        public DbSet<Notification> Notification { get; set; }
-        public DbSet<Reservation> Reservation { get; set; }
-        public DbSet<User> User { get; set; }
-        public DbSet<Voivodeship> Voivodship { get; set; }
+
+
+        }
+
+        public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<AvailabilityNotification> AvailabilityNotifications { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<MainCategory> MainCategories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
+        public DbSet<PicturePath> PictureLocations { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Voivodeship> Voivodeships { get; set; }
     }
 }

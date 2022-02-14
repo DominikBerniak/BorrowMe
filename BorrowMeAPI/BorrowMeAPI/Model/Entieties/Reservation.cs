@@ -1,21 +1,21 @@
-﻿using BorrowMeAPI.Services;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BorrowMeAPI.Model
 {
     public class Reservation
     {
-        [Required, DataType(DataType.Date), Column("reservation_day")]
-        public DateTime ReservationDay { get; set; }
-
-        [Required, Column("is_accepted")]
-        public bool IsAccepted { get; set; }
-
-        [Required, ForeignKey("user_id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
+        [Required, DataType(DataType.Date)]
+        public DateTime ReservationStartDay { get; set; }
+        [Required, DataType(DataType.Date)]
+        public DateTime ReservationEndDay { get; set; }
+        [Required]
+        public bool IsAccepted { get; set; } = false;
+        [Required]
         public User User { get; set; }
-
-        [Required, ForeignKey("announcement_id")]
+        [Required]
         public Announcement Announcement { get; set; }
     }
 }

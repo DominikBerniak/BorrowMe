@@ -1,32 +1,40 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BorrowMeAPI.Model.Entieties;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BorrowMeAPI.Model
 {
     public class Announcement
     {
-        [Key]
-        public int Id { get; set; }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
         [Required, StringLength(50)]
         public string Title { get; set; }
-
         [Required, StringLength(500)]
         public string Description { get; set; }
-
-        [Required, Column("publish_date"), DataType(DataType.DateTime)]
+        [Required, DataType(DataType.DateTime)]
         public DateTime PublishDate { get; set; }
-
-        [Column("picture_path"), StringLength(100)]
-        public PicturePath PictureLocation { get; set; }
-
-        [Required, ForeignKey("owner_id")]
-        public User Owner { get; set; }
-
-        [Required, ForeignKey("category_id")]
-        public Category Category { get; set; }
-
-        [Required, ForeignKey("city_id")]
+        public List<PicturePath>? PictureLocations { get; set; }
+        [Required]
+        public User? Owner { get; set; }
+        [Required]
+        public SubCategory SubCategory { get; set; }
+        [Required]
         public City City { get; set; }
+        [Required, Column(TypeName = "varchar(50)")]
+        public PaymentType PaymentType { get; set; }
+        [Precision(6,2)]
+        public decimal? Price { get; set; }
+        [StringLength(50)]
+        public string? OtherPaymentType { get; set; }
+        public List<Reservation>? Reservations { get; set; } = new List<Reservation>();
+    }
+
+    public enum PaymentType
+    {
+       Free,
+       Money,
+       Beer,
+       Other
     }
 }

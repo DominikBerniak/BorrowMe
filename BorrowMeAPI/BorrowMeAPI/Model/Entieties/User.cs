@@ -5,25 +5,23 @@ namespace BorrowMeAPI.Model
 {
     public class User
     {
-        [Key]
-        public int Id { get; set; }
-
-        [Required, StringLength(50), Column("first_name")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
+        [Required, StringLength(50)]
         public string FirstName { get; set; }
-
-        [Required, StringLength(50), Column("last_name")]
+        [Required, StringLength(50)]
         public string LastName { get; set; }
 
         [Required, StringLength(60)]
         public string Email { get; set; }
 
-        [StringLength(15), Column("phone_number")]
-        public string PhoneNumber { get; set; }
+        [StringLength(20)]
+        public string? PhoneNumber { get; set; }
 
-        [StringLength(80), Column("picture_path")]
-        public string PicturePath { get; set; }
+        public PicturePath? PictureLocation { get; set; }
 
-        [Required, Column("reputation_points")]
-        public int ReputationPoints { get; set; }
+        [Required]
+        public int ReputationPoints { get; set; } = 0;
+        public List<Announcement>? Announcements { get; set; } = new List<Announcement>();
     }
 }

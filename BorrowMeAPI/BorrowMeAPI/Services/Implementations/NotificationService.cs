@@ -5,12 +5,12 @@ namespace BorrowMeAPI.Services.Implementations
 {
     public class NotificationService : INotificationService
     {
-        public void AddNotification(Notification notification)
+        public void AddNotification(AvailabilityNotification notification)
         {
             throw new NotImplementedException();
         }
 
-        public Notification GetAllNotifications(int userId)
+        public AvailabilityNotification GetAllNotifications(int userId)
         {
             throw new NotImplementedException();
         }

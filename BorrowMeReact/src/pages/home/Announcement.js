@@ -13,7 +13,7 @@ const Announcement = ({announcement}) => {
             </div>
             <div className="informations-row-1">
                 <div className="price">
-                    {Math.floor(Math.random() * 50)+1} zł
+                    {Math.floor(Math.random() * 50) + 1} zł
                 </div>
                 <div className="city">
                     {announcement.city.name}
@@ -25,7 +25,7 @@ const Announcement = ({announcement}) => {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Announcement

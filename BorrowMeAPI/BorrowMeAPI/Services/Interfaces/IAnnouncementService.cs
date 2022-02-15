@@ -6,10 +6,10 @@ namespace BorrowMeAPI.Services.Interfaces
     public interface IAnnouncementService
     {
         // GET all
-        IEnumerable<Announcement> GetAnnouncements();
+        Task<IEnumerable<Announcement>> GetAnnouncements();
 
         // GET by ID
-        Announcement GetAnnouncement(int announcementId);
+        Task<Announcement> GetAnnouncement(int announcementId);
 
         // GET by Filters
         Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage);
@@ -20,13 +20,13 @@ namespace BorrowMeAPI.Services.Interfaces
 
 
         // PUT by ID
-        void UpdateAnnouncement(Announcement announcement);
+        Task<Announcement> UpdateAnnouncement(Announcement announcement);
 
         // PATCH by ID
         // TO DO
 
         // DELETE by ID
-        void DeleteAnnouncement(int id);
+        Task<Announcement> DeleteAnnouncement(int id);
 
 
 

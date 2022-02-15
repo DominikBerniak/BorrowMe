@@ -21,13 +21,13 @@ namespace BorrowMeAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<City>> GetAllCities()
         {
-            return Ok(_cityService.GetAllCities());
+            return Ok(await _cityService.GetAllCities());
         }
 
         [HttpGet("{searchCity}")]
         public async Task<ActionResult<City>> GetCitiesByName(string searchCity)
         {
-            return Ok(_cityService.GetByName(searchCity)); // Not implemented
+            return Ok(await _cityService.GetByName(searchCity)); // Not implemented
         }
 
     }

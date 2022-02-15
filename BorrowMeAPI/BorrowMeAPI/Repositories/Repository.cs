@@ -8,11 +8,11 @@ public class Repository<T> : IRepository<T> where T : EntityBase
     {
         _dbContext = dbContext;
     }
-    public virtual T GetById(int id)
+    public async virtual Task<T> GetById(int id)
     {
-        return _dbContext.Set<T>().Find(id);
+        return await _dbContext.Set<T>().FindAsync(id);
     }
-    public virtual IEnumerable<T> GetAll()
+    public async virtual Task<IEnumerable<T>> GetAll()
     {
         return _dbContext.Set<T>().AsEnumerable();
     }
@@ -28,14 +28,16 @@ public class Repository<T> : IRepository<T> where T : EntityBase
         await _dbContext.SaveChangesAsync();
         return entity;
     }
-    public void Edit(T entity)
+    public async Task<T> Edit(T entity)
     {
         _dbContext.Entry(entity).State = EntityState.Modified;
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
+        return entity;
     }
-    public void Delete(T entity)
+    public async Task<T> Delete(T entity)
     {
         _dbContext.Set<T>().Remove(entity);
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
+        return entity;
     }
 }

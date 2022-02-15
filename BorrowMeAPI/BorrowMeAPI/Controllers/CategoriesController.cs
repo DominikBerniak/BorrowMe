@@ -20,9 +20,9 @@ namespace BorrowMeAPI.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
+        public async Task<ActionResult<IEnumerable<MainCategory>>> GetAllCategories()
         {
-            return Ok(_categoryService.GetAllCategories());
+            return Ok(await _categoryService.GetAllCategories());
         }
     }
 }

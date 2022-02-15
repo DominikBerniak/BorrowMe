@@ -4,6 +4,6 @@ namespace BorrowMeAPI.Services.Interfaces
 {
     public interface ICategoryService
     {
-        IEnumerable<MainCategory> GetAllCategories();
+        Task<IEnumerable<MainCategory>> GetAllCategories();
     }
 }

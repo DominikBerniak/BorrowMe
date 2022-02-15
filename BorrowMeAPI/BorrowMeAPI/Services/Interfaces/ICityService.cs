@@ -4,7 +4,7 @@ namespace BorrowMeAPI.Services.Interfaces
 {
     public interface ICityService
     {
-        IEnumerable<City> GetAllCities();
-        IEnumerable<City> GetByName(string phrase);
+        Task<IEnumerable<City>> GetAllCities();
+        Task<IEnumerable<City>> GetByName(string phrase);
     }
 }

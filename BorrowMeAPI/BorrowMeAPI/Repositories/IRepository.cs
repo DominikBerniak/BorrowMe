@@ -5,12 +5,12 @@ namespace BorrowMeAPI.Repositories
 {
     public interface IRepository<T> where T : EntityBase
     {
-        T GetById(int id);
-        IEnumerable<T> GetAll();
+        Task<T> GetById(int id);
+        Task<IEnumerable<T>> GetAll();
         IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate);
         Task<T> Add(T entity);
-        void Delete(T entity);
-        void Edit(T entity);
+        Task<T> Delete(T entity);
+        Task<T> Edit(T entity);
     }
     
 }

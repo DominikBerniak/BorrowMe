@@ -13,12 +13,12 @@ namespace BorrowMeAPI.Services.Implementations
             _repository = repository;
         }
 
-        public IEnumerable<City> GetAllCities()
+        public async Task<IEnumerable<City>> GetAllCities()
         {
-            return _repository.GetAll();
+            return await _repository.GetAll();
         }
 
-        public IEnumerable<City> GetByName(string phrase)
+        public async Task<IEnumerable<City>> GetByName(string phrase)
         {
             throw new NotImplementedException();
         }

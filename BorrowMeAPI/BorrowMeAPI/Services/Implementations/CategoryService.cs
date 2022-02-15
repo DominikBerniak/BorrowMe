@@ -11,9 +11,9 @@ namespace BorrowMeAPI.Services.Implementations
         {
             _repository = repository;
         }
-        public IEnumerable<MainCategory> GetAllCategories()
+        public async Task<IEnumerable<MainCategory>> GetAllCategories()
         {
-            return _repository.GetAll();
+            return await _repository.GetAll();
         }
     }
 }

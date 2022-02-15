@@ -22,10 +22,11 @@ public class Repository<T> : IRepository<T> where T : EntityBase
                .Where(predicate)
                .AsEnumerable();
     }
-    public void Add(T entity)
+    public async Task<T> Add(T entity)
     {
-        _dbContext.Set<T>().Add(entity);
-        _dbContext.SaveChanges();
+        await _dbContext.Set<T>().AddAsync(entity);
+        await _dbContext.SaveChangesAsync();
+        return entity;
     }
     public void Edit(T entity)
     {

@@ -12,9 +12,9 @@ namespace BorrowMeAPI.Services.Implementations
             _repository = repository;
         }
 
-        public void AddAnnouncement(Announcement announcement)
+        public async Task<Announcement> AddAnnouncement(Announcement announcement)
         {
-            _repository.Add(announcement);
+            return await _repository.Add(announcement);
         }
 
         public void DeleteAnnouncement(int id)

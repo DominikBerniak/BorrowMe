@@ -8,7 +8,7 @@ namespace BorrowMeAPI.Repositories
         T GetById(int id);
         IEnumerable<T> GetAll();
         IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate);
-        void Add(T entity);
+        Task<T> Add(T entity);
         void Delete(T entity);
         void Edit(T entity);
     }

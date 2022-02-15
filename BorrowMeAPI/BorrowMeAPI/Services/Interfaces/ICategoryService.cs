@@ -1,9 +1,13 @@
-﻿using BorrowMeAPI.Model;
+﻿using BorrowMeAPI.Model.DataTransferObjects;
+using BorrowMeAPI.Model.Entieties;
 
 namespace BorrowMeAPI.Services.Interfaces
 {
     public interface ICategoryService
     {
-        IEnumerable<MainCategory> GetAllCategories();
+        Task<IEnumerable<MainCategory>> GetAllCategories();
+
+        Task<MainCategory> AddMainCategory(MainCategory mainCategory);
+        Task<SubCategory> AddSubCategory(SubCategoryDto subCategory);
     }
 }

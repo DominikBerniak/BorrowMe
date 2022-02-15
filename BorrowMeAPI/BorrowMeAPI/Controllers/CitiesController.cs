@@ -1,6 +1,9 @@
 ﻿using BorrowMeAPI.Model;
+using BorrowMeAPI.Model.DataTransferObjects;
+using BorrowMeAPI.Repositories;
 using BorrowMeAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace BorrowMeAPI.Controllers
 {
@@ -11,14 +14,14 @@ namespace BorrowMeAPI.Controllers
 
         private readonly ILogger _logger;
         private readonly ICityService _cityService;
-
+       
         public CitiesController(ILogger<CitiesController> logger, ICityService cityService)
         {
             _logger = logger;
             _cityService = cityService;
         }
-        
-        [HttpGet]
+
+        [HttpGet()]
         public async Task<ActionResult<City>> GetAllCities()
         {
             return Ok(_cityService.GetAllCities());
@@ -28,6 +31,13 @@ namespace BorrowMeAPI.Controllers
         public async Task<ActionResult<City>> GetCitiesByName(string searchCity)
         {
             return Ok(_cityService.GetByName(searchCity)); // Not implemented
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Voivodeship>> AddCity(CityDto data)
+        {
+            var city = await _cityService.AddCity(data);
+            return Created($"/Cities/{city.Id}", city);
         }
 
     }

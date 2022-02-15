@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BorrowMeAPI.Services.Interfaces;
+using System;
+using BorrowMeAPI.Model.Entieties;
+using BorrowMeAPI.Model.DataTransferObjects;
 
 namespace BorrowMeAPI.Controllers
 {
@@ -18,11 +21,38 @@ namespace BorrowMeAPI.Controllers
             _categoryService = categoryService;
         }
 
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
+        #region Main Categories
+        [HttpGet("MainCategories")]
+        public async Task<ActionResult<List<MainCategory>>> GetAllMainCategories()
         {
             return Ok(_categoryService.GetAllCategories());
         }
+
+        [HttpPost("MainCategories")]
+        public async Task<ActionResult<MainCategory>> AddMainCategory(MainCategory mainCategory)
+        {
+            var category = await _categoryService.AddMainCategory(mainCategory);
+            if (category is null)
+            {
+                return Problem("Something went horribly wrong.");
+            }
+
+            return Created($"/Categories/MainCategories/{category.Id}", category);
+        }
+        #endregion
+
+        #region Sub Categories
+        [HttpPost("SubCategories")]
+        public async Task<ActionResult<SubCategory>> AddSubCategory(SubCategoryDto subCategoryDto)
+        {
+            var category = await _categoryService.AddSubCategory(subCategoryDto);
+            if (category is null)
+            {
+                return Problem("Something went horribly wrong.");
+            }
+
+            return Created($"/Categories/SubCategories/{category.Id}", category);
+        }
+        #endregion
     }
 }

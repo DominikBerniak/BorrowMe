@@ -1,5 +1,5 @@
-﻿using BorrowMeAPI.Model;
-using BorrowMeAPI.Repositories;
+﻿using BorrowMeAPI.Repositories;
+using System.Linq.Expressions;
 
 public class Repository<T> : IRepository<T> where T : EntityBase
 {
@@ -8,30 +8,39 @@ public class Repository<T> : IRepository<T> where T : EntityBase
     {
         _dbContext = dbContext;
     }
-    public virtual T GetById(int id)
+    public virtual async Task<T> GetById(int id)
     {
-        return _dbContext.Set<T>().Find(id);
+        return await _dbContext.Set<T>().FindAsync(id);
     }
-    public virtual IEnumerable<T> GetAll()
+    public virtual async Task<IEnumerable<T>> GetAll()
     {
-        return _dbContext.Set<T>().AsEnumerable();
+        return await _dbContext.Set<T>().ToListAsync();
     }
-    public virtual IEnumerable<T> GetAll(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+    public virtual async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> predicate)
     {
-        return _dbContext.Set<T>()
+        return await _dbContext.Set<T>()
                .Where(predicate)
-               .AsEnumerable();
+               .ToListAsync();
     }
+
+    public virtual async Task<T> GetByProperty(Expression<Func<T, bool>> predicate)
+    {
+        return await _dbContext.Set<T>()
+               .Where(predicate)
+               .FirstOrDefaultAsync();
+    }
+
     public async Task<T> Add(T entity)
     {
         await _dbContext.Set<T>().AddAsync(entity);
         await _dbContext.SaveChangesAsync();
         return entity;
     }
-    public void Edit(T entity)
+    public async Task<T> Edit(T entity)
     {
-        _dbContext.Entry(entity).State = EntityState.Modified;
-        _dbContext.SaveChanges();
+        _dbContext.Update(entity);
+        await _dbContext.SaveChangesAsync();
+        return entity;
     }
     public void Delete(T entity)
     {

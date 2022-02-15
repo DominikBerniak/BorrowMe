@@ -1,16 +1,16 @@
-﻿using BorrowMeAPI.Model;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace BorrowMeAPI.Repositories
 {
     public interface IRepository<T> where T : EntityBase
     {
-        T GetById(int id);
-        IEnumerable<T> GetAll();
-        IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate);
+        Task<T> GetById(int id);
+        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> predicate);
+        Task<T> GetByProperty(Expression<Func<T, bool>> predicate);
         Task<T> Add(T entity);
         void Delete(T entity);
-        void Edit(T entity);
+        Task<T> Edit(T entity);
     }
-    
+
 }

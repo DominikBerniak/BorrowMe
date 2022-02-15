@@ -27,6 +27,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IRepository<MainCategory>, Repository<MainCategory>>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddTransient<IRepository<City>, Repository<City>>();
+builder.Services.AddTransient<IRepository<Voivodeship>, Repository<Voivodeship>>();
 builder.Services.AddTransient<IAnnouncementRepository, AnnouncementRepository>();
 
 var app = builder.Build();

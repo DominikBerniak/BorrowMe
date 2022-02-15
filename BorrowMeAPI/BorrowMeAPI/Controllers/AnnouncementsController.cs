@@ -20,7 +20,7 @@ namespace BorrowMeAPI.Controllers
         public async Task<ActionResult<List<Announcement>>> GetAllAnnouncements()
         {
             _logger.LogInformation("Get all announcements attempt.");
-            return Ok(_announcementService.GetAnnouncements());
+            return Ok(await _announcementService.GetAnnouncements());
         }
 
         // /api/Announcements POST
@@ -34,19 +34,18 @@ namespace BorrowMeAPI.Controllers
 
         // /api/Announcements/{id} GET
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetAnnouncementById(int id)
+        public async Task<ActionResult<Announcement>> GetAnnouncementById(int id)
         {
             _logger.LogInformation($"Get announcement attempt. Id = '{id}'");
-            return Ok(_announcementService.GetAnnouncement(id));
+            return Ok(await _announcementService.GetAnnouncement(id));
         }
 
         // /api/Announcements/ PUT
         [HttpPut]
-        public async Task<IActionResult> EditWholeAnnouncement(Announcement announcement)
+        public async Task<ActionResult<Announcement>> EditWholeAnnouncement(Announcement announcement)
         {
             _logger.LogInformation($"Edit announcement attempt. Id = '{announcement.Id}'");
-            _announcementService.UpdateAnnouncement(announcement);
-            return Ok();
+            return Ok(await _announcementService.UpdateAnnouncement(announcement));
         }
 
         // /api/Announcements/{id} PATCH
@@ -61,14 +60,15 @@ namespace BorrowMeAPI.Controllers
         public async Task<IActionResult> DeleteAnnouncement(int id)
         {
             _logger.LogInformation($"Delete announcement attempt. Id = '{id}'");
-            _announcementService.DeleteAnnouncement(id);
-            return Ok();
+            var response = await _announcementService.DeleteAnnouncement(id);
+            return Ok(response);
         }
 
         // /api/Announcements/{category}/{voivodeship}/{city}/{search_phrase} GET
         [HttpGet("{category}/{voivodeship}/{city}/{searchPhrase}/{currentPage}")]
         public async Task<ActionResult<SearchedAnnoucementsDTO>> GetAnnouncementByFilters(string category = "all", string voivodeship = "all", string city = "all", string searchPhrase = "all", int currentPage = 1)
         {
+            _logger.LogInformation($"Get announcement by filters attempt. category = '{category}', voivodeship = '{voivodeship}', city = '{city}, searchPhraze = '{searchPhrase}'");
             var announcementDto = await _announcementService.GetAnnouncementByFilters(category, voivodeship, city, searchPhrase, currentPage);
             if (announcementDto.Status == Status.NotFound)
             {

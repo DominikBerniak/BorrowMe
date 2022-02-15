@@ -9,7 +9,7 @@ namespace BorrowMeAPI.Repositories
         Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> predicate);
         Task<T> GetByProperty(Expression<Func<T, bool>> predicate);
         Task<T> Add(T entity);
-        void Delete(T entity);
+        Task<T> Delete(T entity);
         Task<T> Edit(T entity);
     }
 

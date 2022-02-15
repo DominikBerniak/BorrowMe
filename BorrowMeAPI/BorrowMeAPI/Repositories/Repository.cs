@@ -42,9 +42,10 @@ public class Repository<T> : IRepository<T> where T : EntityBase
         await _dbContext.SaveChangesAsync();
         return entity;
     }
-    public void Delete(T entity)
+    public async Task<T> Delete(T entity)
     {
         _dbContext.Set<T>().Remove(entity);
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
+        return entity;
     }
 }

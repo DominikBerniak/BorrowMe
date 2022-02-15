@@ -21,14 +21,14 @@ namespace BorrowMeAPI.Services.Implementations
             return await _repository.Add(announcement);
         }
 
-        public void DeleteAnnouncement(int id)
+        public async Task<Announcement> DeleteAnnouncement(int id)
         {
-            _repository.Delete(_repository.GetById(id));
+            return await _repository.Delete(await _repository.GetById(id));
         }
 
-        public Announcement GetAnnouncement(int announcementId)
+        public async Task<Announcement> GetAnnouncement(int announcementId)
         {
-            return _repository.GetById(announcementId);
+            return await _repository.GetById(announcementId);
         }
 
         public async Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage)
@@ -68,14 +68,14 @@ namespace BorrowMeAPI.Services.Implementations
             };
         }
 
-        public IEnumerable<Announcement> GetAnnouncements()
+        public async Task<IEnumerable<Announcement>> GetAnnouncements()
         {
-            return _repository.GetAll();
+            return await _repository.GetAll();
         }
 
-        public void UpdateAnnouncement(Announcement announcement)
+        public async Task<Announcement> UpdateAnnouncement(Announcement announcement)
         {
-            _repository.Edit(announcement);
+            return await _repository.Edit(announcement);
         }
     }
 }

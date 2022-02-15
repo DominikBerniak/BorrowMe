@@ -1,4 +1,5 @@
 ﻿using BorrowMeAPI.Model;
+using BorrowMeAPI.Model.DataTransferObjects;
 
 namespace BorrowMeAPI.Services.Interfaces
 {
@@ -11,7 +12,7 @@ namespace BorrowMeAPI.Services.Interfaces
         Announcement GetAnnouncement(int announcementId);
 
         // GET by Filters
-        Announcement GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase);
+        Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage);
 
 
         // POST

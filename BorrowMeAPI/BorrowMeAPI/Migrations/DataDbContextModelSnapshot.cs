@@ -110,7 +110,7 @@ namespace BorrowMeAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid?>("VoivodeshipId")
+                    b.Property<Guid>("VoivodeshipId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -315,10 +315,13 @@ namespace BorrowMeAPI.Migrations
 
             modelBuilder.Entity("BorrowMeAPI.Model.City", b =>
                 {
-                    b.HasOne("BorrowMeAPI.Model.Voivodeship", null)
-                        .WithMany("Cities")
+                    b.HasOne("BorrowMeAPI.Model.Voivodeship", "Voivodeship")
+                        .WithMany()
                         .HasForeignKey("VoivodeshipId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Voivodeship");
                 });
 
             modelBuilder.Entity("BorrowMeAPI.Model.Entieties.SubCategory", b =>
@@ -374,11 +377,6 @@ namespace BorrowMeAPI.Migrations
             modelBuilder.Entity("BorrowMeAPI.Model.MainCategory", b =>
                 {
                     b.Navigation("SubCategories");
-                });
-
-            modelBuilder.Entity("BorrowMeAPI.Model.Voivodeship", b =>
-                {
-                    b.Navigation("Cities");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,5 @@
 ﻿using BorrowMeAPI.Model;
+using BorrowMeAPI.Model.DataTransferObjects;
 using BorrowMeAPI.Repositories;
 using BorrowMeAPI.Services.Interfaces;
 
@@ -7,9 +8,12 @@ namespace BorrowMeAPI.Services.Implementations
     public class AnnouncementService : IAnnouncementService
     {
         private readonly IRepository<Announcement> _repository;
-        public AnnouncementService(IRepository<Announcement> repository)
+        private readonly IAnnouncementRepository _announcementRepository;
+
+        public AnnouncementService(IRepository<Announcement> repository, IAnnouncementRepository announcementRepository)
         {
             _repository = repository;
+            _announcementRepository = announcementRepository;
         }
 
         public async Task<Announcement> AddAnnouncement(Announcement announcement)
@@ -27,9 +31,41 @@ namespace BorrowMeAPI.Services.Implementations
             return _repository.GetById(announcementId);
         }
 
-        public Announcement GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase)
+        public async Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage)
         {
-            throw new NotImplementedException();
+            const float numberOfAnnoucementsPerPage = 4f;
+
+            var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(category, voivodship, city,search_phrase);
+
+            var numberOfPages = Math.Ceiling(filteredAnnoucements.Count / numberOfAnnoucementsPerPage);
+
+
+            if (filteredAnnoucements.Count == 0)
+            {
+                return new FilteredAnnoucementsDto
+                {
+                    Status = Status.NotFound
+                };
+            }
+            if (currentPage > numberOfPages)
+            {
+                return new FilteredAnnoucementsDto
+                {
+                    Status = Status.BadRequest
+                };
+            }
+
+            filteredAnnoucements = filteredAnnoucements
+                .Skip(( currentPage - 1 ) * (int) numberOfAnnoucementsPerPage)
+                .Take((int) numberOfAnnoucementsPerPage)
+                .ToList();
+
+            return new FilteredAnnoucementsDto
+            {
+                Status = Status.Ok,
+                Announcements = filteredAnnoucements,
+                NumberOfPages = (int)numberOfPages
+            };
         }
 
         public IEnumerable<Announcement> GetAnnouncements()

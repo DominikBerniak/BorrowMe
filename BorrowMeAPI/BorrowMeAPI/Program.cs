@@ -1,6 +1,6 @@
 global using BorrowMeAPI.Dao;
 global using Microsoft.EntityFrameworkCore;
-using BorrowMeAPI.Model;
+global using BorrowMeAPI.Model;
 using BorrowMeAPI.Repositories;
 using BorrowMeAPI.Services;
 using BorrowMeAPI.Services.Implementations;
@@ -27,6 +27,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IRepository<MainCategory>, Repository<MainCategory>>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddTransient<IRepository<City>, Repository<City>>();
+builder.Services.AddTransient<IAnnouncementRepository, AnnouncementRepository>();
 
 var app = builder.Build();
 

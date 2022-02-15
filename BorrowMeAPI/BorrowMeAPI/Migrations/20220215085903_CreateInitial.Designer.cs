@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BorrowMeAPI.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    [Migration("20220214132220_CreateInitialDb")]
-    partial class CreateInitialDb
+    [Migration("20220215085903_CreateInitial")]
+    partial class CreateInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -112,7 +112,7 @@ namespace BorrowMeAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid?>("VoivodeshipId")
+                    b.Property<Guid>("VoivodeshipId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -278,7 +278,7 @@ namespace BorrowMeAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("BorrowMeAPI.Model.User", "Owner")
-                        .WithMany("Announcements")
+                        .WithMany()
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -317,10 +317,13 @@ namespace BorrowMeAPI.Migrations
 
             modelBuilder.Entity("BorrowMeAPI.Model.City", b =>
                 {
-                    b.HasOne("BorrowMeAPI.Model.Voivodeship", null)
-                        .WithMany("Cities")
+                    b.HasOne("BorrowMeAPI.Model.Voivodeship", "Voivodeship")
+                        .WithMany()
                         .HasForeignKey("VoivodeshipId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Voivodeship");
                 });
 
             modelBuilder.Entity("BorrowMeAPI.Model.Entieties.SubCategory", b =>
@@ -342,7 +345,7 @@ namespace BorrowMeAPI.Migrations
             modelBuilder.Entity("BorrowMeAPI.Model.Reservation", b =>
                 {
                     b.HasOne("BorrowMeAPI.Model.Announcement", "Announcement")
-                        .WithMany("Reservations")
+                        .WithMany()
                         .HasForeignKey("AnnouncementId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -371,23 +374,11 @@ namespace BorrowMeAPI.Migrations
             modelBuilder.Entity("BorrowMeAPI.Model.Announcement", b =>
                 {
                     b.Navigation("PictureLocations");
-
-                    b.Navigation("Reservations");
                 });
 
             modelBuilder.Entity("BorrowMeAPI.Model.MainCategory", b =>
                 {
                     b.Navigation("SubCategories");
-                });
-
-            modelBuilder.Entity("BorrowMeAPI.Model.User", b =>
-                {
-                    b.Navigation("Announcements");
-                });
-
-            modelBuilder.Entity("BorrowMeAPI.Model.Voivodeship", b =>
-                {
-                    b.Navigation("Cities");
                 });
 #pragma warning restore 612, 618
         }

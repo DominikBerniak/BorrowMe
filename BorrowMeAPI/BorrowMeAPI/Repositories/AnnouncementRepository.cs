@@ -17,7 +17,7 @@ namespace BorrowMeAPI.Repositories
                 .Include(a=>a.Owner)
                 .Include(a=>a.SubCategory)
                 .Include(a=>a.City)
-                .ThenInclude(c=>c.Voivodeship)
+                .Include(c=>c.Voivodeship)
                 .AsQueryable();
             if (category != "all")
             {
@@ -25,7 +25,7 @@ namespace BorrowMeAPI.Repositories
             }
             if (voivodeship != "all")
             {
-                announcements = announcements.Where(a => a.City.Voivodeship.Name == voivodeship);
+                announcements = announcements.Where(a => a.Voivodeship.Name == voivodeship);
             }
             if (city != "all")
             {

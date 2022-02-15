@@ -20,6 +20,8 @@ namespace BorrowMeAPI.Model
         [Required]
         public SubCategory SubCategory { get; set; }
         [Required]
+        public Voivodeship Voivodeship { get; set; }
+        [Required]
         public City City { get; set; }
         [Required, Column(TypeName = "varchar(50)")]
         public PaymentType PaymentType { get; set; }

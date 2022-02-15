@@ -22,10 +22,10 @@ namespace BorrowMeAPI.Services.Implementations
             var voivodeship = await _voivodeshipRepository.GetByProperty(v=>v.Name == data.VoivodeshipName);
             var city = new City
             {
-                Name = data.CityName,
-                Voivodeship = voivodeship
+                Name = data.CityName
             };
-            await _repository.Add(city);
+            voivodeship.Cities.Add(city);
+            await _voivodeshipRepository.Edit(voivodeship);
             return city;
         }
 

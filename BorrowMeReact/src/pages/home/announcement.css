@@ -1,14 +1,14 @@
 .announcement {
-    /* background-color: lavender; */
     width: 300px;
-    height: 300px;
-    /* border: solid 1px; */
-    border-radius: 10px;
+    height: 400px;
+    border-radius: 2px;
     box-shadow: rgb(83, 83, 83) 1px 1px 1px 1px;
     margin: 20px;
     padding: 10px;
     font-family: 'Roboto Condensed', sans-serif;
+    align-content: center;
 }
+
 
 .title {
     text-align: center;
@@ -16,6 +16,10 @@
 
 .picture {
     text-align: center;
+    display: grid;
+    justify-items: center;
+    width: 280px;
+    height: 275px;
 }
 
 .informations-row-1{
@@ -27,13 +31,9 @@
 
 .picture img {
     border: 1px solid #ddd;
-    border-radius: 20px;
-    padding: 5px;
-    width: 170px;
-    height: 170px;
-    margin: 10px;
-}
-
-.picture img:hover {
-    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+    border-radius: 2px;
+    padding: 2px;
+    max-width: 280px;
+    max-height: 275px;
+    margin: auto;
 }

@@ -38,6 +38,18 @@ namespace BorrowMeAPI.Repositories
 
             return await announcements.ToListAsync();
         }
+        public async Task<List<Announcement>> GetAllAnnouncements()
+        {
+            var announcements = _dbContext.Announcements
+                .Include(a => a.PictureLocations)
+                .Include(a => a.Owner)
+                .ThenInclude(o=>o.PictureLocation)
+                .Include(a => a.SubCategory)
+                .Include(a => a.City)
+                .Include(c => c.Voivodeship)
+                .AsQueryable();
+            return await announcements.ToListAsync();
+        }
 
     }
 }

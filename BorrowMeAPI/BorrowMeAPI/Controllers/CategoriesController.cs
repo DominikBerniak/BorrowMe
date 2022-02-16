@@ -25,7 +25,7 @@ namespace BorrowMeAPI.Controllers
         [HttpGet("MainCategories")]
         public async Task<ActionResult<List<MainCategory>>> GetAllMainCategories()
         {
-            return Ok(_categoryService.GetAllCategories());
+            return Ok(await _categoryService.GetAllCategories());
         }
 
         [HttpPost("MainCategories")]

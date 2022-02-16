@@ -63,34 +63,39 @@
     border-radius: 0 0 0.35rem 0.35rem !important;
 }
 
-#cities-container{
-    border-left: 1px solid #b6b6b6;
+#cities-container-outer{
+
     position: absolute;
+    /*border-radius: 0 0.35rem 0.35rem 0 !important;*/
 }
-#cities-container button{
-    width: 13rem;
+#cities-container-inner{
+    border-left: 1px solid rgba(0,0,0,.125);
+    border-top: 1px solid rgba(0,0,0,.125);
 }
-#cities-container button:first-child{
-    border-radius: 0 0.35rem 0 0 !important;
+#cities-container-inner button{
+    border-right: 1px solid rgba(0,0,0,.125);
+    border-bottom: 1px solid rgba(0,0,0,.125);
 }
-#cities-container button:last-child{
-    border-radius: 0 0 0.35rem 0 !important;
-}
-#cities-container button:only-child{
-    border-radius: 0 0.35rem 0.35rem 0 !important;
-}
+/*#cities-container button:first-child{*/
+/*    border-radius: 0 0.35rem 0 0 !important;*/
+/*}*/
+/*#cities-container button:last-child{*/
+/*    border-radius: 0 0 0.35rem 0 !important;*/
+/*}*/
+/*#cities-container button:only-child{*/
+/*    border-radius: 0 0.35rem 0.35rem 0 !important;*/
+/*}*/
 .voivodeship-button{
     overflow-wrap: break-word;
 }
+.city-button{
+    flex: 0 0 50%;
+}
 .voivodeship-button:hover, .city-button:hover{
     color: #fff;
-    /*background-color: #0b5ed7;*/
     background-color: #5b5b5b;
 }
 
-#categories{
-
-}
 #categories-button{
     /*background-color: #0d6efd;*/
     background-color: #4d4d4d;

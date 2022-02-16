@@ -30,6 +30,8 @@ builder.Services.AddTransient<IRepository<SubCategory>, Repository<SubCategory>>
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddTransient<IRepository<City>, Repository<City>>();
 builder.Services.AddTransient<IRepository<Voivodeship>, Repository<Voivodeship>>();
+builder.Services.AddTransient<IVoivodeshipRepository, VoivodeshipRepository>();
+builder.Services.AddTransient<IVoivodeshipService, VoivodeshipService>();
 builder.Services.AddTransient<IAnnouncementRepository, AnnouncementRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 

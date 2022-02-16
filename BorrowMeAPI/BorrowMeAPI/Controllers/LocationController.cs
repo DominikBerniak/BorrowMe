@@ -1,31 +1,45 @@
 ﻿using BorrowMeAPI.Model.DataTransferObjects;
+using BorrowMeAPI.Services.Implementations;
 using BorrowMeAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BorrowMeAPI.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
-    public class CitiesController : ControllerBase
+    public class LocationController : ControllerBase
     {
 
         private readonly ILogger _logger;
         private readonly ICityService _cityService;
+        private readonly IVoivodeshipService _voivodeshipService;
 
-        public CitiesController(ILogger<CitiesController> logger, ICityService cityService)
+        public LocationController(ILogger<LocationController> logger, ICityService cityService, IVoivodeshipService voivodeshipService)
         {
             _logger = logger;
             _cityService = cityService;
+            _voivodeshipService = voivodeshipService;
         }
 
-        [HttpGet]
+        #region Voivodeships
+        [HttpGet("Voivodeships")]
+        public async Task<ActionResult<Voivodeship>> GetAllVoivodeships()
+        {
+            var voivodeships = await _voivodeshipService.GetAllVoivodeships();
+            return Ok(voivodeships);
+        }
+
+
+        #endregion
+
+        #region Cities
+        [HttpGet("Cities")]
         public async Task<ActionResult<City>> GetAllCities()
         {
             var cities = await _cityService.GetAllCities();
             return Ok(cities);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("Cities/{id}")]
         public async Task<ActionResult<City>> GetCityById(Guid id)
         {
             var city = await _cityService.GetCityById(id);
@@ -36,7 +50,7 @@ namespace BorrowMeAPI.Controllers
             return Ok(city);
         }
 
-        [HttpGet("search/{searchCity}")]
+        [HttpGet("Cities/Search/{searchCity}")]
         public async Task<ActionResult<City>> GetCitiesByName(string searchCity)
         {
             var cities = await _cityService.GetByName(searchCity);
@@ -47,12 +61,12 @@ namespace BorrowMeAPI.Controllers
             return Ok(cities);
         }
 
-        [HttpPost]
+        [HttpPost("Cities")]
         public async Task<ActionResult<City>> AddCity(CityDto data)
         {
             var city = await _cityService.AddCity(data);
             return Created($"/Cities/{city.Id}", city);
         }
-
+        #endregion
     }
 }

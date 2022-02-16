@@ -2,7 +2,6 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import {useEffect, useState} from "react";
 import VoivodeshipsDropdown from "./VoivodeshipsDropdown";
 import {getData} from "../../../services/apiFetch"
-import {search} from "../../../features/search";
 import {useNavigate} from "react-router-dom";
 
 const Searchbar = () => {
@@ -13,19 +12,20 @@ const Searchbar = () => {
         input: ""
     });
     const [searchCategory, setSearchCategory] = useState("all");
-    const [cities, setCities] = useState();
-    const [filteredCities, setFilteredCities] = useState([]);
     const [areVoivodeshipsVisible, setAreVoivodeshipsVisible] = useState(false);
+    const [voivodeships, setVoivodeships] = useState();
+    const [filteredCities, setFilteredCities] = useState();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!cities) {
-            getData("/Cities")
-                .then(cities => {
-                    setCities(cities);
+    useEffect(()=>{
+        if (!voivodeships)
+        {
+            getData("/Voivodeships")
+                .then(data=>{
+                    setVoivodeships(data);
                 })
         }
-    }, [cities])
+    },[])
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
@@ -61,13 +61,14 @@ const Searchbar = () => {
 
     const handleLocationChange = (searchValue) => {
         if (searchValue.length > 2) {
-            getData(`/Cities/${searchValue}`)
+            getData(`/Cities/Search/${searchValue}`)
                 .then(cities => {
                     if (cities.length === 1) {
+                        let voivodeshipName = voivodeships.find(v=>v.cities.some(c=>c.name === cities[0].name)).name;
                         setSearchLocation({
                             city: cities[0].name,
-                            voivodeship: cities[0].voivodeship.name,
-                            input: `${cities[0].name}, ${cities[0].voivodeship.name}`
+                            voivodeship: voivodeshipName,
+                            input: `${cities[0].name}, ${voivodeshipName}`
                         });
                     }
                 })
@@ -88,7 +89,7 @@ const Searchbar = () => {
     const hideVoivodeshipDropdown = () => {
         if (areVoivodeshipsVisible) {
             setAreVoivodeshipsVisible(false)
-            setFilteredCities([]);
+            setFilteredCities();
         }
     }
 
@@ -109,22 +110,22 @@ const Searchbar = () => {
         hideVoivodeshipDropdown();
     }
 
-    const handleVoivodeshipHover = (e, option) => {
-        if (option.id === 0) {
-            setFilteredCities([]);
+    const handleVoivodeshipHover = (e, voivodeship) => {
+        if (voivodeship.id === 0) {
+            setFilteredCities();
             return;
         }
-        setFilteredCities(
-            cities.filter(city =>
-                city.voivodeship.name === option.name
-            ))
+        setFilteredCities({
+            voivodeshipName: voivodeship.name,
+            cities: voivodeship.cities
+        });
     }
 
-    const handleCityClick = (e, city) => {
+    const handleCityClick = (e, voivodeshipName, city) => {
         setSearchLocation({
             city: city.name,
-            voivodeship: city.voivodeship.name,
-            input: `${city.name}, ${city.voivodeship.name}`
+            voivodeship: voivodeshipName,
+            input: `${city.name}, ${voivodeshipName}`
         });
         hideVoivodeshipDropdown();
     }
@@ -145,7 +146,8 @@ const Searchbar = () => {
                     <VoivodeshipsDropdown hideVoivodeshipDropdown={hideVoivodeshipDropdown}
                                           handleVoivodeshipClick={handleVoivodeshipClick}
                                           handleVoivodeshipHover={handleVoivodeshipHover}
-                                          filteredCities={filteredCities}
+                                          voivodeships={voivodeships}
+                                          filteredCities = {filteredCities}
                                           handleCityClick={handleCityClick}/>
                 }
             </div>

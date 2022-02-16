@@ -11,9 +11,10 @@ function App() {
             <Route path="/" element={<Layout />}>
                 <Route index element={<Home />}/>
                 <Route path="search-results" element={<SearchResults />}/>
-                <Route path="search-results/:categoryParam" element={<SearchResults />}/>
-                <Route path="search-results/:categoryParam/:voivodeshipParam" element={<SearchResults />}/>
-                <Route path="search-results/:categoryParam/:voivodeshipParam/:cityParam" element={<SearchResults />}/>
+                <Route path="search-results/:mainCategoryParam" element={<SearchResults />}/>
+                <Route path="search-results/:mainCategoryParam/:subCategoryParam" element={<SearchResults />}/>
+                <Route path="search-results/:mainCategoryParam/:subCategoryParam/:voivodeshipParam" element={<SearchResults />}/>
+                <Route path="search-results/:mainCategoryParam/:subCategoryParam/:voivodeshipParam/:cityParam" element={<SearchResults />}/>
 
                 <Route path="*" element={<PageNotFound/>}/>
             </Route>

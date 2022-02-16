@@ -69,7 +69,7 @@ namespace BorrowMeAPI.Services.Implementations
 
         public async Task<IEnumerable<Announcement>> GetAnnouncements()
         {
-            return await _repository.GetAll();
+            return await _announcementRepository.GetAllAnnouncements();
         }
 
         public async Task<Announcement> UpdateAnnouncement(Announcement announcement)

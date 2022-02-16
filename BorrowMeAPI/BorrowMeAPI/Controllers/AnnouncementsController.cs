@@ -34,7 +34,7 @@ namespace BorrowMeAPI.Controllers
 
         // /api/Announcements/{id} GET
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Announcement>> GetAnnouncementById(int id)
+        public async Task<ActionResult<Announcement>> GetAnnouncementById(Guid id)
         {
             _logger.LogInformation($"Get announcement attempt. Id = '{id}'");
             return Ok(await _announcementService.GetAnnouncement(id));
@@ -50,14 +50,14 @@ namespace BorrowMeAPI.Controllers
 
         // /api/Announcements/{id} PATCH
         [HttpPatch("{id:int}")]
-        public IActionResult EditOneInAnnouncement(int id)
+        public IActionResult EditOneInAnnouncement(Guid id)
         {
             return Ok("Not Implemented");
         }
 
         // /api/Announcements/{id} DELETE
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteAnnouncement(int id)
+        public async Task<IActionResult> DeleteAnnouncement(Guid id)
         {
             _logger.LogInformation($"Delete announcement attempt. Id = '{id}'");
             var response = await _announcementService.DeleteAnnouncement(id);
@@ -84,7 +84,7 @@ namespace BorrowMeAPI.Controllers
             var response = new SearchedAnnoucementsDTO
             {
                 Announcements = announcementDto.Announcements,
-                NumberOfPages = (int) announcementDto.NumberOfPages,
+                NumberOfPages = announcementDto.NumberOfPages,
                 CurrentPage = currentPage
             };
             return Ok(response);

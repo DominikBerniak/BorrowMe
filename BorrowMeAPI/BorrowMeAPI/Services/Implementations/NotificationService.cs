@@ -1,5 +1,4 @@
-﻿using BorrowMeAPI.Model;
-using BorrowMeAPI.Services.Interfaces;
+﻿using BorrowMeAPI.Services.Interfaces;
 
 namespace BorrowMeAPI.Services.Implementations
 {

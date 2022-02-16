@@ -1,5 +1,4 @@
-﻿using BorrowMeAPI.Model;
-using BorrowMeAPI.Model.Entieties;
+﻿using BorrowMeAPI.Model.Entieties;
 
 namespace BorrowMeAPI.Dao
 {

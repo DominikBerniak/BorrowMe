@@ -1,5 +1,4 @@
-﻿using BorrowMeAPI.Model.DataTransferObjects;
-using BorrowMeAPI.Repositories;
+﻿using BorrowMeAPI.Repositories;
 using BorrowMeAPI.Services.Interfaces;
 
 namespace BorrowMeAPI.Services.Implementations
@@ -15,6 +14,19 @@ namespace BorrowMeAPI.Services.Implementations
             _voivodeshipRepository = voivodeshipRepository;
         }
 
+        public async Task<IEnumerable<City>> GetAllCities()
+        {
+            return await _repository.GetAll();
+        }
+        public async Task<City> GetCityById(Guid id)
+        {
+            return await _repository.GetById(id);
+        }
+        public async Task<IEnumerable<City>> GetByName(string phrase)
+        {
+            return await _repository.GetAll(c => c.Name.ToLower().Contains(phrase.ToLower()));
+        }
+
         public async Task<City> AddCity(CityDto data)
         {
             var voivodeship = await _voivodeshipRepository.GetByProperty(v => v.Name == data.VoivodeshipName);
@@ -25,16 +37,6 @@ namespace BorrowMeAPI.Services.Implementations
             voivodeship.Cities.Add(city);
             await _voivodeshipRepository.Edit(voivodeship);
             return city;
-        }
-
-        public async Task<IEnumerable<City>> GetAllCities()
-        {
-            return await _repository.GetAll();
-        }
-
-        public async Task<IEnumerable<City>> GetByName(string phrase)
-        {
-            return await _repository.GetAll(c => c.Name.ToLower().Contains(phrase.ToLower()));
         }
     }
 }

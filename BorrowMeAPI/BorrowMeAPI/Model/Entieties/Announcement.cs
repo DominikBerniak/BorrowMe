@@ -25,7 +25,7 @@ namespace BorrowMeAPI.Model
         public City City { get; set; }
         [Required, Column(TypeName = "varchar(50)")]
         public PaymentType PaymentType { get; set; }
-        [Precision(6,2)]
+        [Precision(6, 2)]
         public decimal? Price { get; set; }
         [StringLength(50)]
         public string? OtherPaymentType { get; set; }
@@ -33,9 +33,9 @@ namespace BorrowMeAPI.Model
 
     public enum PaymentType
     {
-       Free,
-       Money,
-       Beer,
-       Other
+        Free,
+        Money,
+        Beer,
+        Other
     }
 }

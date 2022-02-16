@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BorrowMeAPI.Model
+﻿namespace BorrowMeAPI.Model
 {
     public class EntityBase
     {
-        
+
     }
 }

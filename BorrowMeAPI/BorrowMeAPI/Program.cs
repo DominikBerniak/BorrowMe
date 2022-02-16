@@ -1,8 +1,9 @@
 global using BorrowMeAPI.Dao;
-global using Microsoft.EntityFrameworkCore;
 global using BorrowMeAPI.Model;
+global using BorrowMeAPI.Model.DataTransferObjects;
+global using Microsoft.EntityFrameworkCore;
+using BorrowMeAPI.Model.Entieties;
 using BorrowMeAPI.Repositories;
-using BorrowMeAPI.Services;
 using BorrowMeAPI.Services.Implementations;
 using BorrowMeAPI.Services.Interfaces;
 using Microsoft.Extensions.FileProviders;
@@ -25,10 +26,12 @@ builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
 builder.Services.AddTransient<IRepository<Announcement>, Repository<Announcement>>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IRepository<MainCategory>, Repository<MainCategory>>();
+builder.Services.AddTransient<IRepository<SubCategory>, Repository<SubCategory>>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddTransient<IRepository<City>, Repository<City>>();
 builder.Services.AddTransient<IRepository<Voivodeship>, Repository<Voivodeship>>();
 builder.Services.AddTransient<IAnnouncementRepository, AnnouncementRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 

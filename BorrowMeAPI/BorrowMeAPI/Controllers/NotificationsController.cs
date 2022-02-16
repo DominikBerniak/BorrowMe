@@ -1,6 +1,4 @@
-﻿using BorrowMeAPI.Model;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace BorrowMeAPI.Controllers
 {

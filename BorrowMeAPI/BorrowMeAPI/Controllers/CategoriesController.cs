@@ -1,10 +1,8 @@
-﻿using BorrowMeAPI.Model;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using BorrowMeAPI.Services.Interfaces;
-using System;
+﻿using BorrowMeAPI.Model.DataTransferObjects;
 using BorrowMeAPI.Model.Entieties;
-using BorrowMeAPI.Model.DataTransferObjects;
+using BorrowMeAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace BorrowMeAPI.Controllers
 {
@@ -29,20 +27,36 @@ namespace BorrowMeAPI.Controllers
             return Ok(mainCategories);
         }
 
+        [HttpGet("MainCategories/{id}")]
+        public async Task<ActionResult<MainCategory>> GetMainCategoryById(Guid id)
+        {
+            var mainCategory = await _categoryService.GetMainCategoryById(id);
+            if (mainCategory is null)
+            {
+                return NotFound();
+            }
+            return Ok(mainCategory);
+        }
+
         [HttpPost("MainCategories")]
         public async Task<ActionResult<MainCategory>> AddMainCategory(MainCategory mainCategory)
         {
             var category = await _categoryService.AddMainCategory(mainCategory);
-            if (category is null)
-            {
-                return Problem("Something went horribly wrong.");
-            }
-
             return Created($"/Categories/MainCategories/{category.Id}", category);
         }
         #endregion
 
         #region Sub Categories
+        [HttpGet("SubCategories/{id}")]
+        public async Task<ActionResult<SubCategory>> GetSubCategoryById(Guid id)
+        {
+            var category = await _categoryService.GetSubCategoryById(id);
+            if (category is null)
+            {
+                return NotFound();
+            }
+            return Ok(category);
+        }
         [HttpPost("SubCategories")]
         public async Task<ActionResult<SubCategory>> AddSubCategory(SubCategoryDto subCategoryDto)
         {

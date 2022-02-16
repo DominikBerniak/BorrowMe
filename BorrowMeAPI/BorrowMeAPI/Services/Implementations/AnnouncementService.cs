@@ -1,5 +1,4 @@
-﻿using BorrowMeAPI.Model;
-using BorrowMeAPI.Model.DataTransferObjects;
+﻿using BorrowMeAPI.Model.DataTransferObjects;
 using BorrowMeAPI.Repositories;
 using BorrowMeAPI.Services.Interfaces;
 
@@ -21,12 +20,12 @@ namespace BorrowMeAPI.Services.Implementations
             return await _repository.Add(announcement);
         }
 
-        public async Task<Announcement> DeleteAnnouncement(int id)
+        public async Task<Announcement> DeleteAnnouncement(Guid id)
         {
             return await _repository.Delete(await _repository.GetById(id));
         }
 
-        public async Task<Announcement> GetAnnouncement(int announcementId)
+        public async Task<Announcement> GetAnnouncement(Guid announcementId)
         {
             return await _repository.GetById(announcementId);
         }
@@ -35,7 +34,7 @@ namespace BorrowMeAPI.Services.Implementations
         {
             const float numberOfAnnoucementsPerPage = 4f;
 
-            var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(category, voivodship, city,search_phrase);
+            var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(category, voivodship, city, search_phrase);
 
             var numberOfPages = Math.Ceiling(filteredAnnoucements.Count / numberOfAnnoucementsPerPage);
 
@@ -64,7 +63,7 @@ namespace BorrowMeAPI.Services.Implementations
             {
                 Status = Status.Ok,
                 Announcements = filteredAnnoucements,
-                NumberOfPages = (int)numberOfPages
+                NumberOfPages = (int) numberOfPages
             };
         }
 

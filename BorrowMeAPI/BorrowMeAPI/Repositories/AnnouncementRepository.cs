@@ -1,5 +1,4 @@
-﻿using System;
-namespace BorrowMeAPI.Repositories
+﻿namespace BorrowMeAPI.Repositories
 {
     public class AnnouncementRepository : IAnnouncementRepository
     {
@@ -13,11 +12,11 @@ namespace BorrowMeAPI.Repositories
         public async Task<List<Announcement>> GetAnnouncementsByFilters(string category, string voivodeship, string city, string searchPhrase)
         {
             var announcements = _dbContext.Announcements
-                .Include(a=>a.PictureLocations)
-                .Include(a=>a.Owner)
-                .Include(a=>a.SubCategory)
-                .Include(a=>a.City)
-                .Include(c=>c.Voivodeship)
+                .Include(a => a.PictureLocations)
+                .Include(a => a.Owner)
+                .Include(a => a.SubCategory)
+                .Include(a => a.City)
+                .Include(c => c.Voivodeship)
                 .AsQueryable();
             if (category != "all")
             {

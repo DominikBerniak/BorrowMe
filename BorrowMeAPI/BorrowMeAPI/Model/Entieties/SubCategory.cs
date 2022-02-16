@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BorrowMeAPI.Model.Entieties
 {
-    public class SubCategory
+    public class SubCategory : EntityBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }

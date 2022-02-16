@@ -1,5 +1,4 @@
-﻿using BorrowMeAPI.Model;
-using BorrowMeAPI.Model.DataTransferObjects;
+﻿using BorrowMeAPI.Model.DataTransferObjects;
 
 namespace BorrowMeAPI.Services.Interfaces
 {
@@ -9,7 +8,7 @@ namespace BorrowMeAPI.Services.Interfaces
         Task<IEnumerable<Announcement>> GetAnnouncements();
 
         // GET by ID
-        Task<Announcement> GetAnnouncement(int announcementId);
+        Task<Announcement> GetAnnouncement(Guid announcementId);
 
         // GET by Filters
         Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage);
@@ -26,7 +25,7 @@ namespace BorrowMeAPI.Services.Interfaces
         // TO DO
 
         // DELETE by ID
-        Task<Announcement> DeleteAnnouncement(int id);
+        Task<Announcement> DeleteAnnouncement(Guid id);
 
 
 

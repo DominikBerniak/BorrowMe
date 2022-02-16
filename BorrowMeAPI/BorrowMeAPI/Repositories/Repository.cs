@@ -8,7 +8,7 @@ public class Repository<T> : IRepository<T> where T : EntityBase
     {
         _dbContext = dbContext;
     }
-    public virtual async Task<T> GetById(int id)
+    public virtual async Task<T> GetById(Guid id)
     {
         return await _dbContext.Set<T>().FindAsync(id);
     }

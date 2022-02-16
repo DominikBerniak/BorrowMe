@@ -1,12 +1,10 @@
-﻿using BorrowMeAPI.Model;
-
-namespace BorrowMeAPI.Services.Interfaces
+﻿namespace BorrowMeAPI.Services.Interfaces
 {
     public interface INotificationService
     {
         // GET all for userID
         AvailabilityNotification GetAllNotifications(int userId);
-        
+
         // POST
         void AddNotification(AvailabilityNotification notification);
 

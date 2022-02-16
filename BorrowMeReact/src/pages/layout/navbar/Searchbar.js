@@ -4,14 +4,14 @@ import VoivodeshipsDropdown from "./VoivodeshipsDropdown";
 import {getData} from "../../../services/apiFetch"
 import {useNavigate} from "react-router-dom";
 
-const Searchbar = () => {
+const Searchbar = ({searchCategory}) => {
     const [searchPhrase, setSearchPhrase] = useState("");
     const [searchLocation, setSearchLocation] = useState({
         city: "",
         voivodeship: "",
         input: ""
     });
-    const [searchCategory, setSearchCategory] = useState("all");
+
     const [areVoivodeshipsVisible, setAreVoivodeshipsVisible] = useState(false);
     const [voivodeships, setVoivodeships] = useState();
     const [filteredCities, setFilteredCities] = useState();
@@ -32,8 +32,7 @@ const Searchbar = () => {
         let voivodeshipParam = searchLocation.voivodeship !== "" ? searchLocation.voivodeship + "/" : "";
         let cityParam = searchLocation.city !== "" ? searchLocation.city + "/" : "";
         let searchPhraseParam = searchPhrase !== "" ? searchPhrase : "";
-        let categoryParam = (searchCategory !== "" && voivodeshipParam !== "") || (searchCategory !=="" && cityParam !== "") ? searchCategory +"/" : "";
-
+        let categoryParam = searchCategory !== "" ? searchCategory + "/" : "";
         let isBackslashNeeded = categoryParam !== "" || voivodeshipParam !== "" || cityParam !== "";
         if (searchPhraseParam === "") {
             navigate(`/search-results${isBackslashNeeded ? "/" : ""}${categoryParam}${voivodeshipParam}${cityParam}`);

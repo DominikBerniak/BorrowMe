@@ -1,7 +1,7 @@
 import {useState} from "react";
 import CategoriesDropDown from "./CategoriesDropDown";
 
-const Categories = ({navbarCategoriesRef}) => {
+const Categories = ({navbarCategoriesRef, handleCategoryClick}) => {
     const [areCategoriesVisible, setAreCategoriesVisible] = useState(false);
     const buttonTexts ={
         hidden: "Kategorie",
@@ -27,7 +27,7 @@ const Categories = ({navbarCategoriesRef}) => {
     }
     return (
         <div id="categories" className="d-flex flex-column w-100 align-items-center" ref={navbarCategoriesRef}>
-            <CategoriesDropDown areCategoriesVisible={areCategoriesVisible}/>
+            <CategoriesDropDown areCategoriesVisible={areCategoriesVisible} handleCategoryClick={handleCategoryClick}/>
             <button id="categories-button" className="btn px-4 fw-light shadow-none text-center"
                     onClick={handleButtonAction} onMouseEnter={handleButtonAction} onMouseLeave={handleButtonAction}>
                 {buttonText}

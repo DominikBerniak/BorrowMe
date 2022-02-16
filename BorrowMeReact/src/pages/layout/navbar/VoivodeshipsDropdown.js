@@ -1,5 +1,5 @@
 import {useDetectClickOutside} from "react-detect-click-outside";
-import {useEffect, useRef} from "react";
+import {useRef} from "react";
 
 const VoivodeshipsDropdown = ({
                                   hideVoivodeshipDropdown, handleVoivodeshipClick, handleVoivodeshipHover,
@@ -8,7 +8,6 @@ const VoivodeshipsDropdown = ({
 
     const refClick = useDetectClickOutside({onTriggered: hideVoivodeshipDropdown});
     const refCities = useRef();
-    const refCitiesButton = useRef();
 
     const updateCitiesContainerPosition = (e) => {
         let cursorPositionPercent = parseInt(e.pageY / window.innerHeight * 100);

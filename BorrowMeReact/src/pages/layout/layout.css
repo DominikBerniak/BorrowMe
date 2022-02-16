@@ -62,11 +62,8 @@
 #voivodeship-list button:last-child{
     border-radius: 0 0 0.35rem 0.35rem !important;
 }
-
 #cities-container-outer{
-
     position: absolute;
-    /*border-radius: 0 0.35rem 0.35rem 0 !important;*/
 }
 #cities-container-inner{
     border-left: 1px solid rgba(0,0,0,.125);
@@ -76,15 +73,6 @@
     border-right: 1px solid rgba(0,0,0,.125);
     border-bottom: 1px solid rgba(0,0,0,.125);
 }
-/*#cities-container button:first-child{*/
-/*    border-radius: 0 0.35rem 0 0 !important;*/
-/*}*/
-/*#cities-container button:last-child{*/
-/*    border-radius: 0 0 0.35rem 0 !important;*/
-/*}*/
-/*#cities-container button:only-child{*/
-/*    border-radius: 0 0.35rem 0.35rem 0 !important;*/
-/*}*/
 .voivodeship-button{
     overflow-wrap: break-word;
 }
@@ -97,7 +85,6 @@
 }
 
 #categories-button{
-    /*background-color: #0d6efd;*/
     background-color: #4d4d4d;
     color: white;
     font-size: 0.9rem;
@@ -112,4 +99,3 @@
 .no-underline {
     text-decoration: none;
 }
-

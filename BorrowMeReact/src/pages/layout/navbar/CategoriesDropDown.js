@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {getData} from "../../../services/apiFetch";
 
 
-const CategoriesDropDown = ({areCategoriesVisible}) => {
+const CategoriesDropDown = ({areCategoriesVisible, handleCategoryClick}) => {
     const [categories, setCategories] = useState()
 
     useEffect(() => {
@@ -15,6 +15,7 @@ const CategoriesDropDown = ({areCategoriesVisible}) => {
                 })
         }
     }, [categories])
+
     return (
         <SlideDown id="categories-dropdown" className="w-80">
             {areCategoriesVisible &&
@@ -23,7 +24,9 @@ const CategoriesDropDown = ({areCategoriesVisible}) => {
                     <div className="d-flex flex-wrap">
                     {categories.map(category=>
                         <button key={category.id}
-                                className="list-group-item btn btn-success shadow-none border-1 col py-5 rounded flex-25">{category.name}</button>
+                                className="list-group-item btn btn-success shadow-none border-1 col py-5 rounded flex-25"
+                                onClick={()=>handleCategoryClick(category.name)}
+                        >{category.name}</button>
                     )}
                     </div>
                 </div>

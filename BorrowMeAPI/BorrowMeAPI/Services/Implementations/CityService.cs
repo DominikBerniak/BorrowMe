@@ -1,8 +1,6 @@
-﻿using BorrowMeAPI.Model;
-using BorrowMeAPI.Model.DataTransferObjects;
+﻿using BorrowMeAPI.Model.DataTransferObjects;
 using BorrowMeAPI.Repositories;
 using BorrowMeAPI.Services.Interfaces;
-using System.Xml.Linq;
 
 namespace BorrowMeAPI.Services.Implementations
 {
@@ -19,7 +17,7 @@ namespace BorrowMeAPI.Services.Implementations
 
         public async Task<City> AddCity(CityDto data)
         {
-            var voivodeship = await _voivodeshipRepository.GetByProperty(v=>v.Name == data.VoivodeshipName);
+            var voivodeship = await _voivodeshipRepository.GetByProperty(v => v.Name == data.VoivodeshipName);
             var city = new City
             {
                 Name = data.CityName
@@ -38,6 +36,5 @@ namespace BorrowMeAPI.Services.Implementations
         {
             return await _repository.GetAll(c => c.Name.ToLower().Contains(phrase.ToLower()));
         }
-
     }
 }

@@ -34,7 +34,7 @@ namespace BorrowMeAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Voivodeship>> AddCity(CityDto data)
+        public async Task<ActionResult<City>> AddCity(CityDto data)
         {
             var city = await _cityService.AddCity(data);
             return Created($"/Cities/{city.Id}", city);

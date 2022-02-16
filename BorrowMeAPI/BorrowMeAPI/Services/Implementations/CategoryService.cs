@@ -1,5 +1,4 @@
-﻿using BorrowMeAPI.Model;
-using BorrowMeAPI.Model.DataTransferObjects;
+﻿using BorrowMeAPI.Model.DataTransferObjects;
 using BorrowMeAPI.Model.Entieties;
 using BorrowMeAPI.Repositories;
 using BorrowMeAPI.Services.Interfaces;

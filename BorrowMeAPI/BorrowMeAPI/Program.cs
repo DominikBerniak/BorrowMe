@@ -34,6 +34,7 @@ builder.Services.AddTransient<IVoivodeshipRepository, VoivodeshipRepository>();
 builder.Services.AddTransient<IVoivodeshipService, VoivodeshipService>();
 builder.Services.AddTransient<IAnnouncementRepository, AnnouncementRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IRepository<User>, Repository<User>>();
 
 var app = builder.Build();
 

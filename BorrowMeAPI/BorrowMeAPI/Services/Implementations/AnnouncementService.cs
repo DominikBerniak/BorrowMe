@@ -8,16 +8,19 @@ namespace BorrowMeAPI.Services.Implementations
     {
         private readonly IRepository<Announcement> _repository;
         private readonly IAnnouncementRepository _announcementRepository;
+        private readonly IRepository<User> _userRepository;
 
-        public AnnouncementService(IRepository<Announcement> repository, IAnnouncementRepository announcementRepository)
+        public AnnouncementService(IRepository<Announcement> repository, IAnnouncementRepository announcementRepository,
+                                    IRepository<User> userRepository)
         {
             _repository = repository;
             _announcementRepository = announcementRepository;
+            _userRepository = userRepository;
         }
 
-        public async Task<Announcement> AddAnnouncement(Announcement announcement)
+        public async Task<Announcement> AddAnnouncement(AnnouncementDTO announcementDTO)
         {
-            return await _repository.Add(announcement);
+            return await _announcementRepository.AddNewAnnouncement(announcementDTO);
         }
 
         public async Task<Announcement> DeleteAnnouncement(Guid id)

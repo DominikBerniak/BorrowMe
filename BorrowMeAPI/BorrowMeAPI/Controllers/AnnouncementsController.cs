@@ -36,7 +36,7 @@ namespace BorrowMeAPI.Controllers
         }
 
         // /api/Announcements/{id} GET
-        [HttpGet("{id:int}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Announcement>> GetAnnouncementById(Guid id)
         {
             _logger.LogInformation($"Get announcement attempt. Id = '{id}'");

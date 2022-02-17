@@ -32,7 +32,7 @@ namespace BorrowMeAPI.Services.Implementations
 
         public async Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage)
         {
-            const float numberOfAnnoucementsPerPage = 4f;
+            const float numberOfAnnoucementsPerPage = 2f;
 
             var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(category, voivodship, city, search_phrase);
 

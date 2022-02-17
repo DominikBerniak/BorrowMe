@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 
 const Footer = ({footerRef}) => {
     return (
-        <div id="footer" className="footer bg-dark text-left mt-auto" ref={footerRef}>
+        <div id="footer" className="footer text-left mt-auto" ref={footerRef}>
             <div className="container p-4">
                 <div className="row">
                     <div className="col-auto">

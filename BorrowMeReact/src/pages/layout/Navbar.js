@@ -61,6 +61,7 @@ const Navbar = ({navBarRef, navbarCategoriesRef}) => {
     },[searchCategory])
 
     const handleSearchSubmit = (e) => {
+        console.log("submit")
         if (e)
         {
             e.preventDefault();

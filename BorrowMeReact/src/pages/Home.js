@@ -8,7 +8,7 @@ const Home = () => {
     const [announcements, setAnnouncements] = useState()
 
     useEffect(() => {
-        getData("/api/Announcements")
+        getData("/Announcements")
             .then(announcements=>{
                 setAnnouncements(announcements);
             })
@@ -19,6 +19,8 @@ const Home = () => {
             <h2 className="text-center">Promowane ogłoszenia</h2>
             {announcements
                 ? <div className="d-flex flex-wrap justify-content-center">
+                    {console.log(announcements)}
+
                     {announcements.map((announcement) => {
                         return (
                             <Announcement key={announcement.id} announcement={announcement}/>

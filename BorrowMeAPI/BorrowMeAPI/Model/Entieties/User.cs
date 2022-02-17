@@ -22,6 +22,5 @@ namespace BorrowMeAPI.Model
 
         [Required]
         public int ReputationPoints { get; set; } = 0;
-        public List<Announcement>? Announcements { get; set; } = new List<Announcement>();
     }
 }

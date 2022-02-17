@@ -1,6 +1,4 @@
-﻿using BorrowMeAPI.Model;
-
-namespace BorrowMeAPI.Services.Implementations
+﻿namespace BorrowMeAPI.Services.Implementations
 {
     public class ReservationService : IReservationService
     {

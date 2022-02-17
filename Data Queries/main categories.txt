@@ -1,0 +1,12 @@
+INSERT INTO borrow_me.dbo.MainCategories (Id, Name) VALUES (N'D18F1509-9B61-4E4C-82A9-08D9F07117A9', N'Elektronika');
+INSERT INTO borrow_me.dbo.MainCategories (Id, Name) VALUES (N'E4F45C03-91D8-4CBF-82AA-08D9F07117A9', N'Dom i ogród');
+INSERT INTO borrow_me.dbo.MainCategories (Id, Name) VALUES (N'09F9355E-21E8-49A2-82AB-08D9F07117A9', N'Motoryzacja');
+INSERT INTO borrow_me.dbo.MainCategories (Id, Name) VALUES (N'963A5565-F096-490B-82AC-08D9F07117A9', N'Rolnictwo');
+INSERT INTO borrow_me.dbo.MainCategories (Id, Name) VALUES (N'E6A06D88-6E15-427F-82AD-08D9F07117A9', N'Dla zwierząt');
+INSERT INTO borrow_me.dbo.MainCategories (Id, Name) VALUES (N'B4559273-E394-4CB1-82AE-08D9F07117A9', N'Sport');
+INSERT INTO borrow_me.dbo.MainCategories (Id, Name) VALUES (N'EC6E7245-86CF-48B0-82AF-08D9F07117A9', N'Zdrowie');
+INSERT INTO borrow_me.dbo.MainCategories (Id, Name) VALUES (N'336DA33B-4D5A-431A-82B0-08D9F07117A9', N'Pielęgnacja urody');
+INSERT INTO borrow_me.dbo.MainCategories (Id, Name) VALUES (N'120F7275-EF31-4D99-82B1-08D9F07117A9', N'Edukacja');
+INSERT INTO borrow_me.dbo.MainCategories (Id, Name) VALUES (N'344CC006-63BE-4D58-82B2-08D9F07117A9', N'Dla dzieci');
+INSERT INTO borrow_me.dbo.MainCategories (Id, Name) VALUES (N'852D6CCD-D9D2-4853-82B3-08D9F07117A9', N'Nieruchomości');
+INSERT INTO borrow_me.dbo.MainCategories (Id, Name) VALUES (N'9D3F2C87-878D-49B5-82B4-08D9F07117A9', N'Moda');

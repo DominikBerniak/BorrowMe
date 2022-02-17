@@ -1,37 +1,80 @@
-﻿using BorrowMeAPI.Model;
+﻿using BorrowMeAPI.Model.DataTransferObjects;
+using BorrowMeAPI.Repositories;
+using BorrowMeAPI.Services.Interfaces;
 
 namespace BorrowMeAPI.Services.Implementations
 {
     public class AnnouncementService : IAnnouncementService
     {
-        public void AddAnnouncement()
+        private readonly IRepository<Announcement> _repository;
+        private readonly IAnnouncementRepository _announcementRepository;
+
+        public AnnouncementService(IRepository<Announcement> repository, IAnnouncementRepository announcementRepository)
         {
-            throw new NotImplementedException();
+            _repository = repository;
+            _announcementRepository = announcementRepository;
         }
 
-        public void DeleteAnnouncement(int id)
+        public async Task<Announcement> AddAnnouncement(Announcement announcement)
         {
-            throw new NotImplementedException();
+            return await _repository.Add(announcement);
         }
 
-        public Announcement GetAnnouncement(int announcementId)
+        public async Task<Announcement> DeleteAnnouncement(Guid id)
         {
-            throw new NotImplementedException();
+            return await _repository.Delete(await _repository.GetById(id));
         }
 
-        public Announcement GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase)
+        public async Task<Announcement> GetAnnouncement(Guid announcementId)
         {
-            throw new NotImplementedException();
+            return await _repository.GetById(announcementId);
         }
 
-        public IEnumerable<Announcement> GetAnnouncements()
+        public async Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage)
         {
-            throw new NotImplementedException();
+            const float numberOfAnnoucementsPerPage = 4f;
+
+            var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(category, voivodship, city, search_phrase);
+
+            var numberOfPages = Math.Ceiling(filteredAnnoucements.Count / numberOfAnnoucementsPerPage);
+
+
+            if (filteredAnnoucements.Count == 0)
+            {
+                return new FilteredAnnoucementsDto
+                {
+                    Status = Status.NotFound
+                };
+            }
+            if (currentPage > numberOfPages)
+            {
+                return new FilteredAnnoucementsDto
+                {
+                    Status = Status.BadRequest
+                };
+            }
+
+            filteredAnnoucements = filteredAnnoucements
+                .Skip(( currentPage - 1 ) * (int) numberOfAnnoucementsPerPage)
+                .Take((int) numberOfAnnoucementsPerPage)
+                .ToList();
+
+            return new FilteredAnnoucementsDto
+            {
+                Status = Status.Ok,
+                Announcements = filteredAnnoucements,
+                NumberOfPages = (int) numberOfPages
+            };
         }
 
-        public void UpdateAnnouncement(int id, Announcement announcement)
+        public async Task<IEnumerable<Announcement>> GetAnnouncements()
         {
-            throw new NotImplementedException();
+            return await _announcementRepository.GetAllAnnouncements();
+        }
+
+        public async Task<Announcement> UpdateAnnouncement(Announcement announcement)
+        {
+            return await _repository.Edit(announcement);
         }
     }
 }

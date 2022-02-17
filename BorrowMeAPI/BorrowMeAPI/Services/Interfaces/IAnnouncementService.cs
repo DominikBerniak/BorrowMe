@@ -1,34 +1,34 @@
-﻿using BorrowMeAPI.Model;
+﻿using BorrowMeAPI.Model.DataTransferObjects;
 
-namespace BorrowMeAPI.Services
+namespace BorrowMeAPI.Services.Interfaces
 {
     public interface IAnnouncementService
     {
         // GET all
-        IEnumerable<Announcement> GetAnnouncements();
+        Task<IEnumerable<Announcement>> GetAnnouncements();
 
         // GET by ID
-        Announcement GetAnnouncement(int announcementId);
+        Task<Announcement> GetAnnouncement(Guid announcementId);
 
         // GET by Filters
-        Announcement GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase);
+        Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage);
 
 
         // POST
-        void AddAnnouncement();
+        Task<Announcement> AddAnnouncement(Announcement announcement);
 
 
         // PUT by ID
-        void UpdateAnnouncement(int id, Announcement announcement);
+        Task<Announcement> UpdateAnnouncement(Announcement announcement);
 
         // PATCH by ID
         // TO DO
 
         // DELETE by ID
-        void DeleteAnnouncement(int id);
+        Task<Announcement> DeleteAnnouncement(Guid id);
 
 
-        
+
 
     }
 }

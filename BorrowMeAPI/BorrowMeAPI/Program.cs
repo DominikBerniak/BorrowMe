@@ -1,5 +1,11 @@
 global using BorrowMeAPI.Dao;
+global using BorrowMeAPI.Model;
+global using BorrowMeAPI.Model.DataTransferObjects;
 global using Microsoft.EntityFrameworkCore;
+using BorrowMeAPI.Model.Entieties;
+using BorrowMeAPI.Repositories;
+using BorrowMeAPI.Services.Implementations;
+using BorrowMeAPI.Services.Interfaces;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +20,20 @@ builder.Services.AddDbContext<DataDbContext>(options =>
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddTransient<DataDbContext, DataDbContext>();
+builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
+builder.Services.AddTransient<IRepository<Announcement>, Repository<Announcement>>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddTransient<IRepository<MainCategory>, Repository<MainCategory>>();
+builder.Services.AddTransient<IRepository<SubCategory>, Repository<SubCategory>>();
+builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddTransient<IRepository<City>, Repository<City>>();
+builder.Services.AddTransient<IRepository<Voivodeship>, Repository<Voivodeship>>();
+builder.Services.AddTransient<IVoivodeshipRepository, VoivodeshipRepository>();
+builder.Services.AddTransient<IVoivodeshipService, VoivodeshipService>();
+builder.Services.AddTransient<IAnnouncementRepository, AnnouncementRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 

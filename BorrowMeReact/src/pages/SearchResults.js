@@ -15,7 +15,7 @@ const SearchResults = () => {
     const [isFetchingData, setIsFetchingData] = useState(false);
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const {categoryParam, voivodeshipParam, cityParam} = useParams();
+    const {mainCategoryParam, subCategoryParam, voivodeshipParam, cityParam} = useParams();
 
     useEffect(() => {
         let pageNum = searchParams.get("page");
@@ -25,7 +25,7 @@ const SearchResults = () => {
 
     useEffect(() => {
         setAllFetchedAnnouncements([]);
-    }, [categoryParam, voivodeshipParam, cityParam, searchParams.get("search")])
+    }, [mainCategoryParam, subCategoryParam, voivodeshipParam, cityParam, searchParams.get("search")])
 
     useEffect(() => {
         updateSearchQueries()
@@ -40,11 +40,11 @@ const SearchResults = () => {
             let searchPhrase = searchParams.get("search");
             searchPhrase = searchPhrase !== null ? searchPhrase : "all"
 
-            let category = categoryParam ? categoryParam : "all";
+            let category = subCategoryParam ? subCategoryParam : mainCategoryParam ? mainCategoryParam : "all";
             let voivodeship = voivodeshipParam ? voivodeshipParam : "all";
             let city = cityParam ? cityParam : "all";
-            console.log(`/Api/Announcements/${category}/${voivodeship}/${city}/${searchPhrase}/${pageNumber}`)
-            getData(`/Api/Announcements/${category}/${voivodeship}/${city}/${searchPhrase}/${pageNumber}`)
+            console.log(`/Announcements/${category}/${voivodeship}/${city}/${searchPhrase}/${pageNumber}`)
+            getData(`/Announcements/${category}/${voivodeship}/${city}/${searchPhrase}/${pageNumber}`)
                 .then(data => {
                     setAnnouncements(data.announcements)
                     setNumberOfPages(data.numberOfPages);

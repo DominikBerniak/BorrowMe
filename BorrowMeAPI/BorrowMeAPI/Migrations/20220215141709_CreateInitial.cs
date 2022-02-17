@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace BorrowMeAPI.Migrations
 {
-    public partial class CreateInitialDb : Migration
+    public partial class CreateInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -81,6 +80,7 @@ namespace BorrowMeAPI.Migrations
                     PublishDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SubCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    VoivodeshipId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PaymentType = table.Column<string>(type: "varchar(50)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(6,2)", precision: 6, scale: 2, nullable: true),
@@ -99,6 +99,12 @@ namespace BorrowMeAPI.Migrations
                         name: "FK_Announcements_SubCategories_SubCategoryId",
                         column: x => x.SubCategoryId,
                         principalTable: "SubCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Announcements_Voivodeships_VoivodeshipId",
+                        column: x => x.VoivodeshipId,
+                        principalTable: "Voivodeships",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -216,6 +222,11 @@ namespace BorrowMeAPI.Migrations
                 column: "SubCategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Announcements_VoivodeshipId",
+                table: "Announcements",
+                column: "VoivodeshipId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AvailabilityNotifications_CityId",
                 table: "AvailabilityNotifications",
                 column: "CityId");
@@ -288,9 +299,6 @@ namespace BorrowMeAPI.Migrations
                 name: "Cities");
 
             migrationBuilder.DropTable(
-                name: "Voivodeships");
-
-            migrationBuilder.DropTable(
                 name: "SubCategories");
 
             migrationBuilder.DropTable(
@@ -304,6 +312,9 @@ namespace BorrowMeAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Announcements");
+
+            migrationBuilder.DropTable(
+                name: "Voivodeships");
         }
     }
 }

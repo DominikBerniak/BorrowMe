@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BorrowMeAPI.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    [Migration("20220214132220_CreateInitialDb")]
-    partial class CreateInitialDb
+    [Migration("20220215141709_CreateInitial")]
+    partial class CreateInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,6 +64,9 @@ namespace BorrowMeAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<Guid>("VoivodeshipId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
@@ -71,6 +74,8 @@ namespace BorrowMeAPI.Migrations
                     b.HasIndex("OwnerId");
 
                     b.HasIndex("SubCategoryId");
+
+                    b.HasIndex("VoivodeshipId");
 
                     b.ToTable("Announcements");
                 });
@@ -278,7 +283,7 @@ namespace BorrowMeAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("BorrowMeAPI.Model.User", "Owner")
-                        .WithMany("Announcements")
+                        .WithMany()
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -289,11 +294,19 @@ namespace BorrowMeAPI.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("BorrowMeAPI.Model.Voivodeship", "Voivodeship")
+                        .WithMany()
+                        .HasForeignKey("VoivodeshipId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("City");
 
                     b.Navigation("Owner");
 
                     b.Navigation("SubCategory");
+
+                    b.Navigation("Voivodeship");
                 });
 
             modelBuilder.Entity("BorrowMeAPI.Model.AvailabilityNotification", b =>
@@ -342,7 +355,7 @@ namespace BorrowMeAPI.Migrations
             modelBuilder.Entity("BorrowMeAPI.Model.Reservation", b =>
                 {
                     b.HasOne("BorrowMeAPI.Model.Announcement", "Announcement")
-                        .WithMany("Reservations")
+                        .WithMany()
                         .HasForeignKey("AnnouncementId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -371,18 +384,11 @@ namespace BorrowMeAPI.Migrations
             modelBuilder.Entity("BorrowMeAPI.Model.Announcement", b =>
                 {
                     b.Navigation("PictureLocations");
-
-                    b.Navigation("Reservations");
                 });
 
             modelBuilder.Entity("BorrowMeAPI.Model.MainCategory", b =>
                 {
                     b.Navigation("SubCategories");
-                });
-
-            modelBuilder.Entity("BorrowMeAPI.Model.User", b =>
-                {
-                    b.Navigation("Announcements");
                 });
 
             modelBuilder.Entity("BorrowMeAPI.Model.Voivodeship", b =>

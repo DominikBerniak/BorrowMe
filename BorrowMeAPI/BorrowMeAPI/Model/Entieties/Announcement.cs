@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BorrowMeAPI.Model
 {
-    public class Announcement
+    public class Announcement : EntityBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -20,21 +20,22 @@ namespace BorrowMeAPI.Model
         [Required]
         public SubCategory SubCategory { get; set; }
         [Required]
+        public Voivodeship Voivodeship { get; set; }
+        [Required]
         public City City { get; set; }
         [Required, Column(TypeName = "varchar(50)")]
         public PaymentType PaymentType { get; set; }
-        [Precision(6,2)]
+        [Precision(6, 2)]
         public decimal? Price { get; set; }
         [StringLength(50)]
         public string? OtherPaymentType { get; set; }
-        public List<Reservation>? Reservations { get; set; } = new List<Reservation>();
     }
 
     public enum PaymentType
     {
-       Free,
-       Money,
-       Beer,
-       Other
+        Free,
+        Money,
+        Beer,
+        Other
     }
 }

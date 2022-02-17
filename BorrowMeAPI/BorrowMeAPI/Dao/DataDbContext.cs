@@ -1,5 +1,4 @@
-﻿using BorrowMeAPI.Model;
-using BorrowMeAPI.Model.Entieties;
+﻿using BorrowMeAPI.Model.Entieties;
 
 namespace BorrowMeAPI.Dao
 {
@@ -14,9 +13,6 @@ namespace BorrowMeAPI.Dao
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
-
-
-
         }
 
         public DbSet<Announcement> Announcements { get; set; }

@@ -11,13 +11,12 @@
 
         public async Task<List<Announcement>> GetAnnouncementsByFilters(string category, string voivodeship, string city, string searchPhrase)
         {
-            var announcements = _dbContext.Announcements
+            IQueryable<Announcement> announcements = _dbContext.Announcements
                 .Include(a => a.PictureLocations)
                 .Include(a => a.Owner)
                 .Include(a => a.SubCategory)
                 .Include(a => a.City)
-                .Include(c => c.Voivodeship)
-                .AsQueryable();
+                .Include(c => c.Voivodeship);
 
             var mainCategories = await _dbContext.MainCategories
                 .Include(mc=>mc.SubCategories)
@@ -52,15 +51,14 @@
         }
         public async Task<List<Announcement>> GetAllAnnouncements()
         {
-            var announcements = _dbContext.Announcements
+            return await _dbContext.Announcements
                 .Include(a => a.PictureLocations)
                 .Include(a => a.Owner)
                 .ThenInclude(o=>o.PictureLocation)
                 .Include(a => a.SubCategory)
                 .Include(a => a.City)
                 .Include(c => c.Voivodeship)
-                .AsQueryable();
-            return await announcements.ToListAsync();
+                .ToListAsync();
         }
 
     }

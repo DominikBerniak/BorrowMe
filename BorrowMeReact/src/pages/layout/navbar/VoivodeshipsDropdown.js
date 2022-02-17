@@ -12,13 +12,13 @@ const VoivodeshipsDropdown = ({
     const updateCitiesContainerPosition = (e) => {
         let cursorPositionPercent = parseInt(e.pageY / window.innerHeight * 100);
         if (cursorPositionPercent > 45) {
-            refCities.current.style.bottom = `${e.target.offsetParent.offsetHeight - e.target.offsetTop - e.target.offsetHeight}px`;
+            refCities.current.style.bottom = `${e.target.offsetParent.offsetHeight - e.target.getBoundingClientRect().top - e.target.offsetHeight}px`;
             refCities.current.style.removeProperty("top");
         } else {
-            refCities.current.style.top = `${e.target.offsetTop}px`;
+            refCities.current.style.top = `${e.target.getBoundingClientRect().top}px`;
             refCities.current.style.removeProperty("bottom");
         }
-        refCities.current.style.left = `${e.target.offsetLeft + e.target.offsetWidth - 2}px`;
+        refCities.current.style.left = `${e.target.offsetLeft + e.target.offsetWidth + 10}px`;
     }
 
     return (

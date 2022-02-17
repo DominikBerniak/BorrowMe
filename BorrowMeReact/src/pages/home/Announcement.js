@@ -4,7 +4,6 @@ import ImageAPI from "../../components/ImageAPI";
 const Announcement = ({ announcement }) => {
     return (
         <div className='announcement'>
-            {console.log(announcement)}
             <div className="title">
                 <b>{announcement.title}</b>
             </div>

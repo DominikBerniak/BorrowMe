@@ -59,6 +59,33 @@
 #city-search-container{
  z-index: 1;
 }
+#voivodeship-container{
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+#voivodeship-container::-webkit-scrollbar-track
+{
+    border-right: 1px solid rgba(0,0,0,.125);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    border-top: 1px solid rgba(0,0,0,.125);
+    background-color: white;
+}
+
+#voivodeship-container::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+#voivodeship-container::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+
+
 #voivodeship-list button:last-child{
     border-radius: 0 0 0.35rem 0.35rem !important;
 }
@@ -69,9 +96,10 @@
     border-left: 1px solid rgba(0,0,0,.125);
     border-top: 1px solid rgba(0,0,0,.125);
 }
-#cities-container-inner button{
+.city-button{
     border-right: 1px solid rgba(0,0,0,.125);
     border-bottom: 1px solid rgba(0,0,0,.125);
+    background-color: white;
 }
 .voivodeship-button{
     overflow-wrap: break-word;
@@ -98,4 +126,7 @@
 }
 .no-underline {
     text-decoration: none;
+}
+#footer{
+    background-color: #363636;
 }

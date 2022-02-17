@@ -24,18 +24,27 @@ const SearchResults = () => {
     }, [])
 
     useEffect(() => {
+        console.log("reset")
         setAllFetchedAnnouncements([]);
+        setIsFetchingData(false);
     }, [mainCategoryParam, subCategoryParam, voivodeshipParam, cityParam, searchParams.get("search")])
 
     useEffect(() => {
+        console.log("fetching")
         updateSearchQueries()
-        for (let i = 0; i < allFetchedAnnouncements.length; i++) {
-            if (allFetchedAnnouncements[i].pageNumber === pageNumber) {
-                setAnnouncements(allFetchedAnnouncements[i].announcements);
-                return;
+        if (allFetchedAnnouncements.length > 0)
+        {
+            console.log("old data")
+            for (let i = 0; i < allFetchedAnnouncements.length; i++) {
+                if (allFetchedAnnouncements[i].pageNumber === pageNumber) {
+                    setAnnouncements(allFetchedAnnouncements[i].announcements);
+                    return;
+                }
             }
         }
+
         if (!isFetchingData) {
+            console.log("new data")
             setIsFetchingData(true);
             let searchPhrase = searchParams.get("search");
             searchPhrase = searchPhrase !== null ? searchPhrase : "all"

@@ -11,7 +11,7 @@ namespace BorrowMeAPI.Services.Interfaces
         Task<Announcement> GetAnnouncement(Guid announcementId);
 
         // GET by Filters
-        Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage);
+        Task<FilteredAnnoucementsDto> GetAnnouncements(string category, string voivodship, string city, string search_phrase, int currentPage);
 
 
         // POST

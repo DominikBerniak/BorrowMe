@@ -53,7 +53,7 @@ const SearchResults = () => {
             let voivodeship = voivodeshipParam ? voivodeshipParam : "all";
             let city = cityParam ? cityParam : "all";
             console.log(`/Announcements/${category}/${voivodeship}/${city}/${searchPhrase}/${pageNumber}`)
-            getData(`/Announcements/${category}/${voivodeship}/${city}/${searchPhrase}/${pageNumber}`)
+            getData(`/Announcements?category=${category}&voivodeship=${voivodeship}&city=${city}&searchPhrase=${searchPhrase}&page=${pageNumber}`)
                 .then(data => {
                     if (data === "Not Found") {
                         setAllFetchedAnnouncements();
@@ -128,7 +128,6 @@ const SearchResults = () => {
                 </>
                 :
                 <NoMatch/>
-            }
             }
         </div>
     );

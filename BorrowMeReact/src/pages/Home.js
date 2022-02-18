@@ -9,8 +9,8 @@ const Home = () => {
 
     useEffect(() => {
         getData("/Announcements")
-            .then(announcements=>{
-                setAnnouncements(announcements);
+            .then(announcementDto=>{
+                setAnnouncements(announcementDto.announcements);
             })
     }, [])
 

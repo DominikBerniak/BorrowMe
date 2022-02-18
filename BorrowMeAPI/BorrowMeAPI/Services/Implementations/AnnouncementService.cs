@@ -1,5 +1,4 @@
-﻿using BorrowMeAPI.Model.DataTransferObjects;
-using BorrowMeAPI.Repositories;
+﻿using BorrowMeAPI.Repositories;
 using BorrowMeAPI.Services.Interfaces;
 
 namespace BorrowMeAPI.Services.Implementations
@@ -30,7 +29,7 @@ namespace BorrowMeAPI.Services.Implementations
             return await _repository.GetById(announcementId);
         }
 
-        public async Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage)
+        public async Task<FilteredAnnoucementsDto> GetAnnouncements(string category, string voivodship, string city, string search_phrase, int currentPage)
         {
             const float numberOfAnnoucementsPerPage = 2f;
 
@@ -53,11 +52,10 @@ namespace BorrowMeAPI.Services.Implementations
                     Status = Status.BadRequest
                 };
             }
-
             filteredAnnoucements = filteredAnnoucements
-                .Skip(( currentPage - 1 ) * (int) numberOfAnnoucementsPerPage)
-                .Take((int) numberOfAnnoucementsPerPage)
-                .ToList();
+            .Skip((int) ( currentPage - 1 ) * (int) numberOfAnnoucementsPerPage)
+            .Take((int) numberOfAnnoucementsPerPage)
+            .ToList();
 
             return new FilteredAnnoucementsDto
             {

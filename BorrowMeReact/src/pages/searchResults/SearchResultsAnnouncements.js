@@ -28,7 +28,14 @@ const SearchResultsAnnouncements = ({announcements}) => {
                             className="d-flex flex-column align-items-end pb-2 mb-2 search-results-announcement-header">
                             <h3 className="search-results-announcement-title hover-pointer"
                                 onClick={() => handleAnnouncementClick(announcement.id)}>{announcement.title}</h3>
-                            <div className="h4 text-secondary">{announcement.price} zł / dzień</div>
+                            {announcement.paymentType === 0 && 
+                            <div className="h4 text-secondary">za darmo</div>}
+                            {announcement.paymentType === 1 &&
+                            <div className="h4 text-secondary">{announcement.price} zł / dzień</div>}
+                            {announcement.paymentType === 2 &&
+                            <div className="h4 text-secondary">{announcement.otherPaymentType}za piwo</div>}
+                            {announcement.paymentType === 3 &&
+                            <div className="h4 text-secondary">{announcement.otherPaymentType}</div>}
                         </div>
                         <div className="search-results-announcement-desc d-flex flex-column align-items-end pb-3 mb-2">
                             <div>{announcement.city.name}, {announcement.voivodeship.name}</div>

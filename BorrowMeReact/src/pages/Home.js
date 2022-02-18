@@ -3,6 +3,7 @@ import {useState} from 'react';
 import Announcement from "./home/Announcement";
 import Spinner from "../components/Spinner";
 import {getData} from "../services/apiFetch";
+import "./home/home.css"
 
 const Home = () => {
     const [announcements, setAnnouncements] = useState()

@@ -129,7 +129,6 @@ const SearchResults = () => {
                 :
                 <NoMatch/>
             }
-            }
         </div>
     );
 };

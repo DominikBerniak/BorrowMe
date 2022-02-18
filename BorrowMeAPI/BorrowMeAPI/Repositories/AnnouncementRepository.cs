@@ -79,9 +79,9 @@
                 SubCategory = subCategory,
                 City = city,    
                 Voivodeship = voivodeship,
-                PaymentType = PaymentType.Free,
-                Price = null,
-                OtherPaymentType = null,
+                PaymentType = announcementDTO.PaymentType,
+                Price = announcementDTO.Price,
+                OtherPaymentType = announcementDTO.OtherPaymentType,
             };
             await _dbContext.Set<Announcement>().AddAsync(announcement);
             await _dbContext.SaveChangesAsync();

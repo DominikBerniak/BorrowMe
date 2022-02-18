@@ -8,16 +8,19 @@ namespace BorrowMeAPI.Services.Implementations
     {
         private readonly IRepository<Announcement> _repository;
         private readonly IAnnouncementRepository _announcementRepository;
+        private readonly IRepository<User> _userRepository;
 
-        public AnnouncementService(IRepository<Announcement> repository, IAnnouncementRepository announcementRepository)
+        public AnnouncementService(IRepository<Announcement> repository, IAnnouncementRepository announcementRepository,
+                                    IRepository<User> userRepository)
         {
             _repository = repository;
             _announcementRepository = announcementRepository;
+            _userRepository = userRepository;
         }
 
-        public async Task<Announcement> AddAnnouncement(Announcement announcement)
+        public async Task<Announcement> AddAnnouncement(AnnouncementDTO announcementDTO)
         {
-            return await _repository.Add(announcement);
+            return await _announcementRepository.AddNewAnnouncement(announcementDTO);
         }
 
         public async Task<Announcement> DeleteAnnouncement(Guid id)
@@ -27,12 +30,13 @@ namespace BorrowMeAPI.Services.Implementations
 
         public async Task<Announcement> GetAnnouncement(Guid announcementId)
         {
-            return await _repository.GetById(announcementId);
+            //return await _repository.GetById(announcementId);
+            return await _announcementRepository.GetAnnouncementById(announcementId);
         }
 
         public async Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage)
         {
-            const float numberOfAnnoucementsPerPage = 4f;
+            const float numberOfAnnoucementsPerPage = 2f;
 
             var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(category, voivodship, city, search_phrase);
 

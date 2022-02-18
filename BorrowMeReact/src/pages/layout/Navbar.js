@@ -69,8 +69,8 @@ const Navbar = ({navBarRef, navbarCategoriesRef}) => {
         let voivodeshipParam = searchLocation.voivodeship !== "" ? searchLocation.voivodeship + "/" : "";
         let cityParam = searchLocation.city !== "" ? searchLocation.city + "/" : "";
         let searchPhraseParam = searchPhrase !== "" ? searchPhrase : "";
-        let mainCategoryParam = searchCategory !== "" ? searchCategory + "/" : "";
-        let subCategoryParam = "";
+        let mainCategoryParam = searchCategory !== "" ? searchCategory + "/" : "all/";
+        let subCategoryParam = "all/";
         let isBackslashNeeded = mainCategoryParam !== "" || voivodeshipParam !== "" || cityParam !== "";
         if (searchPhraseParam === "") {
             navigate(`/search-results${isBackslashNeeded ? "/" : ""}${mainCategoryParam}${subCategoryParam}${voivodeshipParam}${cityParam}`);

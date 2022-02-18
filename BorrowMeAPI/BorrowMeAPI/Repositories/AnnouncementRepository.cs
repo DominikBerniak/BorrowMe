@@ -49,6 +49,21 @@
                 .AsQueryable();
             return await announcements.ToListAsync();
         }
+
+        public async Task<Announcement> GetAnnouncementById(Guid announcementId)
+        {
+            var announcements = _dbContext.Announcements
+                .Include(a => a.PictureLocations)
+                .Include(a => a.Owner)
+                .ThenInclude(o => o.PictureLocation)
+                .Include(a => a.SubCategory)
+                .Include(a => a.City)
+                .Include(c => c.Voivodeship)
+                .AsQueryable();
+            announcements = announcements.Where(a => a.Id == announcementId);
+            return await announcements.FirstOrDefaultAsync();
+        }
+
         public async Task<Announcement> AddNewAnnouncement(AnnouncementDTO announcementDTO)
         {
             var owner = _dbContext.Users.FirstOrDefault(u => u.Id == announcementDTO.UserId);

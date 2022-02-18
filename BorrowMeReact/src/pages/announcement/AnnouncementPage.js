@@ -39,19 +39,20 @@ const AnnouncementPage = () => {
         handleImageChange()
     };
 
-    // useEffect(() => {
-    //         getData(`/api/Announcements/${announcementId}`)
-    //             .then(data => {setData(data);})
-    //         imageDirectory = `${announcementData}.images[${count}].imagePath`;
-    //         imageName = `${announcementData}.images[${count}].imageName`;
-    // }, [])
+    useEffect(() => {
+            getData(`/Announcements/${announcementId}`)
+                .then(data => {setData(data);})
+            // imageDirectory = `${announcementData}.images[${count}].imagePath`;
+            // imageName = `${announcementData}.images[${count}].imageName`;
+    }, [])
 
     return (
         <div className="announcement-container">
-            {/*{announcementData ?*/}
-            {/*    <>*/}
+            {console.log(announcementData)}
+            {announcementData ?
+               <>
                     <div className="btn-warning announcement-top">
-                        <h2 id="title">Kosiarka spalinowa</h2> {/*announcementData.title*/}
+                        <h2 id="title">{announcementData.title}</h2>
                         <h2 id="price">10 zł / dzień</h2>
                     </div>
                     <div className="announcement-middle">
@@ -62,14 +63,13 @@ const AnnouncementPage = () => {
                             <button type="button" onClick={handlePreviousImage} className="btn btn-outline-warning image-buttons">
                                 <ArrowPrevious/>
                             </button>
-                            <img className="picture" src={img}/>
+                            <ImageAPI imageDirectory={announcementData.pictureLocations[0].directoryName} imageName={announcementData.pictureLocations[0].fileName} classNames="announcement-picture"/>
                             <button type="button" onClick={handleNextImage} className="btn btn-outline-warning image-buttons">
                                 <ArrowNext/>
                             </button>
-                            {/*<ImageAPI imageDirectory="" imageName="" classNames="announcement-picture"/>*/}
                         </div>
                         <div className="city">
-                            <p>Lokalizacja: Kraków</p> {/*{announcementData.city.name}*/}
+                            <p>Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</p>
                         </div>
                             <div className="calendar-container center">
                                 <Calendar onChange={setDate} value={date} nextLabel={<ArrowNext/>} prevLabel={<ArrowPrevious/>} next2Label={<CaretNext/>} prev2Label={<CaretPrevious/>} selectRange={true}/>
@@ -92,17 +92,17 @@ const AnnouncementPage = () => {
                     </div>
                     <div className="announcement-bottom">
                         <div className="id">
-                        ID: 3
-                        </div> {/*{announcementData.id}*/}
+                        ID: {announcementData.id}
+                        </div>
                         <div className="publish-date">
-                            <p>Opublikowano 5.10.12 o godzinie 17:12</p> {/*{announcementData.publishDate.slice(0, 10)}*/}
+                            <p>Opublikowano {announcementData.publishDate.slice(0, 10)} o godzinie 17:12</p>
                         </div>
                         <div className="owner">
-                            <p>Autor: Andrzej Śmietana</p> {/*{announcementData.owner.name}*/}
+                            <p>Autor: {announcementData.owner.firstName} {announcementData.owner.lastName}</p>
                         </div>
                     </div>
-                {/*</>:<Spinner/>*/}
-            {/*}*/}
+                </>:<Spinner/>
+            }
         </div>
     )
 }

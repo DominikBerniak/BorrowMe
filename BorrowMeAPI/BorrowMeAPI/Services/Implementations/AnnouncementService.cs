@@ -30,7 +30,8 @@ namespace BorrowMeAPI.Services.Implementations
 
         public async Task<Announcement> GetAnnouncement(Guid announcementId)
         {
-            return await _repository.GetById(announcementId);
+            //return await _repository.GetById(announcementId);
+            return await _announcementRepository.GetAnnouncementById(announcementId);
         }
 
         public async Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage)

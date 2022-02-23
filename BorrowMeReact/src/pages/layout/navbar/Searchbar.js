@@ -1,18 +1,24 @@
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import VoivodeshipsDropdown from "./VoivodeshipsDropdown";
+import CityHintsDropdown from "./CityHintsDropdown";
 
 const Searchbar = ({
-                       searchLocation,searchPhrase,handleSearchSubmit,
+                       searchLocation, searchPhrase, handleSearchSubmit,
                        handleSearchInputChange,
                        showVoivodeshipList,
                        areVoivodeshipsVisible,
+                       areCityHintsVisible,
                        hideVoivodeshipDropdown,
                        handleVoivodeshipClick,
                        handleVoivodeshipHover,
                        filteredCities,
                        handleCityClick,
-                       voivodeships
+                       voivodeships,
+                       hideCityHints,
+                       cityHints,
+                       handleCityHintClick
                    }) => {
+
 
     return (
         <form id="search-form" className="d-flex w-60 h-60" onSubmit={handleSearchSubmit}>
@@ -33,6 +39,13 @@ const Searchbar = ({
                                           voivodeships={voivodeships}
                                           filteredCities={filteredCities}
                                           handleCityClick={handleCityClick}/>
+                }
+                {areCityHintsVisible &&
+                    <CityHintsDropdown
+                        hideCityHints={hideCityHints}
+                        cityHits={cityHints}
+                        handleCityHintClick={handleCityHintClick}
+                    />
                 }
             </div>
             <button id="search-btn" className="btn btn-outline-light rounded-end shadow-none" type="submit">Szukaj

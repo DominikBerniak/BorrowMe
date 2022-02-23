@@ -18,6 +18,8 @@ const Navbar = ({navBarRef, navbarCategoriesRef}) => {
         input: ""
     });
     const [areVoivodeshipsVisible, setAreVoivodeshipsVisible] = useState(false);
+    const [areCityHintsVisible, setAreCityHintsVisible] = useState(false);
+    const [cityHints, setCityHints] = useState();
     const [filteredCities, setFilteredCities] = useState();
 
     const navigate = useNavigate();
@@ -99,16 +101,18 @@ const Navbar = ({navBarRef, navbarCategoriesRef}) => {
     const handleLocationChange = (searchValue) => {
         if (searchValue.length > 2) {
             getData(`/Cities/Search/${searchValue}`)
-                .then(cities => {
-                    if (cities.length === 1) {
-                        let voivodeshipName = voivodeships.find(v => v.cities.some(c => c.name === cities[0].name)).name;
-                        setSearchLocation({
-                            city: cities[0].name,
-                            voivodeship: voivodeshipName,
-                            input: `${cities[0].name}, ${voivodeshipName}`
-                        });
+                .then(citiesData => {
+                    if (citiesData.length > 0) {
+                        setCityHints(citiesData)
+                        hideVoivodeshipDropdown();
+                        showCityHints();
                     }
                 })
+        }
+        else
+        {
+            hideCityHints();
+            showVoivodeshipList();
         }
         setSearchLocation({
             city: "",
@@ -143,6 +147,15 @@ const Navbar = ({navBarRef, navbarCategoriesRef}) => {
         hideVoivodeshipDropdown();
     }
 
+    const handleCityHintClick = (cityDto) => {
+        setSearchLocation({
+            city: cityDto.cityName,
+            voivodeship: cityDto.voivodeshipName,
+            input: `${cityDto.cityName}, ${cityDto.voivodeshipName}`
+        });
+        hideCityHints();
+    }
+
     const showVoivodeshipList = () => {
         if (!areVoivodeshipsVisible) {
             setAreVoivodeshipsVisible(true);
@@ -152,6 +165,19 @@ const Navbar = ({navBarRef, navbarCategoriesRef}) => {
         if (areVoivodeshipsVisible) {
             setAreVoivodeshipsVisible(false)
             setFilteredCities();
+        }
+    }
+    const showCityHints = () => {
+        if (!areCityHintsVisible)
+        {
+            setAreCityHintsVisible(true);
+        }
+    }
+    const hideCityHints = () => {
+        if (areCityHintsVisible)
+        {
+            setAreCityHintsVisible(false);
+
         }
     }
     const handleVoivodeshipHover = (e, voivodeship) => {
@@ -175,13 +201,17 @@ const Navbar = ({navBarRef, navbarCategoriesRef}) => {
                                handleSearchSubmit={handleSearchSubmit}
                                handleSearchInputChange={handleSearchInputChange}
                                showVoivodeshipList={showVoivodeshipList}
+                               hideCityHints={hideCityHints}
                                areVoivodeshipsVisible={areVoivodeshipsVisible}
+                               areCityHintsVisible={areCityHintsVisible}
                                hideVoivodeshipDropdown={hideVoivodeshipDropdown}
                                handleVoivodeshipClick={handleVoivodeshipClick}
                                handleVoivodeshipHover={handleVoivodeshipHover}
                                filteredCities={filteredCities}
                                handleCityClick={handleCityClick}
                                voivodeships={voivodeships}
+                               cityHints={cityHints}
+                               handleCityHintClick={handleCityHintClick}
 
                     />
                     <UserSection/>

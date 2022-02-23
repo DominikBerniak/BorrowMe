@@ -35,10 +35,10 @@ const SearchResultsAnnouncements = ({announcements}) => {
                             <div>najbliższy wolny termin: wtorek</div>
                         </div>
                         <div className="search-results-announcement-footer w-95 d-flex flex-column align-items-end">
-                            <div>pożyczyło: {Math.floor(Math.random() * 1000) + 1} osób</div>
+                            <div>pożyczyło: XX osób</div>
                             <div className="d-flex">
                                 <div>ocena:</div>
-                                <Rating name="half-rating-read" defaultValue={(Math.random() * 5) + 1} precision={0.1}
+                                <Rating name="half-rating-read" defaultValue={5} precision={0.1}
                                         readOnly/>
                             </div>
                         </div>

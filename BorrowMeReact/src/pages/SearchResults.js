@@ -29,6 +29,7 @@ const SearchResults = () => {
         console.log("reset")
         setAllFetchedAnnouncements([]);
         setIsFetchingData(false);
+        setPageNumber(1);
     }, [mainCategoryParam, subCategoryParam, voivodeshipParam, cityParam, searchParams.get("search")])
 
     useEffect(() => {

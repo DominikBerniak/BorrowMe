@@ -4,13 +4,18 @@ import App from './App';
 import {BrowserRouter} from "react-router-dom";
 import {configureStore} from "@reduxjs/toolkit"
 import { Provider } from "react-redux";
-import searchReducer from "./features/location";
 import ScrollToTop from "./components/ScrollToTop";
+
+import locationReducer from "./features/location";
+import searchPhraseReducer from "./features/searchPhrase";
+import categoryReducer from "./features/category";
 
 
 const store = configureStore({
     reducer: {
-        search: searchReducer,
+        location: locationReducer,
+        searchPhrase: searchPhraseReducer,
+        category: categoryReducer
     },
 })
 

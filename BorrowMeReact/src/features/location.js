@@ -1,20 +1,21 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+const initialStateValue = {
+    city: "",
+    voivodeship: "",
+    input: ""
+};
 export const locationSlice = createSlice({
-    name: "voivodeships",
-    initialState: {
-        value: {
-            voivodeships : []
-        }
-    },
+    name: "location",
+    initialState: { value: initialStateValue },
     reducers: {
-        setVoivodeships: (state, action) =>{
+        setLocation: (state, action) => {
             state.value = action.payload
         },
     },
 
 });
 
-export const {setVoivodeships} = locationSlice.actions;
+export const {setLocation} = locationSlice.actions;
 
 export default locationSlice.reducer;

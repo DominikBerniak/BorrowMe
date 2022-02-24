@@ -190,11 +190,29 @@ const Navbar = ({navBarRef, navbarCategoriesRef}) => {
             cities: voivodeship.cities
         });
     }
+    const clearSearchInput = () => {
+        setSearchPhrase("");
+    }
+    const clearSearchLocation = () => {
+        setSearchLocation({
+            city: "",
+            voivodeship: "",
+            input: ""
+        });
+    }
+    const clearSearchCategory = () => {
+        setSearchCategory("");
+    }
+    const clearAllSearchParams = () => {
+        clearSearchInput();
+        clearSearchLocation();
+        clearSearchCategory();
+    }
 
     return (
         <nav id="navbar-container" className="fixed-top h-9" ref={navBarRef}>
             <div id="navbar-main" className="h-100 d-flex align-items-center">
-                <Link className="navbar-brand ms-3 text-white" to="/">BorrowMe</Link>
+                <Link className="navbar-brand ms-3 text-white" to="/" onClick={clearAllSearchParams}>BorrowMe</Link>
                 <div className="d-flex align-items-center w-100 h-100">
                     <Searchbar searchLocation={searchLocation}
                                searchPhrase={searchPhrase}
@@ -212,6 +230,7 @@ const Navbar = ({navBarRef, navbarCategoriesRef}) => {
                                voivodeships={voivodeships}
                                cityHints={cityHints}
                                handleCityHintClick={handleCityHintClick}
+                               clearSearchInput={clearSearchInput}
 
                     />
                     <UserSection/>

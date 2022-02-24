@@ -1,6 +1,10 @@
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import VoivodeshipsDropdown from "./VoivodeshipsDropdown";
 import CityHintsDropdown from "./CityHintsDropdown";
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+import {useDispatch, useSelector} from "react-redux";
+import {changeSearchPhrase, clearSearchPhrase} from "../../../features/searchPhrase";
+import {useEffect} from "react";
 
 const Searchbar = ({
                        searchLocation, searchPhrase, handleSearchSubmit,
@@ -16,15 +20,31 @@ const Searchbar = ({
                        voivodeships,
                        hideCityHints,
                        cityHints,
-                       handleCityHintClick
+                       handleCityHintClick,
+                       clearSearchInput
                    }) => {
 
+    const dispatch = useDispatch();
+    const searchValue = useSelector((state)=>state.searchPhrase.value);
+
+    useEffect(()=>{
+        console.log(searchValue);
+    },[searchValue])
 
     return (
         <form id="search-form" className="d-flex w-60 h-60" onSubmit={handleSearchSubmit}>
-            <input type="text" aria-label="Item name" className="w-50 px-3 border-0 rounded-start border-end"
-                   placeholder="Co chcesz pożyczyć?" value={searchPhrase}
-                   onChange={(e) => handleSearchInputChange(e, "phrase")}/>
+            <input type="text" aria-label="Item name" className="w-50 px-3 border-0 rounded-start"
+                   placeholder="Co chcesz pożyczyć?" value={searchValue}
+                   // onChange={(e) => handleSearchInputChange(e, "phrase")}
+                    onChange={(e)=>dispatch(changeSearchPhrase(e.target.value))}
+            />
+            <div className="d-flex align-items-center bg-white w-4 border-end">
+                {searchValue !== "" &&
+                    <ClearOutlinedIcon sx={{fontSize: 35, color: "#8c8c8c"}} id="searchbar-clear-input-icon"
+                        onClick={()=>dispatch(clearSearchPhrase())}
+                    />
+                }
+            </div>
             <div id="city-search-container" className="d-flex w-30 align-items-center flex-wrap">
                 <LocationOnOutlinedIcon className="ps-1" id="search-location-icon"
                                         sx={{fontSize: 35, color: "#8c8c8c"}}/>

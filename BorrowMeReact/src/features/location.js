@@ -9,13 +9,16 @@ export const locationSlice = createSlice({
     name: "location",
     initialState: { value: initialStateValue },
     reducers: {
-        setLocation: (state, action) => {
+        changeLocation: (state, action) => {
             state.value = action.payload
+        },
+        clearLocation: state => {
+            state.value = initialStateValue
         },
     },
 
 });
 
-export const {setLocation} = locationSlice.actions;
+export const {changeLocation, clearLocation} = locationSlice.actions;
 
 export default locationSlice.reducer;

@@ -2,10 +2,12 @@ import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import {useEffect, useState} from "react";
 
 const SortingPanel = ({pageNumber, incrementPageNum, decrementPageNum, numberOfPages, announcements, changePageToNumber}) => {
-    const [inputPageNum, setInputPageNum] = useState(pageNumber);
+    const [inputPageNum, setInputPageNum] = useState(pageNumber.toString());
     useEffect(()=>{
         setInputPageNum(pageNumber);
     },[pageNumber])
+
+
     return (
         <div id="sorting-container" className="d-flex align-items-center p-3">
             <div className="">
@@ -24,7 +26,7 @@ const SortingPanel = ({pageNumber, incrementPageNum, decrementPageNum, numberOfP
                 </form>
             </div>
             {announcements ?
-                <div id="pagination-container" className="d-flex justify-content-end align-items-center w-40 h-90 ms-auto">
+                <div id="pagination-container" className="d-flex justify-content-end align-items-center w-40 h-90 ms-auto user-select-none">
                     {pageNumber !== 1 &&
                         <button className="btn text-black shadow-none" onClick={decrementPageNum}>{"<"}</button>
                     }
@@ -36,10 +38,13 @@ const SortingPanel = ({pageNumber, incrementPageNum, decrementPageNum, numberOfP
                        />
                     </form>
                     <div className="">{"/"}</div>
-                    <div className="px-3">{numberOfPages}</div>
-                    <button className="btn text-black shadow-none"
-                            onClick={incrementPageNum}
-                            disabled={pageNumber === numberOfPages }>{">"}</button>
+                    <div className="px-3 user-select-none">{numberOfPages}</div>
+                    {pageNumber < numberOfPages ?
+                        <button className="btn text-black shadow-none"
+                                onClick={incrementPageNum}>{">"}</button>
+                        :
+                        <div className="btn text-white shadow-none  pe-none">{">"}</div>
+                    }
                 </div>
                 :
                 <div className="w-40"></div>

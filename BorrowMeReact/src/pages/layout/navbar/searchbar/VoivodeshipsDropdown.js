@@ -1,13 +1,17 @@
 import {useDetectClickOutside} from "react-detect-click-outside";
 import {useRef} from "react";
+import {changeLocation} from "../../../../features/location";
+import {useDispatch} from "react-redux";
 
 const VoivodeshipsDropdown = ({
-                                  hideVoivodeshipDropdown, handleVoivodeshipClick, handleVoivodeshipHover,
-                                  voivodeships, filteredCities, handleCityClick
+                                  hideVoivodeshipDropdown, handleVoivodeshipHover,
+                                  voivodeships, filteredCities
                               }) => {
 
     const refClick = useDetectClickOutside({onTriggered: hideVoivodeshipDropdown});
     const refCities = useRef();
+    const dispatch = useDispatch();
+
 
     const updateCitiesContainerPosition = (e) => {
         let cursorPositionPercent = parseInt(e.pageY / window.innerHeight * 100);
@@ -19,6 +23,35 @@ const VoivodeshipsDropdown = ({
             refCities.current.style.removeProperty("bottom");
         }
         refCities.current.style.left = `${e.target.offsetLeft + e.target.offsetWidth + 10}px`;
+    }
+
+    const handleVoivodeshipClick = (e, voivodeship) => {
+        if (voivodeship.id === 0) {
+            dispatch(changeLocation(
+                {
+                    city: "",
+                    voivodeship: "",
+                    input: ""
+                }))
+        }
+        else {
+            dispatch(changeLocation(
+                {
+                    city: "",
+                    voivodeship: voivodeship.name,
+                    input: voivodeship.name
+                }))
+        }
+        hideVoivodeshipDropdown();
+    }
+    const handleCityClick = (e, voivodeshipName, city) => {
+        dispatch(changeLocation(
+    {
+            city: city.name,
+            voivodeship: voivodeshipName,
+            input: `${city.name}, ${voivodeshipName}`
+        }))
+        hideVoivodeshipDropdown();
     }
 
     return (

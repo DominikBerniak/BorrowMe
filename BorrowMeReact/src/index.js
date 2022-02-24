@@ -9,13 +9,15 @@ import ScrollToTop from "./components/ScrollToTop";
 import locationReducer from "./features/location";
 import searchPhraseReducer from "./features/searchPhrase";
 import categoryReducer from "./features/category";
+import cityHintsReducer from "./features/cityHints";
 
 
 const store = configureStore({
     reducer: {
         location: locationReducer,
         searchPhrase: searchPhraseReducer,
-        category: categoryReducer
+        category: categoryReducer,
+        cityHints: cityHintsReducer
     },
 })
 

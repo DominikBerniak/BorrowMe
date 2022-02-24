@@ -1,0 +1,31 @@
+.filter-header{
+
+}
+.filter-header:hover{
+    cursor: pointer;
+
+}
+.clear-filter-button{
+    font-size: 1.1rem;
+}
+.clear-filter-button:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.main-category{
+    font-size: 1.3rem;
+
+}
+.main-category:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+.sub-category:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+.chosen-main-category{
+    margin-left: 1rem;
+    font-weight: bold;
+}

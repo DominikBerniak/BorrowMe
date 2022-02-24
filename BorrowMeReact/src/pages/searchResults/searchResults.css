@@ -1,7 +1,7 @@
 #main-container{
     display: grid;
     grid-template-columns: 1fr 3fr;
-    grid-auto-rows: max-content;
+    grid-template-rows: 5.5rem auto;
     grid-template-areas: 'filters sorting'
                         'filters main';
     grid-column-gap: 5%;
@@ -10,21 +10,20 @@
     background-color: white;
     grid-area: filters;
     border-radius: 0 0.7rem 0 0 !important;
+    min-height: 90vh;
 }
 #sorting-container{
     background-color: white;
-    height: 100%;
     grid-area: sorting;
     border-radius: 0.7rem 0.7rem 0 0 !important;
 }
 
 #search-results-container{
     grid-area: main;
-    min-height: 90vh;
 }
 .search-results-announcement
 {
-    height: 44%;
+    min-height: 20rem;
     background-color: white;
 }
 .search-results-announcement-image-generic{

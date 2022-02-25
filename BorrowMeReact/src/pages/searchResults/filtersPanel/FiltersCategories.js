@@ -10,6 +10,7 @@ const FiltersCategories = () => {
     const [areCategoriesVisible, setAreCategoriesVisible] = useState(true);
 
     const dispatch = useDispatch();
+
     useEffect(()=>{
         getData("/Categories/MainCategories")
             .then(data=>{
@@ -26,10 +27,10 @@ const FiltersCategories = () => {
 
     return (
         <div className="w-70 mt-4">
-            <div className="d-flex border-bottom border-2 py-3 user-select-none align-items-center justify-content-between">
+            <div className="d-flex border-bottom border-2 py-3 user-select-none align-items-center justify-content-between flex-wrap">
                 <h2 className="filter-header" onClick={toggleCategories}>Kategorie</h2>
                 {areCategoriesVisible &&
-                    <div className="clear-filter-button" onClick={clearCategoryFilter}>wyczyść</div>
+                    <div className="clear-filter-button ms-2" onClick={clearCategoryFilter}>wyczyść</div>
                 }
             </div>
             {categories ?

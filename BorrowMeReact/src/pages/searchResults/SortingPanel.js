@@ -31,7 +31,7 @@ const SortingPanel = ({pageNumber, incrementPageNum, decrementPageNum, numberOfP
                         <button className="btn text-black shadow-none" onClick={decrementPageNum}>{"<"}</button>
                     }
                     <form onSubmit={(e)=>changePageToNumber(e,inputPageNum)}
-                        className="w-15 h-100 mx-3">
+                        className="w-17 h-100 mx-3">
                         <input type="number" id="search-results-pagination-current-page"
                                className="text-center h-100 w-100 rounded" autoComplete="off"
                                value={inputPageNum} onChange={(e)=>setInputPageNum(e.target.value)}

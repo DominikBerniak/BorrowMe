@@ -8,7 +8,7 @@ import {changeLocation} from "../../../features/location";
 import {setCityHints, clearCityHints} from "../../../features/cityHints";
 import {getData} from "../../../services/apiFetch";
 import {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 
 
 const Searchbar = () => {
@@ -17,7 +17,7 @@ const Searchbar = () => {
 
     const searchPhrase = useSelector((state) => state.searchPhrase.value);
     const searchLocation = useSelector(state => state.location.value);
-    const searchCategory = useSelector(state=>state.category.value);
+    const searchCategory = useSelector(state => state.category.value);
 
     const [areCityHintsVisible, setAreCityHintsVisible] = useState(false);
 
@@ -35,29 +35,26 @@ const Searchbar = () => {
         }
     }, [])
 
-    useEffect(()=>{
-        // if ((!mainCategoryParam && searchCategory.mainCategory !== "") || mainCategoryParam)
-        // {
-        //     handleSearchSubmit();
-        // }
-    },[searchCategory])
+    useEffect(() => {
+        if ((!mainCategoryParam && searchCategory.mainCategory !== "all")) {
+            handleSearchSubmit();
+        }
+    }, [searchCategory])
 
     const handleSearchSubmit = (e) => {
         console.log("submit")
-        if (e)
-        {
+        if (e) {
             e.preventDefault();
         }
-        let voivodeshipParam = searchLocation.voivodeship !== "" ? searchLocation.voivodeship + "/" : "";
-        let cityParam = searchLocation.city !== "" ? searchLocation.city + "/" : "";
-        let mainCategoryParam = searchCategory.mainCategory !== "" ? searchCategory.mainCategory + "/" : "all/";
-        let subCategoryParam = searchCategory.subCategory !== "" ? searchCategory.subCategory + "/" : "all/";
-        let isBackslashNeeded = mainCategoryParam !== "" || voivodeshipParam !== "" || cityParam !== "";
+        let voivodeshipParam = searchLocation.voivodeship !== "all" ? searchLocation.voivodeship + "/" : "";
+        let cityParam = searchLocation.city !== "all" ? searchLocation.city + "/" : "";
+        let mainCategoryParam = searchCategory.mainCategory + "/";
+        let subCategoryParam = searchCategory.subCategory + "/";
         if (searchPhrase === "") {
-            navigate(`/search-results${isBackslashNeeded ? "/" : ""}${mainCategoryParam}${subCategoryParam}${voivodeshipParam}${cityParam}`);
+            navigate(`/search-results/${mainCategoryParam}${subCategoryParam}${voivodeshipParam}${cityParam}`);
         } else {
             navigate({
-                pathname: `/search-results${isBackslashNeeded ? "/" : ""}${mainCategoryParam}${subCategoryParam}${voivodeshipParam}${cityParam}`,
+                pathname: `/search-results/${mainCategoryParam}${subCategoryParam}${voivodeshipParam}${cityParam}`,
                 search: `?search=${searchPhrase}`
             });
         }
@@ -95,17 +92,16 @@ const Searchbar = () => {
                         hideVoivodeshipDropdown();
                     }
                 })
-        }
-        else {
+        } else {
             hideCityHints();
             showVoivodeshipDropdown();
         }
         dispatch(changeLocation(
-    {
-            city: "",
-            voivodeship: "",
-            input: searchValue
-        }));
+            {
+                city: "all",
+                voivodeship: "all",
+                input: searchValue
+            }));
     }
     const hideCityHints = () => {
         dispatch(clearCityHints())

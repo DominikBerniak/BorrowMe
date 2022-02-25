@@ -9,7 +9,7 @@ const SubCategory = ({mainCategoryName, subCategoryName}) => {
         if (subCategoryName === "Wszystkie") {
             dispatch(changeCategory({
                 mainCategory: mainCategoryName,
-                subCategory: ""
+                subCategory: "all"
             }))
         } else {
             dispatch(changeCategory({
@@ -22,7 +22,7 @@ const SubCategory = ({mainCategoryName, subCategoryName}) => {
     return (
         <div className={"ps-1 py-2 sub-category " + (chosenCategory.subCategory === subCategoryName ||
             (chosenCategory.mainCategory === mainCategoryName &&
-            chosenCategory.subCategory === "" &&
+            chosenCategory.subCategory === "all" &&
             subCategoryName === "Wszystkie") ? "fw-bold" : "")}
              onClick={handleSubCategoryClick}>{subCategoryName}</div>
     );

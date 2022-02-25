@@ -5,11 +5,11 @@ import {getData} from "../services/apiFetch";
 import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import SearchResultsAnnouncements from "./searchResults/SearchResultsAnnouncements";
 import "./searchResults/searchResults.css"
-import NoMatch from "./searchResults/NoMatch";
+import NoMatch from "./searchResults/searchResultsAnnouncements/NoMatch";
 import {useDispatch, useSelector} from "react-redux";
 import {changeSearchPhrase} from "../features/searchPhrase";
 import {changeCategory} from "../features/category";
-import {changeLocation} from "../features/location";
+import {changeLocation, clearLocation} from "../features/location";
 
 
 const SearchResults = () => {
@@ -18,49 +18,87 @@ const SearchResults = () => {
     const [numberOfPages, setNumberOfPages] = useState();
     const [pageNumber, setPageNumber] = useState(1);
     const [isFetchingData, setIsFetchingData] = useState(false);
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
 
     const [searchParams, setSearchParams] = useSearchParams();
     const {mainCategoryParam, subCategoryParam, voivodeshipParam, cityParam} = useParams();
 
-    const navigate = useNavigate();
+    const searchCategory = useSelector(state => state.category.value);
+    const searchLocation = useSelector(state => state.location.value);
+    const searchPhrase = useSelector(state => state.searchPhrase.value);
+
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        // console.log("load")
-        // let pageNum = searchParams.get("page");
-        // pageNum = (pageNum === null || pageNum === "0") ? 1 : parseInt(pageNum);
-        // setPageNumber(pageNum);
+        let pageNum = searchParams.get("page");
+        pageNum = pageNum ? parseInt(pageNum) : 1;
+        setPageNumber(pageNum);
+        if (mainCategoryParam !== searchCategory.mainCategory) {
+            dispatch(changeCategory({
+                mainCategory: mainCategoryParam,
+                subCategory: searchCategory.subCategory
+            }));
+        }
+        if (subCategoryParam !== searchCategory.subCategory) {
+            dispatch(changeCategory({
+                mainCategory: mainCategoryParam,
+                subCategory: subCategoryParam
+            }));
+        }
+        if (!voivodeshipParam && !cityParam) {
+            dispatch(clearLocation())
+        }
+        if (voivodeshipParam && !cityParam && voivodeshipParam !== searchLocation.voivodeship) {
+            dispatch(changeLocation({
+                city: "all",
+                voivodeship: voivodeshipParam,
+                input: voivodeshipParam
+            }))
+        }
+
+        if (cityParam && cityParam !== searchLocation.city) {
+            dispatch(changeLocation({
+                city: cityParam,
+                voivodeship: voivodeshipParam,
+                input: `${cityParam}, ${voivodeshipParam}`
+            }))
+        }
+        let searchPhraseParam = searchParams.get("search");
+        searchPhraseParam = searchPhraseParam !== null ? searchPhraseParam : ""
+        if (searchPhraseParam !== searchPhrase) {
+            dispatch(changeSearchPhrase(
+                searchPhraseParam
+            ))
+        }
+        setIsInitialLoad(false);
     }, [])
+
+    useEffect(() => {
+        console.log("category change")
+        let location = searchLocation.city !== "all" ? `${searchLocation.voivodeship}/${searchLocation.city}`
+            : searchLocation.voivodeship !== "all" ? searchLocation.voivodeship : "";
+        let searchPhraseParam = searchParams.get("search");
+        if (!searchPhraseParam) {
+            navigate(`/search-results/${searchCategory.mainCategory}/${searchCategory.subCategory}/${location}`);
+        } else {
+            navigate({
+                pathname: `/search-results/${searchCategory.mainCategory}/${searchCategory.subCategory}/${location}`,
+                search: `?search=${searchPhraseParam}`
+            });
+        }
+    }, [searchCategory])
 
     useEffect(() => {
         console.log("reset")
         setAllFetchedAnnouncements([]);
         setIsFetchingData(false);
-        let voivodeship = voivodeshipParam ? voivodeshipParam : "";
-        let city = cityParam ? cityParam : "";
-        let input = city !== ""? `${city}, ${voivodeship}` : voivodeship !== "" ? voivodeship : "";
-        dispatch(changeLocation({
-            city: city,
-            voivodeship: voivodeship,
-            input: input
-        }));
-        dispatch(changeCategory({
-            mainCategory: mainCategoryParam !== "all" ? mainCategoryParam : "",
-            subCategory: subCategoryParam !== "all" ? subCategoryParam : ""
-        }));
-        let searchPhrase = searchParams.get("search");
-        searchPhrase = searchPhrase !== null ? searchPhrase : ""
-        dispatch(changeSearchPhrase(searchPhrase));
     }, [mainCategoryParam, subCategoryParam, voivodeshipParam, cityParam, searchParams.get("search")])
 
     useEffect(() => {
-        console.log("fetching")
+        console.log("tries to fetch")
         if (!isFetchingData) {
-            if (!mainCategoryParam && !subCategoryParam)
-            {
-                navigate("/search-results/all/all/")
-                return;
-            }
+            console.log("is fetching")
             updateSearchQueries()
             if (allFetchedAnnouncements.length > 0) {
                 for (let i = 0; i < allFetchedAnnouncements.length; i++) {
@@ -78,17 +116,31 @@ const SearchResults = () => {
     const FetchNewAnnouncements = () => {
         console.log('%c New Data', 'color:red;')
         setIsFetchingData(true);
-        let searchPhrase = searchParams.get("search");
-        searchPhrase = searchPhrase !== null ? searchPhrase : "all"
         let category = subCategoryParam !== "all" ? subCategoryParam : mainCategoryParam;
         let voivodeship = voivodeshipParam ? voivodeshipParam : "all";
         let city = cityParam ? cityParam : "all";
-        console.log(`/Announcements/${category}/${voivodeship}/${city}/${searchPhrase}/${pageNumber}`)
-        getData(`/Announcements?category=${category}&voivodeship=${voivodeship}&city=${city}&searchPhrase=${searchPhrase}&page=${pageNumber}`)
+        let searchPhraseParam = searchParams.get("search");
+        searchPhraseParam = searchPhraseParam ? searchPhraseParam : "all";
+        let pageNum = searchParams.get("page");
+        pageNum = pageNum ? parseInt(pageNum) : 1;
+        let fetchUrl = `/Announcements?category=${category}&voivodeship=${voivodeship}&city=${city}&searchPhrase=${searchPhraseParam}&page=${isInitialLoad ? pageNum : pageNumber}`;
+        console.log(fetchUrl)
+        getData(fetchUrl)
             .then(data => {
                 if (data === "Not Found") {
                     setAllFetchedAnnouncements();
                     setAnnouncements(data);
+                    setIsFetchingData(false);
+                    return;
+                }
+                if (data.status === 2) {
+                    console.log("wrong page number")
+                    setIsFetchingData(false);
+                    if (pageNum > data.numberOfPages) {
+                        changePageToNumber(null, data.numberOfPages)
+                    } else if (pageNum < 1) {
+                        changePageToNumber(null, 1)
+                    }
                     return;
                 }
                 setAnnouncements(data.announcements)
@@ -102,7 +154,13 @@ const SearchResults = () => {
     }
 
     const updateSearchQueries = () => {
-        let pageNumQuery = pageNumber === 1 ? "" : `page=${pageNumber}`;
+        let pageNumQuery;
+        if (isInitialLoad) {
+            let pageNum = searchParams.get("page");
+            pageNumQuery = !pageNum || pageNum === "1" ? "" : `page=${pageNum}`;
+        } else {
+            pageNumQuery = pageNumber === 1 ? "" : `page=${pageNumber}`;
+        }
         let searchQuery = searchParams.get("search");
         if (searchQuery === "" || searchQuery === null) {
             setSearchParams(pageNumQuery);
@@ -112,43 +170,34 @@ const SearchResults = () => {
             } else {
                 setSearchParams({
                     search: searchQuery,
-                    page: pageNumber
+                    page: pageNumQuery
                 })
             }
         }
-
     }
     const incrementPageNum = () => {
-        if (pageNumber < numberOfPages)
-        {
+        if (pageNumber < numberOfPages) {
             setPageNumber(prev => prev + 1);
         }
-        // setAnnouncements();
     }
 
     const decrementPageNum = () => {
-        if (pageNumber > 0)
-        {
+        if (pageNumber > 0) {
             setPageNumber(prev => prev - 1);
         }
-        // setAnnouncements();
     }
-    const changePageToNumber = (e,stringPageNumber) =>{
-        e.preventDefault();
+    const changePageToNumber = (e, stringPageNumber) => {
+        if (e) {
+            e.preventDefault();
+        }
         let pageNumber = parseInt(stringPageNumber);
-        if (pageNumber > numberOfPages)
-        {
+        if (pageNumber > numberOfPages) {
             setPageNumber(numberOfPages);
-        }
-        else if (pageNumber < 1)
-        {
+        } else if (pageNumber < 1) {
             setPageNumber(1);
-        }
-        else
-        {
+        } else {
             setPageNumber(pageNumber);
         }
-        // setAnnouncements();
     }
 
     return (

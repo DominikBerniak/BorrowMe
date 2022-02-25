@@ -10,6 +10,7 @@ import locationReducer from "./features/location";
 import searchPhraseReducer from "./features/searchPhrase";
 import categoryReducer from "./features/category";
 import cityHintsReducer from "./features/cityHints";
+import costFilterReducer from "./features/costFilter"
 
 
 const store = configureStore({
@@ -17,7 +18,8 @@ const store = configureStore({
         location: locationReducer,
         searchPhrase: searchPhraseReducer,
         category: categoryReducer,
-        cityHints: cityHintsReducer
+        cityHints: cityHintsReducer,
+        costFilter: costFilterReducer
     },
 })
 

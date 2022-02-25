@@ -1,8 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialStateValue = {
-    city: "",
-    voivodeship: "",
+    city: "all",
+    voivodeship: "all",
     input: ""
 };
 export const locationSlice = createSlice({

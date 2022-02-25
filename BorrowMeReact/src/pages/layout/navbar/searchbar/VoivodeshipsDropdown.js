@@ -1,6 +1,6 @@
 import {useDetectClickOutside} from "react-detect-click-outside";
 import {useRef} from "react";
-import {changeLocation} from "../../../../features/location";
+import {changeLocation, clearLocation} from "../../../../features/location";
 import {useDispatch} from "react-redux";
 
 const VoivodeshipsDropdown = ({
@@ -27,17 +27,12 @@ const VoivodeshipsDropdown = ({
 
     const handleVoivodeshipClick = (e, voivodeship) => {
         if (voivodeship.id === 0) {
-            dispatch(changeLocation(
-                {
-                    city: "",
-                    voivodeship: "",
-                    input: ""
-                }))
+            dispatch(clearLocation())
         }
         else {
             dispatch(changeLocation(
                 {
-                    city: "",
+                    city: "all",
                     voivodeship: voivodeship.name,
                     input: voivodeship.name
                 }))

@@ -13,7 +13,7 @@ const MainCategory = ({mainCategoryData}) => {
         {
             setAreSubCategoriesVisible(true);
         }
-        else if (chosenCategory.mainCategory === "" && chosenCategory.subCategory === "")
+        else if (chosenCategory.mainCategory === "all" && chosenCategory.subCategory === "all")
         {
             setAreSubCategoriesVisible(false);
         }

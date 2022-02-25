@@ -1,8 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialStateValue = {
-    mainCategory: "",
-    subCategory: ""
+    mainCategory: "all",
+    subCategory: "all"
 };
 
 export const categorySlice = createSlice({

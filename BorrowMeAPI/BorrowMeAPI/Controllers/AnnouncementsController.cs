@@ -17,9 +17,13 @@ namespace BorrowMeAPI.Controllers
             _announcementService = announcementService;
         }
         [HttpGet]
-        public async Task<ActionResult<List<SearchedAnnoucementsDTO>>> GetAnnouncements([FromQuery] int page = 1, [FromQuery] string? category = "all", [FromQuery] string? voivodeship = "all", [FromQuery] string? city = "all", [FromQuery] string? searchPhrase = "all")
+        public async Task<ActionResult<List<SearchedAnnoucementsDTO>>> GetAnnouncements([FromQuery] int page = 1, 
+            [FromQuery] string? category = "all", [FromQuery] string? voivodeship = "all", [FromQuery] string? city = "all", 
+            [FromQuery] string? searchPhrase = "all")
         {
-            _logger.LogInformation($"Getting announcements with params: page: {page}, category: {category}, voivodeship: {voivodeship}, city: {city}, searchPhrase: {searchPhrase}");
+            _logger.LogInformation($"Getting announcements with params: page: {page}, category: {category}, voivodeship: {voivodeship}, " +
+                $"city: {city}, searchPhrase: {searchPhrase}");
+
             var announcementDto = await _announcementService.GetAnnouncements(category, voivodeship, city, searchPhrase, page);
             if (announcementDto.Status == Status.NotFound)
             {
@@ -29,7 +33,7 @@ namespace BorrowMeAPI.Controllers
             if (announcementDto.Status == Status.BadRequest)
             {
                 _logger.LogError("Wrong page number");
-                return BadRequest("Wrong page number");
+                return BadRequest(announcementDto);
             }
             var response = new SearchedAnnoucementsDTO
             {

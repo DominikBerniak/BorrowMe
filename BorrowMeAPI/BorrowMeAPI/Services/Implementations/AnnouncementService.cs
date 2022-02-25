@@ -45,11 +45,12 @@ namespace BorrowMeAPI.Services.Implementations
                     Status = Status.NotFound
                 };
             }
-            if (currentPage > numberOfPages)
+            if (currentPage > numberOfPages || currentPage < 1)
             {
                 return new FilteredAnnoucementsDto
                 {
-                    Status = Status.BadRequest
+                    Status = Status.BadRequest,
+                    NumberOfPages = (int)numberOfPages
                 };
             }
             filteredAnnoucements = filteredAnnoucements

@@ -31,7 +31,7 @@ const Categories = ({navbarCategoriesRef}) => {
     const handleCategoryClick = (categoryName) => {
         dispatch(changeCategory({
             mainCategory: categoryName,
-            subCategory: ""
+            subCategory: "all"
         }));
         toggleCategories();
     }

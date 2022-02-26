@@ -1,18 +1,21 @@
 import {useState} from "react";
 import BorrowCostFilter from "./filtersMain/BorrowCostFilter";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {clearCostFilter} from "../../../features/costFilter";
 
 
 const FiltersMain = () => {
     const [areFiltersVisible, setAreFiltersVisible] = useState(true);
     const dispatch = useDispatch();
+    const costFilter = useSelector(state => state.costFilter.value);
 
     const toggleFilters = () => {
         setAreFiltersVisible(prev=>!prev);
     }
     const clearFilters = () =>{
-        dispatch(clearCostFilter());
+        if (costFilter.minCost !== 0 || costFilter.maxCost !== 50 || costFilter.checkedButton !== "") {
+            dispatch(clearCostFilter());
+        }
     }
     return (
         <div className="w-70 mt-4">

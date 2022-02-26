@@ -2,8 +2,8 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const initialStateValue = {
     minCost: 0,
-    maxCost: 0,
-    checkedButton: "0"
+    maxCost: 50,
+    checkedButton: ""
 };
 
 export const costFilterSlice = createSlice({

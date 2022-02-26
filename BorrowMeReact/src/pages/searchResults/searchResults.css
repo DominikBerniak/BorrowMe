@@ -61,6 +61,9 @@
 #search-results-pagination-current-page{
     border: 0.1rem solid #b2b2b2;
 }
+#search-results-pagination-current-page:focus{
+    outline:  0.1rem solid #949494;
+}
 #pagination-container{
     font-size: 1.2rem;
 }

@@ -26,6 +26,8 @@ const SearchResults = () => {
     const searchCategory = useSelector(state => state.category.value);
     const searchLocation = useSelector(state => state.location.value);
     const searchPhrase = useSelector(state => state.searchPhrase.value);
+    const costFilter = useSelector(state => state.costFilter.value);
+    const sortFilter = useSelector(state=>state.sort.value);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -92,8 +94,10 @@ const SearchResults = () => {
     useEffect(() => {
         console.log("reset")
         setAllFetchedAnnouncements([]);
+        setAnnouncements();
         setIsFetchingData(false);
-    }, [mainCategoryParam, subCategoryParam, voivodeshipParam, cityParam, searchParams.get("search")])
+        setPageNumber(1);
+    }, [mainCategoryParam, subCategoryParam, voivodeshipParam, cityParam, searchParams.get("search"), costFilter, sortFilter])
 
     useEffect(() => {
         console.log("tries to fetch")
@@ -113,17 +117,28 @@ const SearchResults = () => {
         }
     }, [pageNumber, allFetchedAnnouncements])
 
-    const FetchNewAnnouncements = () => {
-        console.log('%c New Data', 'color:red;')
-        setIsFetchingData(true);
+    const getCorrectFetchUrl = (pageNum) => {
         let category = subCategoryParam !== "all" ? subCategoryParam : mainCategoryParam;
         let voivodeship = voivodeshipParam ? voivodeshipParam : "all";
         let city = cityParam ? cityParam : "all";
         let searchPhraseParam = searchParams.get("search");
         searchPhraseParam = searchPhraseParam ? searchPhraseParam : "all";
+
+        let categoryQuery = `category=${category}`;
+        let locationQuery = `&voivodeship=${voivodeship}&city=${city}`;
+        let searchPhraseQuery = `&searchPhrase=${searchPhraseParam}`;
+        let pageNumQuery = `&page=${isInitialLoad ? pageNum : pageNumber}`;
+        let costFilterQuery = `&costMin=${costFilter.minCost}&costMax=${costFilter.maxCost}`;
+        let sortQuery = `&sortBy=${sortFilter.sortBy}&sortDirection=${sortFilter.sortDirection}`;
+
+        return "/Announcements?" + categoryQuery + locationQuery + searchPhraseQuery + pageNumQuery + costFilterQuery + sortQuery;
+    }
+    const FetchNewAnnouncements = () => {
+        console.log('%c New Data', 'color:red;')
+        setIsFetchingData(true);
         let pageNum = searchParams.get("page");
         pageNum = pageNum ? parseInt(pageNum) : 1;
-        let fetchUrl = `/Announcements?category=${category}&voivodeship=${voivodeship}&city=${city}&searchPhrase=${searchPhraseParam}&page=${isInitialLoad ? pageNum : pageNumber}`;
+        let fetchUrl = getCorrectFetchUrl(pageNum);
         console.log(fetchUrl)
         getData(fetchUrl)
             .then(data => {

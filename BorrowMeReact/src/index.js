@@ -11,6 +11,7 @@ import searchPhraseReducer from "./features/searchPhrase";
 import categoryReducer from "./features/category";
 import cityHintsReducer from "./features/cityHints";
 import costFilterReducer from "./features/costFilter"
+import sortReducer from "./features/sort"
 
 
 const store = configureStore({
@@ -19,7 +20,8 @@ const store = configureStore({
         searchPhrase: searchPhraseReducer,
         category: categoryReducer,
         cityHints: cityHintsReducer,
-        costFilter: costFilterReducer
+        costFilter: costFilterReducer,
+        sort: sortReducer
     },
 })
 

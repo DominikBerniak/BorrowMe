@@ -7,6 +7,7 @@ import {useDispatch} from "react-redux";
 import {clearLocation} from "../features/location";
 import {clearSearchPhrase} from "../features/searchPhrase";
 import {clearCategory} from "../features/category";
+import {clearCostFilter} from "../features/costFilter";
 
 const Home = () => {
     const [announcements, setAnnouncements] = useState()
@@ -24,6 +25,7 @@ const Home = () => {
         dispatch(clearSearchPhrase());
         dispatch(clearLocation());
         dispatch(clearCategory());
+        dispatch(clearCostFilter());
     }
 
     return (

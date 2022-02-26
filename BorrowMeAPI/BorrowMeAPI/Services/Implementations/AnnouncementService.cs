@@ -29,11 +29,12 @@ namespace BorrowMeAPI.Services.Implementations
             return await _repository.GetById(announcementId);
         }
 
-        public async Task<FilteredAnnoucementsDto> GetAnnouncements(string category, string voivodship, string city, string search_phrase, int currentPage)
+        public async Task<FilteredAnnoucementsDto> GetAnnouncements(string category, string voivodship, 
+            string city, string search_phrase, int currentPage, int costMin, int costMax, string sortBy, string sortDirection)
         {
             const float numberOfAnnoucementsPerPage = 2f;
 
-            var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(category, voivodship, city, search_phrase);
+            var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(category, voivodship, city, search_phrase, costMin, costMax, sortBy, sortDirection);
 
             var numberOfPages = Math.Ceiling(filteredAnnoucements.Count / numberOfAnnoucementsPerPage);
 

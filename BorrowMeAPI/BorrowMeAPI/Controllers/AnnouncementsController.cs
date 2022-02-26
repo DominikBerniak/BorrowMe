@@ -19,12 +19,13 @@ namespace BorrowMeAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<SearchedAnnoucementsDTO>>> GetAnnouncements([FromQuery] int page = 1, 
             [FromQuery] string? category = "all", [FromQuery] string? voivodeship = "all", [FromQuery] string? city = "all", 
-            [FromQuery] string? searchPhrase = "all")
+            [FromQuery] string? searchPhrase = "all", [FromQuery] int costMin = 0, [FromQuery] int costMax = 50,
+            [FromQuery] string? sortBy="publishDate", [FromQuery] string? sortDirection = "desc")
         {
             _logger.LogInformation($"Getting announcements with params: page: {page}, category: {category}, voivodeship: {voivodeship}, " +
                 $"city: {city}, searchPhrase: {searchPhrase}");
 
-            var announcementDto = await _announcementService.GetAnnouncements(category, voivodeship, city, searchPhrase, page);
+            var announcementDto = await _announcementService.GetAnnouncements(category, voivodeship, city, searchPhrase, page, costMin, costMax, sortBy, sortDirection);
             if (announcementDto.Status == Status.NotFound)
             {
                 _logger.LogInformation("No annoucements found");

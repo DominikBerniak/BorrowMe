@@ -8,6 +8,7 @@ import {clearLocation} from "../features/location";
 import {clearSearchPhrase} from "../features/searchPhrase";
 import {clearCategory} from "../features/category";
 import {clearCostFilter} from "../features/costFilter";
+import {clearSort} from "../features/sort";
 
 const Home = () => {
     const [announcements, setAnnouncements] = useState()
@@ -26,6 +27,7 @@ const Home = () => {
         dispatch(clearLocation());
         dispatch(clearCategory());
         dispatch(clearCostFilter());
+        dispatch(clearSort());
     }
 
     return (

@@ -130,7 +130,6 @@ const SearchResults = () => {
         let pageNumQuery = `&page=${isInitialLoad ? pageNum : pageNumber}`;
         let costFilterQuery = `&costMin=${costFilter.minCost}&costMax=${costFilter.maxCost}`;
         let sortQuery = `&sortBy=${sortFilter.sortBy}&sortDirection=${sortFilter.sortDirection}`;
-
         return "/Announcements?" + categoryQuery + locationQuery + searchPhraseQuery + pageNumQuery + costFilterQuery + sortQuery;
     }
     const FetchNewAnnouncements = () => {

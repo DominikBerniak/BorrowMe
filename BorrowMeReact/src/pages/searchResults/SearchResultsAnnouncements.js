@@ -18,8 +18,6 @@ const SearchResultsAnnouncements = ({announcements}) => {
             case 1:
                 return `${announcement.price} zł / dzień`;
             case 2:
-                return "Za piwo";
-            case 3:
                 return `Za ${announcement.otherPaymentType}`;
         }
     }

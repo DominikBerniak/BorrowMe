@@ -4,14 +4,12 @@ namespace BorrowMeAPI.Services.Interfaces
 {
     public interface IAnnouncementService
     {
-        // GET all
-        Task<IEnumerable<Announcement>> GetAnnouncements();
-
         // GET by ID
         Task<Announcement> GetAnnouncement(Guid announcementId);
 
         // GET by Filters
-        Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage);
+        Task<FilteredAnnoucementsDto> GetAnnouncements(string category, string voivodship, string city, 
+            string search_phrase, int currentPage, int costMin, int costMax, string sortBy, string sortDirection);
 
 
         // POST

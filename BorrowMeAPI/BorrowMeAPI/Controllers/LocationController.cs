@@ -51,14 +51,24 @@ namespace BorrowMeAPI.Controllers
         }
 
         [HttpGet("Cities/Search/{searchCity}")]
-        public async Task<ActionResult<City>> GetCitiesByName(string searchCity)
+        public async Task<ActionResult<List<CityDto>>> GetCitiesByName(string searchCity)
         {
-            var cities = await _cityService.GetByName(searchCity);
-            if (cities.Count() == 0)
+            var allVoivodeships = await _voivodeshipService.GetAllVoivodeships();
+            var filteredVoivodeships = allVoivodeships.Where(v=>v.Cities.Any(c=>c.Name.ToLower().Contains(searchCity.ToLower()))).ToList();
+            var cityData = new List<CityDto>();
+            foreach (var voivodeship in filteredVoivodeships)
             {
-                return NotFound("No cities matched your criteria.");
+                var cities = voivodeship.Cities.Where(c => c.Name.ToLower().Contains(searchCity.ToLower())).ToList();
+                foreach (var city in cities)
+                {
+                    cityData.Add(new CityDto
+                    {
+                        VoivodeshipName = voivodeship.Name,
+                        CityName = city.Name
+                    });
+                }
             }
-            return Ok(cities);
+            return Ok(cityData);
         }
 
         [HttpPost("Cities")]

@@ -1,0 +1,41 @@
+.filter-header{
+
+}
+.filter-header:hover{
+    cursor: pointer;
+
+}
+.clear-filter-button{
+    font-size: 1.1rem;
+}
+.clear-filter-button:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.main-category{
+    font-size: 1.3rem;
+
+}
+.main-category:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+.sub-category:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+.chosen-main-category{
+    margin-left: 1rem;
+    font-weight: bold;
+}
+
+.MuiRadio-root, .MuiSlider-root, .MuiSlider-track, .MuiSlider-thumb{
+    color: #555 !important;
+    box-shadow: none !important;
+}
+.cost-slider-values{
+    border: 0.1rem solid #b2b2b2;
+    outline: none;
+}
+

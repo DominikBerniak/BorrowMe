@@ -1,10 +1,9 @@
 import {SlideDown} from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
 import {useEffect, useState} from "react";
-import {getData} from "../../../services/apiFetch";
+import {getData} from "../../../../services/apiFetch";
 
-
-const CategoriesDropDown = ({areCategoriesVisible, handleCategoryClick}) => {
+const CategoriesDropdown = ({areCategoriesVisible, handleCategoryClick}) => {
     const [categories, setCategories] = useState()
 
     useEffect(() => {
@@ -35,4 +34,4 @@ const CategoriesDropDown = ({areCategoriesVisible, handleCategoryClick}) => {
     );
 };
 
-export default CategoriesDropDown;
+export default CategoriesDropdown;

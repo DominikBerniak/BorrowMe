@@ -5,6 +5,10 @@ export async function getData(url)
     {
         return await response.json();
     }
+    else if (response.status === 400)
+    {
+        return await response.json()
+    }
     else
     {
         return response.statusText

@@ -9,7 +9,7 @@
             _dbContext = dbContext;
         }
 
-        public async Task<List<Announcement>> GetAnnouncementsByFilters(string category, string voivodeship, string city, string searchPhrase)
+        public async Task<List<Announcement>> GetAnnouncementsByFilters(string category, string voivodeship, string city, string searchPhrase, int costMin, int costMax, string sortBy, string sortDirection)
         {
             var announcements = _dbContext.Announcements
                 .Include(a => a.PictureLocations)
@@ -33,6 +33,31 @@
             if (searchPhrase != "all")
             {
                 announcements = announcements.Where(a => a.Title.ToLower().Contains(searchPhrase.ToLower()) || a.Description.ToLower().Contains(searchPhrase.ToLower()));
+            }
+            announcements = announcements.Where(a => a.Price >= costMin && a.Price <= costMax);
+            if (sortDirection == "desc")
+            {
+                switch (sortBy)
+                {
+                    case "publishDate":
+                        announcements = announcements.OrderByDescending(a => a.PublishDate);
+                        break;
+                    case "cost":
+                        announcements = announcements.OrderByDescending(a => a.Price);
+                        break;
+                }
+            }
+            if (sortDirection == "asc")
+            {
+                switch (sortBy)
+                {
+                    case "publishDate":
+                        announcements = announcements.OrderBy(a => a.PublishDate);
+                        break;
+                    case "cost":
+                        announcements = announcements.OrderBy(a => a.Price);
+                        break;
+                }
             }
 
             return await announcements.ToListAsync();

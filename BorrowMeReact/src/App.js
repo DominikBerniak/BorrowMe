@@ -7,13 +7,14 @@ import SearchResults from "./pages/SearchResults";
 import AnnouncementPage from "./pages/announcement/AnnouncementPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
+import SearchResultsRedirect from "./pages/searchResults/SearchResultsRedirect";
 
 function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<Home />}/>
-                <Route path="search-results" element={<SearchResults />}/>
+                <Route path="search-results" element={<SearchResultsRedirect />}/>
                 <Route path="search-results/:mainCategoryParam" element={<SearchResults />}/>
                 <Route path="search-results/:mainCategoryParam/:subCategoryParam" element={<SearchResults />}/>
                 <Route path="search-results/:mainCategoryParam/:subCategoryParam/:voivodeshipParam" element={<SearchResults />}/>

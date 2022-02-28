@@ -1,5 +1,4 @@
-﻿using BorrowMeAPI.Model.DataTransferObjects;
-using BorrowMeAPI.Repositories;
+﻿using BorrowMeAPI.Repositories;
 using BorrowMeAPI.Services.Interfaces;
 
 namespace BorrowMeAPI.Services.Implementations
@@ -34,11 +33,12 @@ namespace BorrowMeAPI.Services.Implementations
             return await _announcementRepository.GetAnnouncementById(announcementId);
         }
 
-        public async Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage)
+        public async Task<FilteredAnnoucementsDto> GetAnnouncements(string category, string voivodship, 
+            string city, string search_phrase, int currentPage, int costMin, int costMax, string sortBy, string sortDirection)
         {
             const float numberOfAnnoucementsPerPage = 2f;
 
-            var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(category, voivodship, city, search_phrase);
+            var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(category, voivodship, city, search_phrase, costMin, costMax, sortBy, sortDirection);
 
             var numberOfPages = Math.Ceiling(filteredAnnoucements.Count / numberOfAnnoucementsPerPage);
 
@@ -50,18 +50,18 @@ namespace BorrowMeAPI.Services.Implementations
                     Status = Status.NotFound
                 };
             }
-            if (currentPage > numberOfPages)
+            if (currentPage > numberOfPages || currentPage < 1)
             {
                 return new FilteredAnnoucementsDto
                 {
-                    Status = Status.BadRequest
+                    Status = Status.BadRequest,
+                    NumberOfPages = (int)numberOfPages
                 };
             }
-
             filteredAnnoucements = filteredAnnoucements
-                .Skip(( currentPage - 1 ) * (int) numberOfAnnoucementsPerPage)
-                .Take((int) numberOfAnnoucementsPerPage)
-                .ToList();
+            .Skip((int) ( currentPage - 1 ) * (int) numberOfAnnoucementsPerPage)
+            .Take((int) numberOfAnnoucementsPerPage)
+            .ToList();
 
             return new FilteredAnnoucementsDto
             {

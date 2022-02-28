@@ -41,7 +41,8 @@
     transition: transform 0.5s;
 }
 #navbar-add-icon:hover{
-    transform: scale(1.4);
+    transform: rotate(90deg) scale(1.4);
+
 }
 
 #user-info-dropdown-container{

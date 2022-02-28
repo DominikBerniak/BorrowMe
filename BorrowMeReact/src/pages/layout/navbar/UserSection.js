@@ -9,7 +9,7 @@ import {useState} from "react";
 
 const userData = {
     firstName: "Dominik",
-    avatarName: "bobr.jpg"
+    avatarName: "mlocus.png"
 }
 
 

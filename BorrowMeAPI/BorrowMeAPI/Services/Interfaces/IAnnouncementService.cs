@@ -13,7 +13,7 @@ namespace BorrowMeAPI.Services.Interfaces
 
 
         // POST
-        Task<Announcement> AddAnnouncement(Announcement announcement);
+        Task<Announcement> AddAnnouncement(AnnouncementDTO announcementDTO);
 
 
         // PUT by ID

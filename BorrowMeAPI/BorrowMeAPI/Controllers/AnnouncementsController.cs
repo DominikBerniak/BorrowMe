@@ -47,11 +47,14 @@ namespace BorrowMeAPI.Controllers
 
         // /api/Announcements POST
         [HttpPost]
-        public async Task<ActionResult<Announcement>> AddNewAnnouncement(Announcement announcement)
+        public async Task<ActionResult<Announcement>> AddNewAnnouncement(AnnouncementDTO announcementDTO)
         {
             _logger.LogInformation("Add new announcements attempt.");
-            var createdAnnouncement = await _announcementService.AddAnnouncement(announcement);
-            return Ok(createdAnnouncement);
+            _logger.LogInformation(announcementDTO.ToString());
+
+            //return Ok();
+            var createdannouncement = await _announcementService.AddAnnouncement(announcementDTO);
+            return Ok(createdannouncement);
         }
 
         // /api/Announcements/{id} GET

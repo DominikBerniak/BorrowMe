@@ -5,7 +5,9 @@ import {getData} from "../../services/apiFetch";
 import "./announcementPage.css"
 import Spinner from "../../components/Spinner";
 import {useNavigate} from "react-router-dom";
-import img from "../..//images/losiek.jpg";
+import img from "../../images/losiek.jpg";
+import img2 from "../../images/zubr.jpg";
+import img3 from "../../images/bobr.jpg";
 import Calendar from 'react-calendar'
 import '../../styles/Custom-calendar.css';
 import CaretNext from "../../components/CaretNext";
@@ -14,11 +16,19 @@ import ArrowPrevious from "../../components/ArrowPrevious";
 import ArrowNext from "../../components/ArrowNext";
 
 const AnnouncementPage = () => {
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(new Date())
+    //
     const [imageDirectory, setPath] = useState("");
     const [imageName, setImageName] = useState("")
+    //
     const [count, setCount] = useState(0)
     const [announcementData, setData] = useState();
+    // test
+    const imagePaths = [
+        img, img2, img3
+    ]
+    const [image, setImage] = useState(imagePaths[0]);
+    //
     const actionLink = `api/announcements/3/Reservation`; //${announcementId}
     const navigate = useNavigate();
     const {announcementId} = useParams();
@@ -27,17 +37,51 @@ const AnnouncementPage = () => {
         navigate(`/announcements/3`) //${announcementId}
     };
     let handleImageChange = () => {
-        setPath(`${announcementData}.images[${count}].imagePath`)
-        setImageName(`${announcementData}.images[${count}].imageName`)
+        setPath(`${announcementData}.images[${count}].${imageDirectory}`)
+        setImageName(`${announcementData}.images[${count}].${imageName}`)
     }
     let handleNextImage = () => {
-        setCount(count + 1);
-        handleImageChange()
+        if (count < imagePaths.length)
+        {
+            setCount(count => count + 1);
+            console.log(count)
+            setImage(imagePaths[count])
+            //handleImageChange()
+        }
     };
     let handlePreviousImage = () => {
-        setCount(count - 1);
-        handleImageChange()
+        if (count > 0)
+        {
+            setCount(count => count - 1);
+            console.log(count)
+            setImage(imagePaths[count])
+            //handleImageChange()
+        }
     };
+    const months = [
+        "styczeń",
+        "luty",
+        "marzec",
+        "kwiecień",
+        "maj",
+        "czerwiec",
+        "lipiec",
+        "sierpień",
+        "wrzesień",
+        "październik",
+        "listopad",
+        "grudzień"
+    ]
+    const dayOfWeek = [
+        "nie",
+        "pon",
+        "wto",
+        "śro",
+        "czw",
+        "pią",
+        "sob"
+    ]
+
 
     // useEffect(() => {
     //         getData(`/api/Announcements/${announcementId}`)
@@ -62,7 +106,7 @@ const AnnouncementPage = () => {
                             <button type="button" onClick={handlePreviousImage} className="btn btn-outline-warning image-buttons">
                                 <ArrowPrevious/>
                             </button>
-                            <img className="picture" src={img}/>
+                            <img className="picture" src={image}/>
                             <button type="button" onClick={handleNextImage} className="btn btn-outline-warning image-buttons">
                                 <ArrowNext/>
                             </button>
@@ -72,17 +116,17 @@ const AnnouncementPage = () => {
                             <p>Lokalizacja: Kraków</p> {/*{announcementData.city.name}*/}
                         </div>
                             <div className="calendar-container center">
-                                <Calendar onChange={setDate} value={date} nextLabel={<ArrowNext/>} prevLabel={<ArrowPrevious/>} next2Label={<CaretNext/>} prev2Label={<CaretPrevious/>} selectRange={true}/>
+                                <Calendar onChange={setDate} value={date} nextLabel={<ArrowNext/>} prevLabel={<ArrowPrevious/>} next2Label={<CaretNext/>} prev2Label={<CaretPrevious/>} selectRange={true} returnValue="range"/>
                             </div>
                             <div className="choosing-date-form center">
                                 <form method="post" action={actionLink} id="reservation-form" onSubmit={handleSubmit}>
                                     <div className="from-container">
-                                        <label>Od </label>
-                                        <input/>
+                                        <p className="label">Od: </p>
+                                        <p className="reservationDate">{date[0] == null ? "" : `${dayOfWeek[date[0].getDay()]}, ${date[0].getDate()} ${months[date[0].getMonth()]} ${date[0].getFullYear()}`}</p>
                                     </div>
                                     <div className="to-container">
-                                        <label>Do </label>
-                                        <input/>
+                                        <p className="label">Do: </p>
+                                        <p className="reservationDate">{date[1] == null ? "" : `${dayOfWeek[date[1].getDay()]}, ${date[1].getDate()} ${months[date[1].getMonth()]} ${date[1].getFullYear()}`}</p>
                                     </div>
                                     <div id="button-container" className="center">
                                         <button type="submit" className="btn btn-warning" id="reservation-button">Zarezerwuj</button>

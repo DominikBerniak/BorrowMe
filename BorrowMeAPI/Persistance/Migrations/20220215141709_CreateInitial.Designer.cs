@@ -7,7 +7,7 @@ using Persistance;
 
 #nullable disable
 
-namespace BorrowMeAPI.Migrations
+namespace Api.Migrations
 {
     [DbContext(typeof(DataDbContext))]
     [Migration("20220215141709_CreateInitial")]

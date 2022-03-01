@@ -1,6 +1,6 @@
-﻿using BorrowMeAPI.Model.DataTransferObjects;
-using BorrowMeAPI.Services.Implementations;
-using BorrowMeAPI.Services.Interfaces;
+﻿using Core.Model.DataTransferObjects;
+using Core.Services.Interfaces;
+using Domain.Entieties;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BorrowMeAPI.Controllers

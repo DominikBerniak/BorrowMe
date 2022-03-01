@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Entieties;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BorrowMeAPI.Controllers
 {

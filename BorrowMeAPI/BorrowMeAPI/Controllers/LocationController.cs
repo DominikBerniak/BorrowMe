@@ -3,7 +3,7 @@ using Core.Services.Interfaces;
 using Domain.Entieties;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BorrowMeAPI.Controllers
+namespace Api.Controllers
 {
     [ApiController]
     public class LocationController : ControllerBase

@@ -1,5 +1,4 @@
 global using Microsoft.EntityFrameworkCore;
-using BorrowMeAPI.Repositories;
 using Core.Repositories;
 using Core.Services.Interfaces;
 using Domain.Entieties;

@@ -4,7 +4,7 @@ using Core.Services.Interfaces;
 using Domain.Entieties;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BorrowMeAPI.Controllers
+namespace Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]

@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {changeSort} from "../../features/sort";
 
+
 const SortingPanel = ({pageNumber, incrementPageNum, decrementPageNum, numberOfPages, announcements, changePageToNumber}) => {
     const dispatch = useDispatch();
     const [inputPageNum, setInputPageNum] = useState(pageNumber.toString());

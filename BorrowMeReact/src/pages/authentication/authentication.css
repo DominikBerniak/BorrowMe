@@ -1,0 +1,84 @@
+#authentication-main-container{
+    min-width: 30rem;
+    min-height: 40rem;
+    border-radius: 0.7rem !important;
+    background-color: #f1f1f1;
+}
+#links-header{
+    /*background-color: pink;*/
+    /*border-radius: 0.7rem 0.7rem 0 0 !important;*/
+    font-size: 1.5rem;
+}
+#links-header a{
+    background-color: #cccccc;
+    border-color: #cccccc !important;
+    color: black;
+    text-decoration: none;
+    transition: border-color 0.8s, background-color 0.8s;
+}
+#login-navigate-link
+{
+    border-radius: 0.7rem 0 0 0 !important;
+}
+#register-navigate-link{
+    border-radius: 0 0.7rem 0 0 !important;
+}
+#links-header a.current-page-header{
+    border-color: #2d2d2d !important;
+    background-color: #676767;
+    color: white;
+}
+#authentication-form input{
+    outline: none;
+    border: 0.1rem solid #b2b2b2;
+    height: 2.2rem;
+}
+#authentication-form input:focus{
+    /*outline: 0.1rem solid #949494;*/
+    box-shadow: 0 0 0 0.1rem #949494;
+    /*border: 0.1rem solid #ff0000;*/
+}
+#authentication-form input:focus ~.password-eye-button{
+    /*outline: 0.1rem solid #949494;*/
+    box-shadow: 0.1rem 0 0 0 #949494,
+                0 0.1rem 0 0 #949494,
+                0 -0.1rem 0 0 #949494;;
+}
+input#password-input{
+    /*background-color: pink;*/
+    border-left: 0.1rem solid #b2b2b2;
+    border-top: 0.1rem solid #b2b2b2;
+    border-bottom: 0.1rem solid #b2b2b2;
+    border-right: none;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+}
+.password-eye-button{
+    background-color: white;
+    border-top: 0.1rem solid #b2b2b2;
+    border-bottom: 0.1rem solid #b2b2b2;
+    border-right: 0.1rem solid #b2b2b2;
+    border-radius: 0 0.25rem 0.25rem 0 !important;
+    /*padding: 0.2rem;*/
+    height: 2.2rem !important;
+}
+.password-eye-button:hover{
+    margin-left: auto;
+    cursor: pointer;
+    color: #606060;
+}
+#authenticate-button{
+    /*outline: none;*/
+    background-color: #676767;
+    color: white;
+    font-size: 1.2rem;
+}
+#facebook-button, #google-button{
+    width: 8rem;
+}
+#facebook-button{
+    background-color: #1B74E4;
+    color: white;
+}
+#google-button{
+    background-color: white;
+}

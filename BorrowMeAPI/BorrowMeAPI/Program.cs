@@ -1,12 +1,12 @@
-global using BorrowMeAPI.Dao;
-global using BorrowMeAPI.Model;
-global using BorrowMeAPI.Model.DataTransferObjects;
 global using Microsoft.EntityFrameworkCore;
-using BorrowMeAPI.Model.Entieties;
 using BorrowMeAPI.Repositories;
-using BorrowMeAPI.Services.Implementations;
-using BorrowMeAPI.Services.Interfaces;
+using Core.Repositories;
+using Core.Services.Interfaces;
+using Domain.Entieties;
 using Microsoft.Extensions.FileProviders;
+using Persistance;
+using Persistance.Repositories;
+using Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();

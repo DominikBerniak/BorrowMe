@@ -3,9 +3,11 @@ export const getCorrectPaymentElem = (announcement, quantity = 1) => {
         case 0:
             return "Za darmo";
         case 1:
-            return `${(announcement.price)*quantity} zł / dzień`;
+            return quantity > 1 ? `${(announcement.price)*quantity} zł` : `${(announcement.price)} zł / dzień`;
         case 2:
             return `Za ${announcement.otherPaymentType}`;
     }
 }
+
+
 

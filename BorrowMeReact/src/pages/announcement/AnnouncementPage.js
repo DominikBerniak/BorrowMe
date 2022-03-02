@@ -51,6 +51,19 @@ const AnnouncementPage = () => {
             handleImageChange()
         }
     };
+    let onChange = (date) => {
+        setDate(date)
+        if (date == null || date[0] === null || date[1] === null)
+        {
+            setQuantity(1);
+        }
+        else
+        {
+            let differenceInTime = date[1].getTime() - date[0].getTime();
+            let differenceInDays = differenceInTime / (1000 * 3600 * 24);
+            setQuantity(Math.round(differenceInDays))
+        }
+    }
 
     useEffect(() => {
             getData(`/Announcements/${announcementId}`)
@@ -94,14 +107,14 @@ const AnnouncementPage = () => {
                             }
                         </div>
                             <div className="calendar-container center">
-                                <Calendar onChange={setDate} value={date} nextLabel={<ArrowNext/>} prevLabel={<ArrowPrevious/>} next2Label={<CaretNext/>} prev2Label={<CaretPrevious/>} selectRange={true} returnValue="range"/>
+                                <Calendar onChange={onChange} value={date} nextLabel={<ArrowNext/>} prevLabel={<ArrowPrevious/>} next2Label={<CaretNext/>} prev2Label={<CaretPrevious/>} selectRange={true} returnValue="range"/>
                             </div>
                             <div className="choosing-date-form">
                                 <form method="post" action={actionLink} id="reservation-form" onSubmit={handleSubmit}>
-                                    <DateRangePicker value={date} disableCalendar={true} onChange={setDate} rangeDivider="-"/>
+                                    <DateRangePicker value={date} disableCalendar={true} onChange={onChange} rangeDivider="-"/>
                                     <div className="reservation-price-container">
                                         <label id="reservation-price-paragraph">Cena rezerwacji:</label>
-                                        <p id="reservation-price">{getCorrectPaymentElem(announcementData, quantity)}</p>
+                                        <p id="reservation-price">{quantity > 1 ? getCorrectPaymentElem(announcementData, quantity) : ""}</p>
                                     </div>
                                     <div className="reservation-button-container center">
                                         <button type="submit" className="btn btn-warning"

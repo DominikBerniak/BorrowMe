@@ -10,9 +10,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {changeSearchPhrase} from "../features/searchPhrase";
 import {changeCategory} from "../features/category";
 import {changeLocation, clearLocation} from "../features/location";
+import {Helmet} from "react-helmet";
 
 
 const SearchResults = () => {
+    const [pageTitle, setPageTitle] = useState("Wyniki wyszukiwania")
     const [allFetchedAnnouncements, setAllFetchedAnnouncements] = useState([]);
     const [announcements, setAnnouncements] = useState();
     const [numberOfPages, setNumberOfPages] = useState();
@@ -93,6 +95,9 @@ const SearchResults = () => {
 
     useEffect(() => {
         console.log("reset")
+        setPageTitle(
+            searchPhrase !== "" ? searchPhrase : "Wyniki wyszukiwania"
+        )
         setAllFetchedAnnouncements([]);
         setAnnouncements();
         setIsFetchingData(false);
@@ -130,7 +135,7 @@ const SearchResults = () => {
         let pageNumQuery = `&page=${isInitialLoad ? pageNum : pageNumber}`;
         let costFilterQuery = `&costMin=${costFilter.minCost}&costMax=${costFilter.maxCost}`;
         let sortQuery = `&sortBy=${sortFilter.sortBy}&sortDirection=${sortFilter.sortDirection}`;
-        return "/Announcements?" + categoryQuery + locationQuery + searchPhraseQuery + pageNumQuery + costFilterQuery + sortQuery;
+        return "/api/Announcements?" + categoryQuery + locationQuery + searchPhraseQuery + pageNumQuery + costFilterQuery + sortQuery;
     }
     const FetchNewAnnouncements = () => {
         console.log('%c New Data', 'color:red;')
@@ -216,6 +221,9 @@ const SearchResults = () => {
 
     return (
         <div id="main-container" className="w-90 mx-auto">
+            <Helmet>
+                <title>{pageTitle} | BorrowMe</title>
+            </Helmet>
             <FiltersPanel/>
             {announcements !== "Not Found" ?
                 <>

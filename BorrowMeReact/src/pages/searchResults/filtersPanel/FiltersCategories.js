@@ -12,7 +12,7 @@ const FiltersCategories = () => {
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        getData("/Categories/MainCategories")
+        getData("/api/Categories/MainCategories")
             .then(data=>{
                 setCategories(data);
             })

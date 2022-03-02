@@ -8,6 +8,7 @@ import AnnouncementPage from "./pages/announcement/AnnouncementPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import SearchResultsRedirect from "./pages/searchResults/SearchResultsRedirect";
+import UserPage from "./pages/UserPage";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="terms-of-use" element={<TermsOfUse/>}/>
                 <Route path="privacy-policy" element={<PrivacyPolicy/>}/>
                 <Route path="announcement/:announcementId" element={<AnnouncementPage/>}/>
+                <Route path="users/:userId" element={<UserPage/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Route>
         </Routes>

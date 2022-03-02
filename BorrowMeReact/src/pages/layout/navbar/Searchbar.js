@@ -28,7 +28,7 @@ const Searchbar = () => {
 
     useEffect(() => {
         if (!voivodeships) {
-            getData("/Voivodeships")
+            getData("/api/Voivodeships")
                 .then(data => {
                     setVoivodeships(data);
                 })
@@ -84,7 +84,7 @@ const Searchbar = () => {
 
     const handleLocationChange = (searchValue) => {
         if (searchValue.length > 2) {
-            getData(`/Cities/Search/${searchValue}`)
+            getData(`/api/Cities/Search/${searchValue}`)
                 .then(citiesData => {
                     if (citiesData.length > 0) {
                         dispatch(setCityHints(citiesData))

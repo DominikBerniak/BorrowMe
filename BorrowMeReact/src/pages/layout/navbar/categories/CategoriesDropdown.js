@@ -8,7 +8,7 @@ const CategoriesDropdown = ({areCategoriesVisible, handleCategoryClick}) => {
 
     useEffect(() => {
         if (!categories) {
-            getData("/Categories/MainCategories")
+            getData("/api/Categories/MainCategories")
                 .then(categories => {
                     setCategories(categories);
                 })

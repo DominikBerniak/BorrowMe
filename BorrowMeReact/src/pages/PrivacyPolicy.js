@@ -1,6 +1,13 @@
+import {Helmet} from "react-helmet";
+
 const PrivacyPolicy = () => {
     return (
-        <h1>Polityka prywatności</h1>
+        <div>
+            <Helmet>
+                <title>Polityka prywatności | BorrowMe</title>
+            </Helmet>
+            <h1>Polityka prywatności</h1>
+        </div>
     )
 }
 

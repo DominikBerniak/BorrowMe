@@ -10,7 +10,6 @@ import TermsOfUse from "./pages/TermsOfUse";
 import SearchResultsRedirect from "./pages/searchResults/SearchResultsRedirect";
 import Authentication from "./pages/Authentication";
 
-
 function App() {
     return (
         <Routes>

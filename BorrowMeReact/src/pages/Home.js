@@ -3,16 +3,32 @@ import {useState} from 'react';
 import Announcement from "./home/Announcement";
 import Spinner from "../components/Spinner";
 import {getData} from "../services/apiFetch";
+import {useDispatch} from "react-redux";
+import {clearLocation} from "../features/location";
+import {clearSearchPhrase} from "../features/searchPhrase";
+import {clearCategory} from "../features/category";
+import {clearCostFilter} from "../features/costFilter";
+import {clearSort} from "../features/sort";
 
 const Home = () => {
     const [announcements, setAnnouncements] = useState()
+    const dispatch = useDispatch();
 
     useEffect(() => {
+        clearAllSearchParams()
         getData("/Announcements")
-            .then(announcements=>{
-                setAnnouncements(announcements);
+            .then(announcementDto=>{
+                setAnnouncements(announcementDto.announcements);
             })
     }, [])
+
+    const clearAllSearchParams = () => {
+        dispatch(clearSearchPhrase());
+        dispatch(clearLocation());
+        dispatch(clearCategory());
+        dispatch(clearCostFilter());
+        dispatch(clearSort());
+    }
 
     return (
         <div>

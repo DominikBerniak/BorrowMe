@@ -1,10 +1,18 @@
 import './announcement.css'
 import ImageAPI from "../../components/ImageAPI";
+import {useNavigate} from "react-router-dom";
+
 
 const Announcement = ({ announcement }) => {
+    const navigate = useNavigate();
+    const handleAnnouncementClick = (announcementId) => {
+        navigate(`/announcement/${announcementId}`)
+    }
+    
     return (
-        <div className='announcement'>
-            <div className="title">
+        <div className='announcement' onClick={() => handleAnnouncementClick(announcement.id)}>
+            {console.log(announcement)}
+            <div className="title" >
                 <b>{announcement.title}</b>
             </div>
             <div className="picture">
@@ -36,7 +44,7 @@ const Announcement = ({ announcement }) => {
             </div>
             <div className="informations-row-2">
                 <div className="date">
-                    {announcement.publishDate.slice(0, 10)}
+                    {announcement.subCategory.name}
                 </div>
             </div>
         </div>

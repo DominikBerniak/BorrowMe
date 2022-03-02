@@ -1,52 +1,46 @@
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import ImageAPI from "../../components/ImageAPI";
 import {getData} from "../../services/apiFetch";
 import "./announcementPage.css"
 import Spinner from "../../components/Spinner";
 import {useNavigate} from "react-router-dom";
-import img from "../../images/losiek.jpg";
-import img2 from "../../images/zubr.jpg";
-import img3 from "../../images/bobr.jpg";
 import Calendar from 'react-calendar'
 import '../../styles/Custom-calendar.css';
+import '../../styles/Custom-DatePicker.css';
 import CaretNext from "../../components/CaretNext";
 import CaretPrevious from "../../components/CaretPrevious";
 import ArrowPrevious from "../../components/ArrowPrevious";
 import ArrowNext from "../../components/ArrowNext";
+import {getCorrectPaymentElem} from "../../services/announcementUtils";
+import NoImage from "../../components/NoImage";
+import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
 
 const AnnouncementPage = () => {
-    const [date, setDate] = useState(new Date())
-    //
+    const [date, setDate] = useState(new Date());
     const [imageDirectory, setPath] = useState("");
     const [imageName, setImageName] = useState("")
-    //
     const [count, setCount] = useState(0)
     const [announcementData, setData] = useState();
-    // test
-    const imagePaths = [
-        img, img2, img3
-    ]
-    const [image, setImage] = useState(imagePaths[0]);
-    //
-    const actionLink = `api/announcements/3/Reservation`; //${announcementId}
-    const navigate = useNavigate();
+    const [quantity, setQuantity] = useState(1);
     const {announcementId} = useParams();
+    const actionLink = `api/announcements/${announcementId}/Reservation`;
+    const navigate = useNavigate();
     let handleSubmit = (e) => {
         e.preventDefault();
-        navigate(`/announcements/3`) //${announcementId}
+        navigate(`/announcements/${announcementId}`)
     };
     let handleImageChange = () => {
-        setPath(`${announcementData}.images[${count}].${imageDirectory}`)
-        setImageName(`${announcementData}.images[${count}].${imageName}`)
+        setPath(announcementData.pictureLocations[count].imageDirectory)
+        setImageName(announcementData.pictureLocations[count].imageName)
+
     }
     let handleNextImage = () => {
-        if (count < imagePaths.length)
+        if (count < {announcementData}.images.length)
         {
             setCount(count => count + 1);
             console.log(count)
-            setImage(imagePaths[count])
-            //handleImageChange()
+            handleImageChange()
         }
     };
     let handlePreviousImage = () => {
@@ -54,99 +48,84 @@ const AnnouncementPage = () => {
         {
             setCount(count => count - 1);
             console.log(count)
-            setImage(imagePaths[count])
-            //handleImageChange()
+            handleImageChange()
         }
     };
-    const months = [
-        "styczeń",
-        "luty",
-        "marzec",
-        "kwiecień",
-        "maj",
-        "czerwiec",
-        "lipiec",
-        "sierpień",
-        "wrzesień",
-        "październik",
-        "listopad",
-        "grudzień"
-    ]
-    const dayOfWeek = [
-        "nie",
-        "pon",
-        "wto",
-        "śro",
-        "czw",
-        "pią",
-        "sob"
-    ]
 
-
-    // useEffect(() => {
-    //         getData(`/api/Announcements/${announcementId}`)
-    //             .then(data => {setData(data);})
-    //         imageDirectory = `${announcementData}.images[${count}].imagePath`;
-    //         imageName = `${announcementData}.images[${count}].imageName`;
-    // }, [])
+    useEffect(() => {
+            getData(`/Announcements/${announcementId}`)
+                .then(data => {
+                    setData(data);
+                    setPath(data.pictureLocations[0].directoryName);
+                    setImageName(data.pictureLocations[0].fileName);
+                });
+    }, [])
 
     return (
         <div className="announcement-container">
-            {/*{announcementData ?*/}
-            {/*    <>*/}
+            {announcementData ?
+               <>
                     <div className="btn-warning announcement-top">
-                        <h2 id="title">Kosiarka spalinowa</h2> {/*announcementData.title*/}
-                        <h2 id="price">10 zł / dzień</h2>
+                        <h2 id="title">{announcementData.title}</h2>
+                        <h2 id="price">{getCorrectPaymentElem(announcementData)}</h2>
                     </div>
                     <div className="announcement-middle">
                         <div className="announcement-description">
-                            <p className={"description-text"}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam condimentum metus ultricies nibh gravida posuere. Donec in mi nulla. Nam consectetur mauris vel sodales maximus. Sed at lorem porta, commodo elit nec, volutpat ex. Vestibulum maximus mollis erat, eget dignissim augue varius et. Quisque pharetra molestie cursus. Mauris dapibus nibh sed dolor consequat tempor.</p> {/*announcementData.description*/}
+                            <p className={"description-text"}>{announcementData.description}</p>
                         </div>
                         <div className="announcement-picture-container center">
-                            <button type="button" onClick={handlePreviousImage} className="btn btn-outline-warning image-buttons">
-                                <ArrowPrevious/>
-                            </button>
-                            <img className="picture" src={image}/>
-                            <button type="button" onClick={handleNextImage} className="btn btn-outline-warning image-buttons">
-                                <ArrowNext/>
-                            </button>
-                            {/*<ImageAPI imageDirectory="" imageName="" classNames="announcement-picture"/>*/}
-                        </div>
-                        <div className="city">
-                            <p>Lokalizacja: Kraków</p> {/*{announcementData.city.name}*/}
+                            {imageDirectory!=="" ?
+                                <>
+                                    {announcementData.pictureLocations.length > 1 &&
+                                        <button type="button" onClick={handlePreviousImage}
+                                                className="btn btn-outline-warning image-buttons">
+                                            <ArrowPrevious/>
+                                        </button>
+                                    }
+                                    <ImageAPI imageDirectory={imageDirectory} imageName={imageName} classNames="announcement-picture"/>
+                                    {announcementData.pictureLocations.length > 1 &&
+                                        <button type="button" onClick={handleNextImage}
+                                                className="btn btn-outline-warning image-buttons">
+                                            <ArrowNext/>
+                                        </button>
+                                    }
+                                </>
+                                : <NoImage/>
+                            }
                         </div>
                             <div className="calendar-container center">
                                 <Calendar onChange={setDate} value={date} nextLabel={<ArrowNext/>} prevLabel={<ArrowPrevious/>} next2Label={<CaretNext/>} prev2Label={<CaretPrevious/>} selectRange={true} returnValue="range"/>
                             </div>
-                            <div className="choosing-date-form center">
+                            <div className="choosing-date-form">
                                 <form method="post" action={actionLink} id="reservation-form" onSubmit={handleSubmit}>
-                                    <div className="from-container">
-                                        <p className="label">Od: </p>
-                                        <p className="reservationDate">{date[0] == null ? "" : `${dayOfWeek[date[0].getDay()]}, ${date[0].getDate()} ${months[date[0].getMonth()]} ${date[0].getFullYear()}`}</p>
+                                    <DateRangePicker value={date} disableCalendar={true} onChange={setDate} rangeDivider="-"/>
+                                    <div className="reservation-price-container">
+                                        <label id="reservation-price-paragraph">Cena rezerwacji:</label>
+                                        <p id="reservation-price">{getCorrectPaymentElem(announcementData, quantity)}</p>
                                     </div>
-                                    <div className="to-container">
-                                        <p className="label">Do: </p>
-                                        <p className="reservationDate">{date[1] == null ? "" : `${dayOfWeek[date[1].getDay()]}, ${date[1].getDate()} ${months[date[1].getMonth()]} ${date[1].getFullYear()}`}</p>
-                                    </div>
-                                    <div id="button-container" className="center">
-                                        <button type="submit" className="btn btn-warning" id="reservation-button">Zarezerwuj</button>
+                                    <div className="reservation-button-container center">
+                                        <button type="submit" className="btn btn-warning"
+                                                id="reservation-button">Zarezerwuj
+                                        </button>
                                     </div>
                                 </form>
-                    </div>
+                            </div>
+                        <div className="city">
+                            <p>Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</p>
+                            <p>mapka</p>
+                        </div>
                     </div>
                     <div className="announcement-bottom">
-                        <div className="id">
-                        ID: 3
-                        </div> {/*{announcementData.id}*/}
-                        <div className="publish-date">
-                            <p>Opublikowano 5.10.12 o godzinie 17:12</p> {/*{announcementData.publishDate.slice(0, 10)}*/}
-                        </div>
                         <div className="owner">
-                            <p>Autor: Andrzej Śmietana</p> {/*{announcementData.owner.name}*/}
+                                <label>Autor: </label>
+                                <Link id="link-to-user-page" to={"/Users/"+announcementData.owner.id}>{announcementData.owner.firstName} {announcementData.owner.lastName}</Link>
+                        </div>
+                        <div className="publish-date">
+                            <p>Opublikowano {announcementData.publishDate.slice(0, 10)} o godzinie {announcementData.publishDate.slice(11, 16)}</p>
                         </div>
                     </div>
-                {/*</>:<Spinner/>*/}
-            {/*}*/}
+                </>:<Spinner/>
+            }
         </div>
     )
 }

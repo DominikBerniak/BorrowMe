@@ -1,5 +1,4 @@
-﻿using BorrowMeAPI.Model.DataTransferObjects;
-using BorrowMeAPI.Repositories;
+﻿using BorrowMeAPI.Repositories;
 using BorrowMeAPI.Services.Interfaces;
 
 namespace BorrowMeAPI.Services.Implementations
@@ -8,16 +7,19 @@ namespace BorrowMeAPI.Services.Implementations
     {
         private readonly IRepository<Announcement> _repository;
         private readonly IAnnouncementRepository _announcementRepository;
+        private readonly IRepository<User> _userRepository;
 
-        public AnnouncementService(IRepository<Announcement> repository, IAnnouncementRepository announcementRepository)
+        public AnnouncementService(IRepository<Announcement> repository, IAnnouncementRepository announcementRepository,
+                                    IRepository<User> userRepository)
         {
             _repository = repository;
             _announcementRepository = announcementRepository;
+            _userRepository = userRepository;
         }
 
-        public async Task<Announcement> AddAnnouncement(Announcement announcement)
+        public async Task<Announcement> AddAnnouncement(AnnouncementDTO announcementDTO)
         {
-            return await _repository.Add(announcement);
+            return await _announcementRepository.AddNewAnnouncement(announcementDTO);
         }
 
         public async Task<Announcement> DeleteAnnouncement(Guid id)
@@ -27,14 +29,16 @@ namespace BorrowMeAPI.Services.Implementations
 
         public async Task<Announcement> GetAnnouncement(Guid announcementId)
         {
-            return await _repository.GetById(announcementId);
+            //return await _repository.GetById(announcementId);
+            return await _announcementRepository.GetAnnouncementById(announcementId);
         }
 
-        public async Task<FilteredAnnoucementsDto> GetAnnouncementByFilters(string category, string voivodship, string city, string search_phrase, int currentPage)
+        public async Task<FilteredAnnoucementsDto> GetAnnouncements(string category, string voivodship, 
+            string city, string search_phrase, int currentPage, int costMin, int costMax, string sortBy, string sortDirection)
         {
-            const float numberOfAnnoucementsPerPage = 4f;
+            const float numberOfAnnoucementsPerPage = 2f;
 
-            var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(category, voivodship, city, search_phrase);
+            var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(category, voivodship, city, search_phrase, costMin, costMax, sortBy, sortDirection);
 
             var numberOfPages = Math.Ceiling(filteredAnnoucements.Count / numberOfAnnoucementsPerPage);
 
@@ -46,18 +50,18 @@ namespace BorrowMeAPI.Services.Implementations
                     Status = Status.NotFound
                 };
             }
-            if (currentPage > numberOfPages)
+            if (currentPage > numberOfPages || currentPage < 1)
             {
                 return new FilteredAnnoucementsDto
                 {
-                    Status = Status.BadRequest
+                    Status = Status.BadRequest,
+                    NumberOfPages = (int)numberOfPages
                 };
             }
-
             filteredAnnoucements = filteredAnnoucements
-                .Skip(( currentPage - 1 ) * (int) numberOfAnnoucementsPerPage)
-                .Take((int) numberOfAnnoucementsPerPage)
-                .ToList();
+            .Skip((int) ( currentPage - 1 ) * (int) numberOfAnnoucementsPerPage)
+            .Take((int) numberOfAnnoucementsPerPage)
+            .ToList();
 
             return new FilteredAnnoucementsDto
             {

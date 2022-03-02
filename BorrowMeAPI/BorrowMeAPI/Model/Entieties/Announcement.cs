@@ -35,7 +35,6 @@ namespace BorrowMeAPI.Model
     {
         Free,
         Money,
-        Beer,
         Other
     }
 }

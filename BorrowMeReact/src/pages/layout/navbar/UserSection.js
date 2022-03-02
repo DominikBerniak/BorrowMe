@@ -1,15 +1,15 @@
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import AddIcon from '@mui/icons-material/Add';
-import UserInfoPanel from "./UserInfoPanel";
+import UserInfoPanel from "./userSection/UserInfoPanel";
 import {Link} from "react-router-dom";
-import UserInfoDropdown from "./UserInfoDropdown";
+import UserInfoDropdown from "./userSection/UserInfoDropdown";
 import {useState} from "react";
 
 
 const userData = {
     firstName: "Dominik",
-    avatarName: "bobr.jpg"
+    avatarName: "mlocus.png"
 }
 
 

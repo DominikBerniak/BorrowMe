@@ -1,9 +1,8 @@
 ﻿using Core.Repositories;
 using Domain.Entieties;
 using Microsoft.EntityFrameworkCore;
-using Persistance;
 
-namespace BorrowMeAPI.Repositories
+namespace Persistance.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {

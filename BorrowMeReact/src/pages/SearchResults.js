@@ -102,6 +102,7 @@ const SearchResults = () => {
         setAnnouncements();
         setIsFetchingData(false);
         setPageNumber(1);
+        window.scrollTo(0, 0);
     }, [mainCategoryParam, subCategoryParam, voivodeshipParam, cityParam, searchParams.get("search"), costFilter, sortFilter])
 
     useEffect(() => {

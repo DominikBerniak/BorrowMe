@@ -52,17 +52,20 @@
     height: 260px;
 }
 .description-text {
-    margin: 1%;
+    margin: 1em;
 }
 .owner {
     grid-area: owner;
 }
 .city {
     grid-area: city;
+    text-align: center;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     background-color: white;
     border-radius: 3px;
-    text-align: center;
+}
+#localization-label {
+    margin: 1em;
 }
 .calendar-container {
     grid-area: calendar;
@@ -77,7 +80,8 @@
     display: flex;
 }
 .image-buttons {
-    height: 250px
+    background-color: white;
+    height: 260px
 }
 .center {
     display: flex;

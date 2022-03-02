@@ -22,7 +22,7 @@ const AnnouncementPage = () => {
     const [imageName, setImageName] = useState("")
     const [count, setCount] = useState(0)
     const [announcementData, setData] = useState();
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(0);
     const {announcementId} = useParams();
     const actionLink = `api/announcements/${announcementId}/Reservation`;
     const navigate = useNavigate();
@@ -30,32 +30,23 @@ const AnnouncementPage = () => {
         e.preventDefault();
         navigate(`/announcements/${announcementId}`)
     };
-    let handleImageChange = () => {
-        setPath(announcementData.pictureLocations[count].imageDirectory)
-        setImageName(announcementData.pictureLocations[count].imageName)
-
-    }
     let handleNextImage = () => {
-        if (count < {announcementData}.images.length)
+        if (count < announcementData.pictureLocations.length)
         {
-            setCount(count => count + 1);
-            console.log(count)
-            handleImageChange()
+            setCount(count + 1);
         }
     };
     let handlePreviousImage = () => {
         if (count > 0)
         {
-            setCount(count => count - 1);
-            console.log(count)
-            handleImageChange()
+            setCount(count - 1);
         }
     };
     let onChange = (date) => {
         setDate(date)
         if (date == null || date[0] === null || date[1] === null)
         {
-            setQuantity(1);
+            setQuantity(0);
         }
         else
         {
@@ -69,10 +60,11 @@ const AnnouncementPage = () => {
             getData(`/Announcements/${announcementId}`)
                 .then(data => {
                     setData(data);
-                    setPath(data.pictureLocations[0].directoryName);
-                    setImageName(data.pictureLocations[0].fileName);
+                    setPath(data.pictureLocations[count].directoryName);
+                    setImageName(data.pictureLocations[count].fileName);
+                    console.log(count)
                 });
-    }, [])
+    }, [count])
 
     return (
         <div className="announcement-container">
@@ -90,15 +82,13 @@ const AnnouncementPage = () => {
                             {imageDirectory!=="" ?
                                 <>
                                     {announcementData.pictureLocations.length > 1 &&
-                                        <button type="button" onClick={handlePreviousImage}
-                                                className="btn btn-outline-warning image-buttons">
+                                        <button type="button" onClick={handlePreviousImage} className="btn btn-warning image-buttons">
                                             <ArrowPrevious/>
                                         </button>
                                     }
                                     <ImageAPI imageDirectory={imageDirectory} imageName={imageName} classNames="announcement-picture"/>
                                     {announcementData.pictureLocations.length > 1 &&
-                                        <button type="button" onClick={handleNextImage}
-                                                className="btn btn-outline-warning image-buttons">
+                                        <button type="button" onClick={handleNextImage} className="btn btn-warning image-buttons">
                                             <ArrowNext/>
                                         </button>
                                     }
@@ -107,14 +97,14 @@ const AnnouncementPage = () => {
                             }
                         </div>
                             <div className="calendar-container center">
-                                <Calendar onChange={onChange} value={date} nextLabel={<ArrowNext/>} prevLabel={<ArrowPrevious/>} next2Label={<CaretNext/>} prev2Label={<CaretPrevious/>} selectRange={true} returnValue="range"/>
+                                <Calendar onChange={onChange} value={date} nextLabel={<ArrowNext/>} prevLabel={<ArrowPrevious/>} next2Label={<CaretNext/>} prev2Label={<CaretPrevious/>} minDate={new Date()} selectRange={true} returnValue="range"/>
                             </div>
                             <div className="choosing-date-form">
                                 <form method="post" action={actionLink} id="reservation-form" onSubmit={handleSubmit}>
                                     <DateRangePicker value={date} disableCalendar={true} onChange={onChange} rangeDivider="-"/>
                                     <div className="reservation-price-container">
                                         <label id="reservation-price-paragraph">Cena rezerwacji:</label>
-                                        <p id="reservation-price">{quantity > 1 ? getCorrectPaymentElem(announcementData, quantity) : ""}</p>
+                                        <p id="reservation-price">{quantity > 0 ? getCorrectPaymentElem(announcementData, quantity) : ""}</p>
                                     </div>
                                     <div className="reservation-button-container center">
                                         <button type="submit" className="btn btn-warning"
@@ -124,8 +114,8 @@ const AnnouncementPage = () => {
                                 </form>
                             </div>
                         <div className="city">
-                            <p>Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</p>
-                            <p>mapka</p>
+                            <label id="localization-label">Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</label>
+                            <ImageAPI imageDirectory="site-images" imageName="krakow.png" classNames="announcement-picture"/>
                         </div>
                     </div>
                     <div className="announcement-bottom">

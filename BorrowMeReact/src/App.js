@@ -22,7 +22,7 @@ function App() {
                 <Route path="search-results/:mainCategoryParam/:subCategoryParam/:voivodeshipParam/:cityParam" element={<SearchResults />}/>
                 <Route path="terms-of-use" element={<TermsOfUse/>}/>
                 <Route path="privacy-policy" element={<PrivacyPolicy/>}/>
-                <Route path="announcement/:announcementId" element={<AnnouncementPage/>}/>
+                <Route path="announcements/:announcementId" element={<AnnouncementPage/>}/>
                 <Route path="users/:userId" element={<UserPage/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Route>

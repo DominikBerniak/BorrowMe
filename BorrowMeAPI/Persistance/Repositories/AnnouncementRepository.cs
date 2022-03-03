@@ -23,9 +23,22 @@ namespace Persistance.Repositories
                 .Include(a => a.City)
                 .Include(c => c.Voivodeship)
                 .AsQueryable();
+
+            var mainCategories = await _dbContext.MainCategories
+                .Include(mc => mc.SubCategories)
+                .ToListAsync();
+
             if (category != "all")
             {
-                announcements = announcements.Where(a => a.SubCategory.Name == category);
+                var mainCategory = mainCategories.Where(mc => mc.Name.ToLower() == category.ToLower()).FirstOrDefault();
+                if (mainCategory is not null)
+                {
+                    announcements = announcements.Where(a => mainCategory.SubCategories.Contains(a.SubCategory));
+                }
+                else
+                {
+                    announcements = announcements.Where(a => a.SubCategory.Name == category);
+                }
             }
             if (voivodeship != "all")
             {

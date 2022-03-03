@@ -19,10 +19,11 @@ namespace Api.Controllers
             _announcementService = announcementService;
         }
         [HttpGet]
-        public async Task<ActionResult<List<SearchedAnnoucementsDTO>>> GetAnnouncements([FromQuery] int page = 1, 
-            [FromQuery] string? category = "all", [FromQuery] string? voivodeship = "all", [FromQuery] string? city = "all", 
+        //[Authorize(Roles = "string")]
+        public async Task<ActionResult<List<SearchedAnnoucementsDTO>>> GetAnnouncements([FromQuery] int page = 1,
+            [FromQuery] string? category = "all", [FromQuery] string? voivodeship = "all", [FromQuery] string? city = "all",
             [FromQuery] string? searchPhrase = "all", [FromQuery] int costMin = 0, [FromQuery] int costMax = 50,
-            [FromQuery] string? sortBy="publishDate", [FromQuery] string? sortDirection = "desc")
+            [FromQuery] string? sortBy = "publishDate", [FromQuery] string? sortDirection = "desc")
         {
             _logger.LogInformation($"Getting announcements with params: page: {page}, category: {category}, voivodeship: {voivodeship}, " +
                 $"city: {city}, searchPhrase: {searchPhrase}");
@@ -44,7 +45,15 @@ namespace Api.Controllers
                 NumberOfPages = announcementDto.NumberOfPages,
                 CurrentPage = page
             };
-            return Ok(response);            
+            return Ok(response);
+        }
+
+        [HttpGet("promoted")]
+        //[Authorize(Roles = "string")]
+        public async Task<ActionResult<List<Announcement>>> GetPromotedAnnouncements()
+        {
+            var announcements = await _announcementService.GetPromotedAnnouncements();
+            return Ok(announcements);
         }
 
         // /api/Announcements POST
@@ -90,32 +99,6 @@ namespace Api.Controllers
             var response = await _announcementService.DeleteAnnouncement(id);
             return Ok(response);
         }
-
-        // /api/Announcements/{category}/{voivodeship}/{city}/{search_phrase} GET
-        //[HttpGet("{category}/{voivodeship}/{city}/{searchPhrase}/{currentPage}")]
-        //public async Task<ActionResult<SearchedAnnoucementsDTO>> GetAnnouncementByFilters(string category = "all", string voivodeship = "all", string city = "all", string searchPhrase = "all", int currentPage = 1)
-        //{
-        //    _logger.LogInformation($"Get announcement by filters attempt. category = '{category}', voivodeship = '{voivodeship}', city = '{city}, searchPhraze = '{searchPhrase}'");
-        //    var announcementDto = await _announcementService.GetAnnouncements(category, voivodeship, city, searchPhrase, currentPage);
-        //    if (announcementDto.Status == Status.NotFound)
-        //    {
-        //        _logger.LogInformation("No annoucements found");
-        //        return NotFound("No annoucements found");
-        //    }
-        //    if (announcementDto.Status == Status.BadRequest)
-        //    {
-        //        _logger.LogError("Wrong page number");
-        //        return BadRequest("Wrong page number");
-        //    }
-
-        //    var response = new SearchedAnnoucementsDTO
-        //    {
-        //        Announcements = announcementDto.Announcements,
-        //        NumberOfPages = announcementDto.NumberOfPages,
-        //        CurrentPage = currentPage
-        //    };
-        //    return Ok(response);
-        //}
 
         // /api/Announcements/{id}/Reservation POST
         [HttpPost("{id}/Reservation")]

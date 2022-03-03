@@ -17,9 +17,9 @@ const Home = () => {
 
     useEffect(() => {
         clearAllSearchParams()
-        getData("/api/Announcements")
-            .then(announcementDto=>{
-                setAnnouncements(announcementDto.announcements);
+        getData("/api/Announcements/promoted")
+            .then(announcements=>{
+                setAnnouncements(announcements);
             })
     }, [])
 

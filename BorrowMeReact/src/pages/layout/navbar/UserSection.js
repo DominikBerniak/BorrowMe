@@ -4,16 +4,10 @@ import AddIcon from '@mui/icons-material/Add';
 import UserInfoPanel from "./userSection/UserInfoPanel";
 import {Link} from "react-router-dom";
 import UserInfoDropdown from "./userSection/UserInfoDropdown";
-import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {getData} from "../../../services/apiFetch";
-import {changeUser} from "../../../features/user";
+import {useState} from "react";
 
 const UserSection = () => {
     const [isMenuDown, setIsMenuDown] = useState(false);
-    const authUser = useSelector(state=>state.authUser.value);
-    const user = useSelector(state=>state.user.value);
-    const dispatch = useDispatch();
 
     const showDropDownMenu = (e) => {
         if (!isMenuDown) {
@@ -23,24 +17,6 @@ const UserSection = () => {
     const hideDropDownMenu = () => {
         setIsMenuDown(false);
     }
-
-    useEffect(()=>{
-        if (authUser.userId === "")
-        {
-            return;
-        }
-        getData(`/api/Users/${authUser.userId}`)
-            .then(user=>{
-                dispatch(changeUser({
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email,
-                    phoneNumber: user.phoneNumber,
-                    pictureName: user.pictureLocation ? user.pictureLocation.fileName : "",
-                    reputationPoints: user.reputationPoints
-                }))
-            })
-    },[authUser])
 
     return (
         <div id="navbar-user-section-container" className="d-flex ms-auto me-3 h-60 align-items-center">

@@ -2,21 +2,14 @@ import {useEffect, useState} from "react";
 import {getData} from "../../../services/apiFetch";
 import MainCategory from "./filtersCategories/MainCategory";
 import Spinner from "../../../components/Spinner";
-import {useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {clearCategory} from "../../../features/category";
 
 const FiltersCategories = () => {
-    const [categories, setCategories] = useState();
     const [areCategoriesVisible, setAreCategoriesVisible] = useState(true);
 
     const dispatch = useDispatch();
-
-    useEffect(()=>{
-        getData("/Categories/MainCategories")
-            .then(data=>{
-                setCategories(data);
-            })
-    },[])
+    const allCategories = useSelector(state => state.allCategories.value)
 
     const toggleCategories = () => {
         setAreCategoriesVisible(prev=>!prev);
@@ -33,15 +26,12 @@ const FiltersCategories = () => {
                     <div className="clear-filter-button ms-2" onClick={clearCategoryFilter}>wyczyść</div>
                 }
             </div>
-            {categories ?
-                areCategoriesVisible &&
+            {areCategoriesVisible &&
                 <div className="ms-3">
-                    {categories.map(mainCategory =>
+                    {allCategories.map(mainCategory =>
                         <MainCategory key={mainCategory.id} mainCategoryData={mainCategory}/>
                     )}
                 </div>
-                :
-                <Spinner />
             }
         </div>
     );

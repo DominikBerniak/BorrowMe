@@ -40,7 +40,7 @@ const AnnouncementPage = () => {
     };
 
     useEffect(() => {
-            getData(`/Announcements/${announcementId}`)
+            getData(`/api/Announcements/${announcementId}`)
                 .then(data => {setData(data);})
             // imageDirectory = `${announcementData}.images[${count}].imagePath`;
             // imageName = `${announcementData}.images[${count}].imageName`;

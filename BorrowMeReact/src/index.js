@@ -11,7 +11,10 @@ import searchPhraseReducer from "./features/searchPhrase";
 import categoryReducer from "./features/category";
 import cityHintsReducer from "./features/cityHints";
 import costFilterReducer from "./features/costFilter"
-import sortReducer from "./features/sort"
+import sortReducer from "./features/sort";
+import authUserReducer from "./features/authUser";
+import userReducer from "./features/user";
+import allCategoriesReducer from "./features/allCategories";
 
 
 const store = configureStore({
@@ -21,7 +24,10 @@ const store = configureStore({
         category: categoryReducer,
         cityHints: cityHintsReducer,
         costFilter: costFilterReducer,
-        sort: sortReducer
+        sort: sortReducer,
+        authUser: authUserReducer,
+        user: userReducer,
+        allCategories: allCategoriesReducer
     },
 })
 

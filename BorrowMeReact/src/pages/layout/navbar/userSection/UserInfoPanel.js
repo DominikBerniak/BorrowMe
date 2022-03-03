@@ -1,11 +1,17 @@
 import Avatar from '@mui/material/Avatar';
+import {useSelector} from "react-redux";
 
-const UserInfoPanel = ({showDropDownMenu, userData}) => {
+const UserInfoPanel = ({showDropDownMenu}) => {
+    const user = useSelector(state=>state.user.value);
     return (
         <div id="user-info-panel-container" className="d-flex h-100 align-items-center bg-light rounded rounded-pill"
              onMouseOver={showDropDownMenu} onClick={showDropDownMenu}>
-            <div className="ps-4 pe-2 user-select-none">{userData.firstName}</div>
-            <Avatar sx={{width: 45, height: 45}} src={`/StaticFiles/user-images/${userData.avatarName}`}/>
+            <div className="ps-4 pe-2 user-select-none">{user.firstName}</div>
+            {user.pictureName !== "" ?
+                <Avatar sx={{width: 45, height: 45}} src={`/StaticFiles/user-images/${user.pictureName}`}/>
+                :
+                <Avatar sx={{width: 45, height: 45}}/>
+            }
         </div>
     );
 };

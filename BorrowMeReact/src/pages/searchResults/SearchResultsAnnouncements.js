@@ -26,7 +26,7 @@ const SearchResultsAnnouncements = ({announcements}) => {
             {announcements ?
                 announcements.map(announcement =>
                     <div key={announcement.id} className="search-results-announcement d-flex w-100 mb-2 p-4">
-                        <div className="w-25 h-100 hover-pointer"
+                        <div className="w-25 h-100 cursor-pointer"
                              onClick={() => handleAnnouncementClick(announcement.id)}>
                             {announcement.pictureLocations.length > 0 ?
                                 <ImageAPI imageDirectory={announcement.pictureLocations[0].directoryName}

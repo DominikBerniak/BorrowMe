@@ -9,6 +9,7 @@ import {clearSearchPhrase} from "../features/searchPhrase";
 import {clearCategory} from "../features/category";
 import {clearCostFilter} from "../features/costFilter";
 import {clearSort} from "../features/sort";
+import {Helmet} from "react-helmet";
 
 const Home = () => {
     const [announcements, setAnnouncements] = useState()
@@ -16,7 +17,7 @@ const Home = () => {
 
     useEffect(() => {
         clearAllSearchParams()
-        getData("/Announcements")
+        getData("/api/Announcements")
             .then(announcementDto=>{
                 setAnnouncements(announcementDto.announcements);
             })
@@ -32,6 +33,9 @@ const Home = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Strona główna | BorrowMe</title>
+            </Helmet>
             <h2 className="text-center">Promowane ogłoszenia</h2>
             {announcements
                 ? <div className="d-flex flex-wrap justify-content-center">

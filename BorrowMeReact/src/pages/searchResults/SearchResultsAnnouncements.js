@@ -3,6 +3,7 @@ import ImageAPI from "../../components/ImageAPI";
 import NoImage from "../../components/NoImage";
 import {useNavigate} from "react-router-dom";
 import Rating from '@mui/material/Rating';
+import {getCorrectPaymentElem} from "../../services/announcementUtils"
 
 const SearchResultsAnnouncements = ({announcements}) => {
 
@@ -10,16 +11,6 @@ const SearchResultsAnnouncements = ({announcements}) => {
 
     const handleAnnouncementClick = (announcementId) => {
         navigate(`/announcement/${announcementId}`)
-    }
-    const getCorrectPaymentElem = (announcement) => {
-        switch (announcement.paymentType) {
-            case 0:
-                return "Za darmo";
-            case 1:
-                return `${announcement.price} zł / dzień`;
-            case 2:
-                return `Za ${announcement.otherPaymentType}`;
-        }
     }
     return (
         <div id="search-results-container" className="d-flex flex-column align-items-center py-4">

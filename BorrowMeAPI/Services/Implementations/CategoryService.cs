@@ -7,14 +7,14 @@ namespace Services.Implementations
 {
     public class CategoryService : ICategoryService
     {
-        private readonly IRepository<MainCategory> _mainCategoryGeneralRpository;
-        private readonly IRepository<SubCategory> _subCategoryGeneralRpository;
+        private readonly IRepository<MainCategory> _mainCategoryGeneralRepository;
+        private readonly IRepository<SubCategory> _subCategoryGeneralRepository;
         private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryService(IRepository<MainCategory> mainCategoryRpository, IRepository<SubCategory> subCategoryRpository, ICategoryRepository categoryRepository)
+        public CategoryService(IRepository<MainCategory> mainCategoryRepository, IRepository<SubCategory> subCategoryRepository, ICategoryRepository categoryRepository)
         {
-            _mainCategoryGeneralRpository = mainCategoryRpository;
-            _subCategoryGeneralRpository = subCategoryRpository;
+            _mainCategoryGeneralRepository = mainCategoryRepository;
+            _subCategoryGeneralRepository = subCategoryRepository;
             _categoryRepository = categoryRepository;
         }
         public async Task<IEnumerable<MainCategory>> GetAllCategories()
@@ -27,23 +27,23 @@ namespace Services.Implementations
         }
         public async Task<MainCategory> AddMainCategory(MainCategory mainCategory)
         {
-            return await _mainCategoryGeneralRpository.Add(mainCategory);
+            return await _mainCategoryGeneralRepository.Add(mainCategory);
         }
 
         public async Task<SubCategory> GetSubCategoryById(Guid id)
         {
-            return await _subCategoryGeneralRpository.GetById(id);
+            return await _subCategoryGeneralRepository.GetById(id);
         }
         public async Task<SubCategory> AddSubCategory(SubCategoryDto subCategoryDto)
         {
-            var mainCategory = await _mainCategoryGeneralRpository.GetByProperty(mc => mc.Name == subCategoryDto.MainCategoryName);
+            var mainCategory = await _mainCategoryGeneralRepository.GetByProperty(mc => mc.Name == subCategoryDto.MainCategoryName);
             var subCateogory = new SubCategory
             {
                 Name = subCategoryDto.SubCategoryName
             };
 
             mainCategory.SubCategories.Add(subCateogory);
-            await _mainCategoryGeneralRpository.Edit(mainCategory);
+            await _mainCategoryGeneralRepository.Edit(mainCategory);
             return subCateogory;
         }
     }

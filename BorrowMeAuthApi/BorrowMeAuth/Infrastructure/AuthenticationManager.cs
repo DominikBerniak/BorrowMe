@@ -60,11 +60,6 @@ namespace MyHotels.WebApi.Infrastructure
             {
                 new Claim(ClaimTypes.Email, _user.Email)
             };
-
-            _logger.LogInformation("\n\n\n");
-            _logger.LogInformation(_user.Id.ToString());
-            _logger.LogInformation("\n\n\n");
-
             var roles = await _userManager.GetRolesAsync(_user);
 
             foreach (var role in roles)

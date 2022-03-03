@@ -2,6 +2,7 @@
 using Core.Model.DataTransferObjects;
 using Core.Services.Interfaces;
 using Domain.Entieties;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BorrowMeAPI.Controllers
@@ -19,6 +20,7 @@ namespace BorrowMeAPI.Controllers
             _announcementService = announcementService;
         }
         [HttpGet]
+        [Authorize(Roles = "string")]
         public async Task<ActionResult<List<SearchedAnnoucementsDTO>>> GetAnnouncements([FromQuery] int page = 1, 
             [FromQuery] string? category = "all", [FromQuery] string? voivodeship = "all", [FromQuery] string? city = "all", 
             [FromQuery] string? searchPhrase = "all", [FromQuery] int costMin = 0, [FromQuery] int costMax = 50,

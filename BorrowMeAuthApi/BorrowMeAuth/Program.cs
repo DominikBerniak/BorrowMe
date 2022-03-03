@@ -55,12 +55,6 @@ builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 //Add AutoMapper
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-
-//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-//    .AddRoles<IdentityRole>()
-//    .AddEntityFrameworkStores<BorrowMeAuthContext>();
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -8,6 +8,8 @@ namespace Core.Services.Interfaces
         // GET by ID
         Task<Announcement> GetAnnouncement(Guid announcementId);
 
+        Task<List<Announcement>> GetPromotedAnnouncements();
+
         // GET by Filters
         Task<FilteredAnnoucementsDto> GetAnnouncements(string category, string voivodship, string city, 
             string search_phrase, int currentPage, int costMin, int costMax, string sortBy, string sortDirection);

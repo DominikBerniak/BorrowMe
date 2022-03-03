@@ -20,7 +20,7 @@ const SearchResultsAnnouncements = ({announcements}) => {
                         <div className="w-25 h-100 cursor-pointer"
                              onClick={() => handleAnnouncementClick(announcement.id)}>
                             {announcement.pictureLocations.length > 0 ?
-                                <ImageAPI imageDirectory={announcement.pictureLocations[0].directoryName}
+                                <ImageAPI imageDirectory="user-images"
                                           imageName={announcement.pictureLocations[0].fileName}
                                           classNames="search-results-announcement-image search-results-announcement-image-generic"/>
                                 :
@@ -30,7 +30,7 @@ const SearchResultsAnnouncements = ({announcements}) => {
                         <div className="d-flex flex-column align-items-end w-75">
                             <div
                                 className="d-flex flex-column align-items-end pb-2 mb-2 search-results-announcement-header">
-                                <h3 className="search-results-announcement-title hover-pointer"
+                                <h3 className="search-results-announcement-title cursor-pointer"
                                     onClick={() => handleAnnouncementClick(announcement.id)}>{announcement.title}</h3>
                                 <div className="h4 text-secondary">{getCorrectPaymentElem(announcement)}</div>
                             </div>

@@ -57,7 +57,7 @@ app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
            Path.Combine(builder.Environment.ContentRootPath, "Images")),
-    RequestPath = "/StaticFiles"
+    RequestPath = "/api/StaticFiles"
 });
 
 app.UseAuthorization();

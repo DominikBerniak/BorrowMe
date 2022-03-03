@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const initialStateValue = {
     userId: "",
-    role: ""
+    roles: []
 };
 
 export const authUserSlice = createSlice({

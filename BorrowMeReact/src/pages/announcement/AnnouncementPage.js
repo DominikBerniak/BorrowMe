@@ -15,6 +15,7 @@ import ArrowNext from "../../components/ArrowNext";
 import {getCorrectPaymentElem} from "../../services/announcementUtils";
 import NoImage from "../../components/NoImage";
 import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
+import {Helmet} from "react-helmet";
 
 const AnnouncementPage = () => {
     const [date, setDate] = useState(new Date());
@@ -85,6 +86,9 @@ const AnnouncementPage = () => {
         <div className="announcement-container">
             {announcementData ?
                <>
+                   <Helmet>
+                       <title>{announcementData.title} | BorrowMe</title>
+                   </Helmet>
                     <div className="btn-warning announcement-top">
                         <h2 id="title">{announcementData.title}</h2>
                         <h2 id="price">{getCorrectPaymentElem(announcementData)}</h2>

@@ -9,6 +9,7 @@ const UserInfoDropdown = ({hideDropDownMenu}) => {
     const ref = useDetectClickOutside({onTriggered: hideDropDownMenu});
     const user = useSelector(state => state.user.value);
     const dispatch = useDispatch();
+
     const handleLogout = async() => {
         await fetch("/authentication/logout",{
             method: 'POST',

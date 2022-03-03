@@ -1,10 +1,10 @@
 .announcement {
-    width: 300px;
-    height: 400px;
+    width: 20rem;
+    height: 28rem;
     border-radius: 2px;
     box-shadow: rgb(83, 83, 83) 1px 1px 1px 1px;
     margin: 20px;
-    padding: 10px;
+    padding: 1rem;
     font-family: 'Roboto Condensed', sans-serif;
     align-content: center;
     background-color: white;

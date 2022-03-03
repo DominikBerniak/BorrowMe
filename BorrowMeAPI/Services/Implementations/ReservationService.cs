@@ -27,6 +27,11 @@ namespace Services.Implementations
             return await _reservationRepository.GetReservationsByAnnouncementId(id);
         }
 
+        public async Task<Reservation> GetReservationById(Guid id)
+        {
+            return await _reservationRepository.GetReservationsById(id);
+        }
+
         public async Task<Reservation> AddReservation(ReservationDto reservation)
         {
             return await _reservationRepository.AddNewReservation(reservation);

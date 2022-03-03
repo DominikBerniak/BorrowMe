@@ -30,6 +30,14 @@ namespace Api.Controllers
             return Ok(createdReservation);
         }
 
+        // /api/Reservations/{id} GET
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<Reservation>> GetReservationById(Guid id)
+        {
+            _logger.LogInformation($"Get reservation attempt. Id = '{id}'");
+            return Ok(await _reservationService.GetReservationById(id));
+        }
+
         // /api/Reservations/{id} DELETE
         [HttpDelete("{id:Guid}")]
         public async Task<IActionResult> DeleteReservation(Guid id)

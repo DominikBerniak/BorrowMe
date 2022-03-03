@@ -50,4 +50,14 @@ public class ReservationRepository : IReservationRepository
         await _dbContext.SaveChangesAsync();
         return reservation;
     }
+
+    public async Task<Reservation> GetReservationsById(Guid id)
+    {
+        var reservations = _dbContext.Reservations
+            .Include(r => r.User)
+            .Include(r => r.Announcement)
+            .AsQueryable();
+        reservations = reservations.Where(r => r.Id == id);
+        return await reservations.FirstOrDefaultAsync();
+    }
 }

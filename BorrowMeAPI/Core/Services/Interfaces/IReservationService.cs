@@ -8,10 +8,13 @@ namespace Core.Services
         Task<List<Reservation>> GetByUserId(Guid id);
 
         Task<List<Reservation>> GetByAnnouncementId(Guid id);
+
+        Task<Reservation> GetReservationById(Guid id);
         // POST
         Task<Reservation> AddReservation(ReservationDto reservation);
 
         // DELETE
         Task<Reservation> DeleteReservation(Guid id);
+        
     }
 }

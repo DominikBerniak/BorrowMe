@@ -1,12 +1,12 @@
-global using BorrowMeAPI.Dao;
-global using BorrowMeAPI.Model;
-global using BorrowMeAPI.Model.DataTransferObjects;
 global using Microsoft.EntityFrameworkCore;
-using BorrowMeAPI.Model.Entieties;
-using BorrowMeAPI.Repositories;
-using BorrowMeAPI.Services.Implementations;
-using BorrowMeAPI.Services.Interfaces;
+using Core.Repositories;
+using Core.Repositories.Interfaces;
+using Core.Services.Interfaces;
+using Domain.Entieties;
 using Microsoft.Extensions.FileProviders;
+using Persistance;
+using Persistance.Repositories;
+using Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
@@ -28,6 +28,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IRepository<MainCategory>, Repository<MainCategory>>();
 builder.Services.AddTransient<IRepository<SubCategory>, Repository<SubCategory>>();
 builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddTransient<IRepository<City>, Repository<City>>();
 builder.Services.AddTransient<IRepository<Voivodeship>, Repository<Voivodeship>>();
 builder.Services.AddTransient<IVoivodeshipRepository, VoivodeshipRepository>();
@@ -35,6 +36,7 @@ builder.Services.AddTransient<IVoivodeshipService, VoivodeshipService>();
 builder.Services.AddTransient<IAnnouncementRepository, AnnouncementRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IRepository<User>, Repository<User>>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

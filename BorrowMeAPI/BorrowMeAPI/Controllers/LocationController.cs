@@ -1,9 +1,9 @@
-﻿using BorrowMeAPI.Model.DataTransferObjects;
-using BorrowMeAPI.Services.Implementations;
-using BorrowMeAPI.Services.Interfaces;
+﻿using Core.Model.DataTransferObjects;
+using Core.Services.Interfaces;
+using Domain.Entieties;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BorrowMeAPI.Controllers
+namespace Api.Controllers
 {
     [ApiController]
     public class LocationController : ControllerBase
@@ -21,7 +21,7 @@ namespace BorrowMeAPI.Controllers
         }
 
         #region Voivodeships
-        [HttpGet("Voivodeships")]
+        [HttpGet("api/Voivodeships")]
         public async Task<ActionResult<Voivodeship>> GetAllVoivodeships()
         {
             var voivodeships = await _voivodeshipService.GetAllVoivodeships();
@@ -32,14 +32,14 @@ namespace BorrowMeAPI.Controllers
         #endregion
 
         #region Cities
-        [HttpGet("Cities")]
+        [HttpGet("api/Cities")]
         public async Task<ActionResult<City>> GetAllCities()
         {
             var cities = await _cityService.GetAllCities();
             return Ok(cities);
         }
 
-        [HttpGet("Cities/{id}")]
+        [HttpGet("api/Cities/{id}")]
         public async Task<ActionResult<City>> GetCityById(Guid id)
         {
             var city = await _cityService.GetCityById(id);
@@ -50,7 +50,7 @@ namespace BorrowMeAPI.Controllers
             return Ok(city);
         }
 
-        [HttpGet("Cities/Search/{searchCity}")]
+        [HttpGet("api/Cities/Search/{searchCity}")]
         public async Task<ActionResult<List<CityDto>>> GetCitiesByName(string searchCity)
         {
             var allVoivodeships = await _voivodeshipService.GetAllVoivodeships();
@@ -71,7 +71,7 @@ namespace BorrowMeAPI.Controllers
             return Ok(cityData);
         }
 
-        [HttpPost("Cities")]
+        [HttpPost("api/Cities")]
         public async Task<ActionResult<City>> AddCity(CityDto data)
         {
             var city = await _cityService.AddCity(data);

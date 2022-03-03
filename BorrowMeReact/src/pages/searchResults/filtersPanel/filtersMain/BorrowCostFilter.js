@@ -123,18 +123,20 @@ const BorrowCostFilter = () => {
                         <FormControlLabel value="10-20" control={<Radio/>} label="10 - 20 zł / dzień"/>
                         <FormControlLabel value=">20" control={<Radio/>} label="powyżej 20 zł / dzień"/>
                     </RadioGroup>
-                    <div className="d-flex justify-content-between mt-3 mb-2">
+                    <div className="d-flex justify-content-between mt-3 mb-2 pe-3">
                         <div className="cost-slider-values w-25 rounded text-center p-1">{sliderValues[0]}</div>
                         <div className="cost-slider-values w-25 rounded text-center p-1">{sliderValues[1]}</div>
                     </div>
-                    <Slider
-                        value={sliderValues}
-                        onChange={handleSliderChange}
-                        disableSwap
-                        className="cost-slider"
-                        min={0}
-                        max={50}
-                    />
+                    <div className="pe-3">
+                        <Slider
+                            value={sliderValues}
+                            onChange={handleSliderChange}
+                            disableSwap
+                            className="cost-slider"
+                            min={0}
+                            max={50}
+                        />
+                    </div>
                 </div>
             }
         </div>

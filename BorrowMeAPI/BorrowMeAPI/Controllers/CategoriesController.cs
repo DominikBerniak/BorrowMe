@@ -1,12 +1,11 @@
-﻿using BorrowMeAPI.Model.DataTransferObjects;
-using BorrowMeAPI.Model.Entieties;
-using BorrowMeAPI.Services.Interfaces;
+﻿using Core.Model.DataTransferObjects;
+using Core.Services.Interfaces;
+using Domain.Entieties;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
-namespace BorrowMeAPI.Controllers
+namespace Api.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {

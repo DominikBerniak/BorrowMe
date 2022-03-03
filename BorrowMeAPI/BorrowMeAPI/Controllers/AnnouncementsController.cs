@@ -1,10 +1,12 @@
-﻿using BorrowMeAPI.Model.DataTransferObjects;
-using BorrowMeAPI.Services.Interfaces;
+﻿using Core.Model;
+using Core.Model.DataTransferObjects;
+using Core.Services.Interfaces;
+using Domain.Entieties;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BorrowMeAPI.Controllers
+namespace Api.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AnnouncementsController : ControllerBase
     {

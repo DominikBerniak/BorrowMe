@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Entieties;
+using Microsoft.AspNetCore.Mvc;
 
-namespace BorrowMeAPI.Controllers
+namespace Api.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class NotificationsController : ControllerBase
     {

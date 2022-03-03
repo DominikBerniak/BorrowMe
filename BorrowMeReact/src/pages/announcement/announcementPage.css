@@ -38,6 +38,7 @@
 }
 .announcement-picture-container {
     grid-area: picture;
+
 }
 .announcement-picture {
     border-radius: 4px;
@@ -54,10 +55,10 @@
 .description-text {
     margin: 1em;
 }
-.owner {
+.owner-announcement-container {
     grid-area: owner;
 }
-.city {
+.city-announcement-container {
     grid-area: city;
     text-align: center;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;

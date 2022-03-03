@@ -23,23 +23,30 @@ const AnnouncementPage = () => {
     const [count, setCount] = useState(0)
     const [announcementData, setData] = useState();
     const [quantity, setQuantity] = useState(0);
+    const [reservationPrice, setPrice] = useState(0);
     const {announcementId} = useParams();
     const actionLink = `api/announcements/${announcementId}/Reservation`;
     const navigate = useNavigate();
     let handleSubmit = (e) => {
         e.preventDefault();
-        navigate(`/announcements/${announcementId}`)
+        navigate(`/announcement/${announcementId}`)
     };
     let handleNextImage = () => {
-        if (count < announcementData.pictureLocations.length)
+        if (count < announcementData.pictureLocations.length-1)
         {
             setCount(count + 1);
+        }
+        else {
+            setCount(0)
         }
     };
     let handlePreviousImage = () => {
         if (count > 0)
         {
             setCount(count - 1);
+        }
+        else {
+            setCount(announcementData.pictureLocations.length-1)
         }
     };
     let onChange = (date) => {
@@ -50,6 +57,8 @@ const AnnouncementPage = () => {
         }
         else
         {
+            // funkcja do obliczania ceny rezerwacji w zależności od ilości dni
+
             let differenceInTime = date[1].getTime() - date[0].getTime();
             let differenceInDays = differenceInTime / (1000 * 3600 * 24);
             setQuantity(Math.round(differenceInDays))
@@ -57,12 +66,11 @@ const AnnouncementPage = () => {
     }
 
     useEffect(() => {
-            getData(`/Announcements/${announcementId}`)
+            getData(`/api/Announcements/${announcementId}`)
                 .then(data => {
                     setData(data);
                     setPath(data.pictureLocations[count].directoryName);
                     setImageName(data.pictureLocations[count].fileName);
-                    console.log(count)
                 });
     }, [count])
 
@@ -113,13 +121,13 @@ const AnnouncementPage = () => {
                                     </div>
                                 </form>
                             </div>
-                        <div className="city">
+                        <div className="city-announcement-container">
                             <label id="localization-label">Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</label>
                             <ImageAPI imageDirectory="site-images" imageName="krakow.png" classNames="announcement-picture"/>
                         </div>
                     </div>
                     <div className="announcement-bottom">
-                        <div className="owner">
+                        <div className="owner-announcement-container">
                                 <label>Autor: </label>
                                 <Link id="link-to-user-page" to={"/Users/"+announcementData.owner.id}>{announcementData.owner.firstName} {announcementData.owner.lastName}</Link>
                         </div>

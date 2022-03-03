@@ -27,14 +27,14 @@ namespace Services.Implementations
             return await _reservationRepository.GetReservationsByAnnouncementId(id);
         }
 
-        public async void AddReservation(ReservationDto reservation)
+        public async Task<Reservation> AddReservation(ReservationDto reservation)
         {
-            await _reservationRepository.AddNewReservation(reservation);
+            return await _reservationRepository.AddNewReservation(reservation);
         }
 
-        public async void DeleteReservation(Guid id)
+        public async Task<Reservation> DeleteReservation(Guid id)
         {
-            await _repository.Delete(await _repository.GetById(id));
+            return await _repository.Delete(await _repository.GetById(id));
         }
     }
 }

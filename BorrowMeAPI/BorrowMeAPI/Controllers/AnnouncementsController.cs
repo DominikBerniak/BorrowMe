@@ -116,19 +116,5 @@ namespace Api.Controllers
         //    };
         //    return Ok(response);
         //}
-
-        // /api/Announcements/{id}/Reservation POST
-        [HttpPost("{id}/Reservation")]
-        public async Task<IActionResult> AddNewReservation(Guid id)
-        {
-            return Ok();
-        }
-
-        // /api/Announcements/{id}/Reservation DELETE
-        [HttpDelete("{id}/Reservation")]
-        public async Task<IActionResult> DeleteReservation(int id)
-        {
-            return Ok();
-        }
     }
 }

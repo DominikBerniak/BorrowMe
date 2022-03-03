@@ -1,17 +1,20 @@
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import ImageAPI from "../../components/ImageAPI";
-import {getData} from "../../services/apiFetch";
+import {getData, postData} from "../../services/apiFetch";
 import "./announcementPage.css"
 import Spinner from "../../components/Spinner";
 import {useNavigate} from "react-router-dom";
-import img from "../..//images/losiek.jpg";
 import Calendar from 'react-calendar'
 import '../../styles/Custom-calendar.css';
+import '../../styles/Custom-DatePicker.css';
 import CaretNext from "../../components/CaretNext";
 import CaretPrevious from "../../components/CaretPrevious";
 import ArrowPrevious from "../../components/ArrowPrevious";
 import ArrowNext from "../../components/ArrowNext";
+import {getCorrectPaymentElem} from "../../services/announcementUtils";
+import NoImage from "../../components/NoImage";
+import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
 
 const AnnouncementPage = () => {
     const [date, setDate] = useState(new Date());
@@ -19,86 +22,115 @@ const AnnouncementPage = () => {
     const [imageName, setImageName] = useState("")
     const [count, setCount] = useState(0)
     const [announcementData, setData] = useState();
-    const actionLink = `api/announcements/3/Reservation`; //${announcementId}
-    const navigate = useNavigate();
+    const [quantity, setQuantity] = useState(0);
+    const [reservationPrice, setPrice] = useState(0);
     const {announcementId} = useParams();
-    let handleSubmit = (e) => {
-        e.preventDefault();
-        navigate(`/announcements/3`) //${announcementId}
+    const navigate = useNavigate();
+    let handleSubmit = () => {
+        setPrice(announcementData.price*quantity)
+        postData(`/api/Announcements/${announcementId}/Reservation`, )
+        navigate(`/announcement/${announcementId}`)
     };
-    let handleImageChange = () => {
-        setPath(`${announcementData}.images[${count}].imagePath`)
-        setImageName(`${announcementData}.images[${count}].imageName`)
-    }
     let handleNextImage = () => {
-        setCount(count + 1);
-        handleImageChange()
+        if (count < announcementData.pictureLocations.length-1)
+        {
+            setCount(count + 1);
+        }
+        else {
+            setCount(0)
+        }
     };
     let handlePreviousImage = () => {
-        setCount(count - 1);
-        handleImageChange()
+        if (count > 0)
+        {
+            setCount(count - 1);
+        }
+        else {
+            setCount(announcementData.pictureLocations.length-1)
+        }
     };
+    let onChange = (date) => {
+        setDate(date)
+        if (date == null || date[0] === null || date[1] === null)
+        {
+            setQuantity(0);
+        }
+        else
+        {
+            // funkcja do obliczania ceny rezerwacji w zależności od ilości dni
+
+            let differenceInTime = date[1].getTime() - date[0].getTime();
+            let differenceInDays = differenceInTime / (1000 * 3600 * 24);
+            setQuantity(Math.round(differenceInDays))
+        }
+    }
 
     useEffect(() => {
             getData(`/api/Announcements/${announcementId}`)
-                .then(data => {setData(data);})
-            // imageDirectory = `${announcementData}.images[${count}].imagePath`;
-            // imageName = `${announcementData}.images[${count}].imageName`;
-    }, [])
+                .then(data => {
+                    setData(data);
+                    setPath(data.pictureLocations[count].directoryName);
+                    setImageName(data.pictureLocations[count].fileName);
+                });
+    }, [count])
 
     return (
         <div className="announcement-container">
-            {console.log(announcementData)}
             {announcementData ?
                <>
                     <div className="btn-warning announcement-top">
                         <h2 id="title">{announcementData.title}</h2>
-                        <h2 id="price">10 zł / dzień</h2>
+                        <h2 id="price">{getCorrectPaymentElem(announcementData)}</h2>
                     </div>
                     <div className="announcement-middle">
                         <div className="announcement-description">
-                            <p className={"description-text"}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam condimentum metus ultricies nibh gravida posuere. Donec in mi nulla. Nam consectetur mauris vel sodales maximus. Sed at lorem porta, commodo elit nec, volutpat ex. Vestibulum maximus mollis erat, eget dignissim augue varius et. Quisque pharetra molestie cursus. Mauris dapibus nibh sed dolor consequat tempor.</p> {/*announcementData.description*/}
+                            <p className={"description-text"}>{announcementData.description}</p>
                         </div>
                         <div className="announcement-picture-container center">
-                            <button type="button" onClick={handlePreviousImage} className="btn btn-outline-warning image-buttons">
-                                <ArrowPrevious/>
-                            </button>
-                            <ImageAPI imageDirectory={announcementData.pictureLocations[0].directoryName} imageName={announcementData.pictureLocations[0].fileName} classNames="announcement-picture"/>
-                            <button type="button" onClick={handleNextImage} className="btn btn-outline-warning image-buttons">
-                                <ArrowNext/>
-                            </button>
-                        </div>
-                        <div className="city">
-                            <p>Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</p>
+                            {imageDirectory!=="" ?
+                                <>
+                                    {announcementData.pictureLocations.length > 1 &&
+                                        <button type="button" onClick={handlePreviousImage} className="btn btn-warning image-buttons">
+                                            <ArrowPrevious/>
+                                        </button>
+                                    }
+                                    <ImageAPI imageDirectory={imageDirectory} imageName={imageName} classNames="announcement-picture"/>
+                                    {announcementData.pictureLocations.length > 1 &&
+                                        <button type="button" onClick={handleNextImage} className="btn btn-warning image-buttons">
+                                            <ArrowNext/>
+                                        </button>
+                                    }
+                                </>
+                                : <NoImage/>
+                            }
                         </div>
                             <div className="calendar-container center">
-                                <Calendar onChange={setDate} value={date} nextLabel={<ArrowNext/>} prevLabel={<ArrowPrevious/>} next2Label={<CaretNext/>} prev2Label={<CaretPrevious/>} selectRange={true}/>
+                                <Calendar onChange={onChange} value={date} nextLabel={<ArrowNext/>} prevLabel={<ArrowPrevious/>} next2Label={<CaretNext/>} prev2Label={<CaretPrevious/>} minDate={new Date()} selectRange={true} returnValue="range"/>
                             </div>
-                            <div className="choosing-date-form center">
-                                <form method="post" action={actionLink} id="reservation-form" onSubmit={handleSubmit}>
-                                    <div className="from-container">
-                                        <label>Od </label>
-                                        <input/>
+                            <div className="choosing-date-form">
+                                <div id="reservation-form" >
+                                    <DateRangePicker value={date} disableCalendar={true} onChange={onChange} rangeDivider="-"/>
+                                    <div className="reservation-price-container">
+                                        <label id="reservation-price-paragraph">Cena rezerwacji:</label>
+                                        <p id="reservation-price">{quantity > 0 ? getCorrectPaymentElem(announcementData, quantity) : ""}</p>
                                     </div>
-                                    <div className="to-container">
-                                        <label>Do </label>
-                                        <input/>
+                                    <div className="reservation-button-container center">
+                                        <button type="submit" className="btn btn-warning" id="reservation-button" onClick={handleSubmit}>Zarezerwuj</button>
                                     </div>
-                                    <div id="button-container" className="center">
-                                        <button type="submit" className="btn btn-warning" id="reservation-button">Zarezerwuj</button>
-                                    </div>
-                                </form>
-                    </div>
+                                </div>
+                            </div>
+                        <div className="city-announcement-container">
+                            <label id="localization-label">Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</label>
+                            <ImageAPI imageDirectory="site-images" imageName="krakow.png" classNames="announcement-picture"/>
+                        </div>
                     </div>
                     <div className="announcement-bottom">
-                        <div className="id">
-                        ID: {announcementData.id}
+                        <div className="owner-announcement-container">
+                                <label>Autor: </label>
+                                <Link id="link-to-user-page" to={"/Users/"+announcementData.owner.id}>{announcementData.owner.firstName} {announcementData.owner.lastName}</Link>
                         </div>
                         <div className="publish-date">
-                            <p>Opublikowano {announcementData.publishDate.slice(0, 10)} o godzinie 17:12</p>
-                        </div>
-                        <div className="owner">
-                            <p>Autor: {announcementData.owner.firstName} {announcementData.owner.lastName}</p>
+                            <p>Opublikowano {announcementData.publishDate.slice(0, 10)} o godzinie {announcementData.publishDate.slice(11, 16)}</p>
                         </div>
                     </div>
                 </>:<Spinner/>

@@ -8,6 +8,7 @@ import AnnouncementPage from "./pages/announcement/AnnouncementPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import SearchResultsRedirect from "./pages/searchResults/SearchResultsRedirect";
+import UserPage from "./pages/UserPage";
 import Authentication from "./pages/Authentication";
 import AddAnnouncement from "./pages/AddAnnouncement";
 
@@ -26,6 +27,7 @@ function App() {
                 <Route path="announcement/:announcementId" element={<AnnouncementPage/>}/>
                 <Route path="login" element={<Authentication pageType="login"/>}/>
                 <Route path="register" element={<Authentication pageType="register"/>}/>
+                <Route path="users/:userId" element={<UserPage/>}/>
                 <Route path="announcement/new" element={<AddAnnouncement />}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Route>

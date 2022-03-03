@@ -119,7 +119,7 @@ namespace Api.Controllers
 
         // /api/Announcements/{id}/Reservation POST
         [HttpPost("{id}/Reservation")]
-        public async Task<IActionResult> AddNewReservation(int id)
+        public async Task<IActionResult> AddNewReservation(Guid id)
         {
             return Ok();
         }

@@ -2,6 +2,7 @@ import './announcement.css'
 import ImageAPI from "../../components/ImageAPI";
 import {useNavigate} from "react-router-dom";
 import NoImage from "../../components/NoImage";
+import {getCorrectPaymentElem} from "../../services/announcementUtils";
 
 
 const Announcement = ({ announcement }) => {
@@ -25,14 +26,7 @@ const Announcement = ({ announcement }) => {
             </div>
             <div className="informations-row-1">
                 <div className="price">
-                    {announcement.paymentType === 0 && 
-                    <>za darmo</>}
-                    {announcement.paymentType === 1 &&
-                    <>{announcement.price} zł</>}
-                    {announcement.paymentType === 2 &&
-                    <>za piwo</>}
-                    {announcement.paymentType === 3 &&
-                    <>{announcement.otherPaymentType}</>}
+                    {getCorrectPaymentElem(announcement)}
                 </div>
                 <div className="city">
                     {announcement.city ?
@@ -44,7 +38,7 @@ const Announcement = ({ announcement }) => {
             </div>
             <div className="informations-row-2">
                 <div className="date">
-                    {announcement.subCategory.name}
+                    Kategoria: {announcement.subCategory.name}
                 </div>
             </div>
         </div>

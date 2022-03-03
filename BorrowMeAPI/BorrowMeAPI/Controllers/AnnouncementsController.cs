@@ -1,5 +1,6 @@
 ﻿using Core.Model;
 using Core.Model.DataTransferObjects;
+using Core.Services;
 using Core.Services.Interfaces;
 using Domain.Entieties;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,13 @@ namespace Api.Controllers
     {
         private readonly ILogger _logger;
         private readonly IAnnouncementService _announcementService;
+        private readonly IReservationService _reservationService;
 
-        public AnnouncementsController(ILogger<AnnouncementsController> logger, IAnnouncementService announcementService)
+        public AnnouncementsController(ILogger<AnnouncementsController> logger, IAnnouncementService announcementService, IReservationService reservationService)
         {
             _logger = logger;
             _announcementService = announcementService;
+            _reservationService = reservationService;
         }
         [HttpGet]
         //[Authorize(Roles = "string")]
@@ -70,10 +73,17 @@ namespace Api.Controllers
 
         // /api/Announcements/{id} GET
         [HttpGet("{id}")]
-        public async Task<ActionResult<Announcement>> GetAnnouncementById(Guid id)
+        public async Task<ActionResult<AnnouncementReservationsDto>> GetAnnouncementById(Guid id)
         {
             _logger.LogInformation($"Get announcement attempt. Id = '{id}'");
-            return Ok(await _announcementService.GetAnnouncement(id));
+            var announcement = await _announcementService.GetAnnouncement(id);
+            var reservations = await _reservationService.GetByAnnouncementId(id);
+            var announcementData = new AnnouncementReservationsDto
+            {
+                Announcement = announcement,
+                Reservations = reservations
+            };
+        return Ok(announcementData);
         }
 
         // /api/Announcements/ PUT
@@ -98,20 +108,6 @@ namespace Api.Controllers
             _logger.LogInformation($"Delete announcement attempt. Id = '{id}'");
             var response = await _announcementService.DeleteAnnouncement(id);
             return Ok(response);
-        }
-
-        // /api/Announcements/{id}/Reservation POST
-        [HttpPost("{id}/Reservation")]
-        public async Task<IActionResult> AddNewReservation(Guid id)
-        {
-            return Ok();
-        }
-
-        // /api/Announcements/{id}/Reservation DELETE
-        [HttpDelete("{id}/Reservation")]
-        public async Task<IActionResult> DeleteReservation(int id)
-        {
-            return Ok();
         }
     }
 }

@@ -1,0 +1,50 @@
+.reservation-confirmation-container {
+    padding-left: 20%;
+    padding-right: 20%;
+}
+.confirmation-top {
+    height: 3em;
+    border-bottom: 2px solid #949494;
+}
+#title-label {
+    margin-top: 9px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.confirmation-middle {
+    border-radius: 4px;
+    background-color: #dddddd;
+    margin: 15px 0;
+    text-align: center;
+}
+.confirmation-middle-deeper {
+    padding: 20px;
+}
+#confirmation-details-label {
+    font-weight: bold;
+}
+.confirmation-details-container {
+    text-align: start;
+}
+.reference-link {
+    color: #949494;
+    text-decoration: none;
+    font-weight: bold;
+}
+.home-page-link {
+    text-decoration: none;
+    color: #949494;
+}
+.home-page-link:hover {
+    color: white;
+}
+.reference-link:hover {
+    color: mediumvioletred;
+}
+.confirmation-bottom {
+
+    border-top: 2px solid #949494;
+}
+.homepage-button {
+    margin: 10px 0;
+}

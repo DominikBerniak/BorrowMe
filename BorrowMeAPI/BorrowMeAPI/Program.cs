@@ -1,6 +1,7 @@
 global using Microsoft.EntityFrameworkCore;
 using Core.Repositories;
 using Core.Repositories.Interfaces;
+using Core.Services;
 using Core.Services.Interfaces;
 using Domain.Entieties;
 using Microsoft.Extensions.FileProviders;
@@ -23,6 +24,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<DataDbContext, DataDbContext>();
 builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
+builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
+builder.Services.AddScoped<IRepository<Reservation>, Repository<Reservation>>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddTransient<IRepository<Announcement>, Repository<Announcement>>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IRepository<MainCategory>, Repository<MainCategory>>();

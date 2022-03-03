@@ -1,15 +1,10 @@
 ﻿using BorrowMeAuth.Areas.Identity.Data;
 using BorrowMeAuth.DTO;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MyHotels.WebApi.Infrastructure
 {
@@ -81,7 +76,23 @@ namespace MyHotels.WebApi.Infrastructure
         {
             _user = await _userManager.FindByEmailAsync(userDto.Email);
 
-            return (_user != null && await _userManager.CheckPasswordAsync(_user, userDto.Password));
+            return ( _user != null && await _userManager.CheckPasswordAsync(_user, userDto.Password) );
+        }
+
+        public JwtSecurityToken Verify(string jtw)
+        {
+            var secretKey = "tajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucz";
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(secretKey);
+
+            tokenHandler.ValidateToken(jtw, new TokenValidationParameters
+            {
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuerSigningKey = true,
+                ValidateIssuer = false,
+                ValidateAudience = false
+            }, out SecurityToken validatedToken);
+            return (JwtSecurityToken) validatedToken;
         }
     }
 }

@@ -23,6 +23,5 @@ namespace BorrowMeAuth.DTO
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        public ICollection<string> Roles { get; set; }
     }
 }

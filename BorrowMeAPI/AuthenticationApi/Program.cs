@@ -6,6 +6,13 @@ using System.Reflection;
 using MyHotels.WebApi.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Core.Services.Interfaces;
+using Services.Implementations;
+using Core.Repositories;
+using Domain.Entieties;
+using Persistance.Repositories;
+using Core.Repositories.Interfaces;
+using Persistance;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("BorrowMeAuthContextConnection");
@@ -20,6 +27,7 @@ IConfiguration configuration = builder.Configuration;
 builder.Services.AddAuthentication();
 var b = builder.Services.AddIdentityCore<BorrowMeAuthUser>(q => q.User.RequireUniqueEmail = true);
 b = new IdentityBuilder(b.UserType, typeof(IdentityRole), builder.Services);
+b.AddRoles<IdentityRole>();
 b.AddEntityFrameworkStores<BorrowMeAuthContext>().AddDefaultTokenProviders();
 
 builder.Services.AddControllers();
@@ -51,6 +59,16 @@ builder.Services.AddAuthentication(options =>
 
 
 builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
+
+builder.Services.AddDbContext<DataDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddTransient<DataDbContext, DataDbContext>();
+builder.Services.AddTransient<IRepository<User>, Repository<User>>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IUserService, UserService>();
 
 //Add AutoMapper
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());

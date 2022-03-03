@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{C96B9F0A-7771-40E0-BF3F-4FE49FE4FEC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationApi", "AuthenticationApi\AuthenticationApi.csproj", "{3CCD6C65-3A9D-4AF5-A71F-7629D13838AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C96B9F0A-7771-40E0-BF3F-4FE49FE4FEC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C96B9F0A-7771-40E0-BF3F-4FE49FE4FEC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C96B9F0A-7771-40E0-BF3F-4FE49FE4FEC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CCD6C65-3A9D-4AF5-A71F-7629D13838AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CCD6C65-3A9D-4AF5-A71F-7629D13838AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CCD6C65-3A9D-4AF5-A71F-7629D13838AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CCD6C65-3A9D-4AF5-A71F-7629D13838AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,7 +4,18 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>2434f8c9-3100-47db-8e78-2787724295ff</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <_WebToolingArtifacts Remove="Properties\serviceDependencies.json" />
+    <_WebToolingArtifacts Remove="Properties\serviceDependencies.local.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Properties\serviceDependencies.json" />
+    <Content Include="Properties\serviceDependencies.local.json" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
@@ -22,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
 </Project>

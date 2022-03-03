@@ -2,7 +2,6 @@
 using Core.Model.DataTransferObjects;
 using Core.Services.Interfaces;
 using Domain.Entieties;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -21,10 +20,10 @@ namespace Api.Controllers
         }
         [HttpGet]
         //[Authorize(Roles = "string")]
-        public async Task<ActionResult<List<SearchedAnnoucementsDTO>>> GetAnnouncements([FromQuery] int page = 1, 
-            [FromQuery] string? category = "all", [FromQuery] string? voivodeship = "all", [FromQuery] string? city = "all", 
+        public async Task<ActionResult<List<SearchedAnnoucementsDTO>>> GetAnnouncements([FromQuery] int page = 1,
+            [FromQuery] string? category = "all", [FromQuery] string? voivodeship = "all", [FromQuery] string? city = "all",
             [FromQuery] string? searchPhrase = "all", [FromQuery] int costMin = 0, [FromQuery] int costMax = 50,
-            [FromQuery] string? sortBy="publishDate", [FromQuery] string? sortDirection = "desc")
+            [FromQuery] string? sortBy = "publishDate", [FromQuery] string? sortDirection = "desc")
         {
             _logger.LogInformation($"Getting announcements with params: page: {page}, category: {category}, voivodeship: {voivodeship}, " +
                 $"city: {city}, searchPhrase: {searchPhrase}");
@@ -46,7 +45,15 @@ namespace Api.Controllers
                 NumberOfPages = announcementDto.NumberOfPages,
                 CurrentPage = page
             };
-            return Ok(response);            
+            return Ok(response);
+        }
+
+        [HttpGet("promoted")]
+        //[Authorize(Roles = "string")]
+        public async Task<ActionResult<List<Announcement>>> GetPromotedAnnouncements()
+        {
+            var announcements = await _announcementService.GetPromotedAnnouncements();
+            return Ok(announcements);
         }
 
         // /api/Announcements POST

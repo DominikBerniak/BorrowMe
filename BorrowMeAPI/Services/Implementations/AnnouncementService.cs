@@ -78,6 +78,13 @@ namespace Services.Implementations
             return await _announcementRepository.GetAllAnnouncements();
         }
 
+        public async Task<List<Announcement>> GetPromotedAnnouncements()
+        {
+            //na potrzeby demo
+            var announcements = await _announcementRepository.GetAllAnnouncements();
+            return announcements.Take(4).ToList();
+        }
+
         public async Task<Announcement> UpdateAnnouncement(Announcement announcement)
         {
             return await _repository.Edit(announcement);

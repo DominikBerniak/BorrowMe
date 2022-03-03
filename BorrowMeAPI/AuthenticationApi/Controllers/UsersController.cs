@@ -4,7 +4,6 @@ using BorrowMeAuth.DTO;
 using Core.Model.DataTransferObjects;
 using Core.Services.Interfaces;
 using Domain.Entieties;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyHotels.WebApi.Infrastructure;
@@ -37,6 +36,12 @@ namespace BorrowMeAuth.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterApiUser([FromBody] RegisterApiUserDto userDto)
         {
+            bool isEmailTaken = await _userManager.FindByEmailAsync(userDto.Email) is not null;
+            if (isEmailTaken)
+            {
+                _logger.LogInformation("User submited email that is already taken");
+                return BadRequest();
+            }
             var user = _mapper.Map<BorrowMeAuthUser>(userDto);
             user.UserName = user.Email;
 
@@ -48,7 +53,6 @@ namespace BorrowMeAuth.Controllers
             };
             User businessUser = await _userService.AddUser(businessUserData);
             user.BusinessUserId = businessUser.Id.ToString();
-
             var result = await _userManager.CreateAsync(user, userDto.Password);
             await _userManager.AddToRoleAsync(user, "User");
 

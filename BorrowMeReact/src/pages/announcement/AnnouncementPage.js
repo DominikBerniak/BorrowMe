@@ -1,7 +1,7 @@
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import ImageAPI from "../../components/ImageAPI";
-import {getData} from "../../services/apiFetch";
+import {getData, postData} from "../../services/apiFetch";
 import "./announcementPage.css"
 import Spinner from "../../components/Spinner";
 import {useNavigate} from "react-router-dom";
@@ -25,10 +25,10 @@ const AnnouncementPage = () => {
     const [quantity, setQuantity] = useState(0);
     const [reservationPrice, setPrice] = useState(0);
     const {announcementId} = useParams();
-    const actionLink = `api/announcements/${announcementId}/Reservation`;
     const navigate = useNavigate();
-    let handleSubmit = (e) => {
-        e.preventDefault();
+    let handleSubmit = () => {
+        setPrice(announcementData.price*quantity)
+        postData(`/api/Announcements/${announcementId}/Reservation`, )
         navigate(`/announcement/${announcementId}`)
     };
     let handleNextImage = () => {
@@ -108,18 +108,16 @@ const AnnouncementPage = () => {
                                 <Calendar onChange={onChange} value={date} nextLabel={<ArrowNext/>} prevLabel={<ArrowPrevious/>} next2Label={<CaretNext/>} prev2Label={<CaretPrevious/>} minDate={new Date()} selectRange={true} returnValue="range"/>
                             </div>
                             <div className="choosing-date-form">
-                                <form method="post" action={actionLink} id="reservation-form" onSubmit={handleSubmit}>
+                                <div id="reservation-form" >
                                     <DateRangePicker value={date} disableCalendar={true} onChange={onChange} rangeDivider="-"/>
                                     <div className="reservation-price-container">
                                         <label id="reservation-price-paragraph">Cena rezerwacji:</label>
                                         <p id="reservation-price">{quantity > 0 ? getCorrectPaymentElem(announcementData, quantity) : ""}</p>
                                     </div>
                                     <div className="reservation-button-container center">
-                                        <button type="submit" className="btn btn-warning"
-                                                id="reservation-button">Zarezerwuj
-                                        </button>
+                                        <button type="submit" className="btn btn-warning" id="reservation-button" onClick={handleSubmit}>Zarezerwuj</button>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         <div className="city-announcement-container">
                             <label id="localization-label">Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</label>

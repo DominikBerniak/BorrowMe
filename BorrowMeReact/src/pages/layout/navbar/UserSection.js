@@ -44,7 +44,7 @@ const UserSection = () => {
 
     return (
         <div id="navbar-user-section-container" className="d-flex ms-auto me-3 h-60 align-items-center">
-            <Link to="/">
+            <Link to="/announcement/new">
                 <AddIcon id="navbar-add-icon" sx={{fontSize: 35, color: "#ffffff"}} className="me-4"/>
             </Link>
             <Link to="/">

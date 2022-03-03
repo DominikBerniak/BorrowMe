@@ -14,7 +14,7 @@ namespace Api.Controllers
         private readonly ILogger _logger;
         private readonly IReservationService _reservationService;
 
-        public ReservationsController(ILogger logger, IReservationService reservationService)
+        public ReservationsController(ILogger<ReservationsController> logger, IReservationService reservationService)
         {
             _logger = logger;
             _reservationService = reservationService;
@@ -31,7 +31,7 @@ namespace Api.Controllers
         }
 
         // /api/Reservations/{id} DELETE
-        [HttpDelete("id:Guid")]
+        [HttpDelete("{id:Guid}")]
         public async Task<IActionResult> DeleteReservation(Guid id)
         {
             _logger.LogInformation($"Delete reservation attempt. Id = '{id}'");

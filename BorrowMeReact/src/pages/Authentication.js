@@ -4,21 +4,27 @@ import "./authentication/authentication.css"
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import {Helmet} from "react-helmet";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {changeAuthUser} from "../features/authUser";
+import {getAuthUser} from "../services/getAuthUser";
+import Spinner from "../components/Spinner";
 
 const Authentication = ({pageType}) => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
+    const [email, setEmail] = useState("dominik@gmail.com");
+    const [password, setPassword] = useState("Admin123!");
 
     const [passwordInputTimeout, setPasswordInputTimeout] = useState(null);
 
 
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(true);
     const [isPasswordHidden, setIsPasswordHidden] = useState(true);
+
+    const [isAuthenticationInProgress, setIsAuthenticationInProgress] = useState(false);
+    const [wrongAuthenticationMessage, setWrongAuthenticationMessage] = useState("");
+
+    const authUser = useSelector(state=>state.authUser.value);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -27,9 +33,26 @@ const Authentication = ({pageType}) => {
             () => clearTimeout(passwordInputTimeout)
         , [passwordInputTimeout]
     )
+    useEffect(()=>{
+        if (authUser.userId !== "")
+        {
+            navigate("/")
+            return;
+        }
+
+    },[authUser])
 
     useEffect(()=>{
-        setPassword("");
+        console.log(authUser.userId)
+        // if (authUser.userId !== "")
+        // {
+        //     console.log("dupa")
+        //     navigate("/")
+        //     return;
+        // }
+        //Na potrzebe demo zakomentowane
+        //setPassword("");
+
     },[pageType])
 
     useEffect(() => {
@@ -54,6 +77,7 @@ const Authentication = ({pageType}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setIsAuthenticationInProgress(true);
         let data =
         {
             email: email,
@@ -83,48 +107,72 @@ const Authentication = ({pageType}) => {
         });
         if (response.ok)
         {
+            setIsAuthenticationInProgress(false);
             navigate("/login")
         }
         else
         {
-            alert("Email już zajęty")
+            setIsAuthenticationInProgress(false);
+            setWrongAuthenticationMessage("Ten adres email jest już zajęty.");
         }
     }
     const handleLogin = async (loginData) => {
-        // const response = await fetch("/authentication/login",{
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     credentials: 'include',
-        //     body: JSON.stringify(loginData)
-        // });
-        // if (response.ok)
-        // {
-        //     await fetch("/authentication/user",{
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         credentials: 'include',
-        //     }).then(data=>data.json())
-        //     .then(user=>{
-        //         dispatch(changeAuthUser({
-        //             userId: user.id,
-        //             role: user.role
-        //         }))
-        //     })
-        // }
-
-        // HARDCODE
-        dispatch(changeAuthUser({
-            userId: "65BBBB86-B46A-4114-2A34-08D9F157CDB2",
-            role: "user"
-        }))
-        navigate("/")
+        const response = await fetch("/authentication/login",{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(loginData)
+        });
+        if (response.ok)
+        {
+            getAuthUser()
+                .then(user=>{
+                    dispatch(changeAuthUser({
+                        userId: user.businessUserId,
+                        roles: user.roles
+                    }))
+                    setIsAuthenticationInProgress(false);
+                    navigate("/")
+                })
+        }
+        else {
+            setIsAuthenticationInProgress(false);
+            setWrongAuthenticationMessage("Błędny email lub hasło.")
+        }
     }
 
     const togglePassword = () => {
         setIsPasswordHidden(prev => !prev);
+    }
+    const handleFirstNameChange = (firstName) => {
+        setFirstName(firstName);
+        if (wrongAuthenticationMessage !== "")
+        {
+            setWrongAuthenticationMessage("");
+        }
+    }
+    const handleLastNameChange = (lastName) => {
+        setLastName(lastName);
+        if (wrongAuthenticationMessage !== "")
+        {
+            setWrongAuthenticationMessage("");
+        }
+    }
+    const handleEmailChange = (email) => {
+        setEmail(email);
+        if (wrongAuthenticationMessage !== "")
+        {
+            setWrongAuthenticationMessage("");
+        }
+    }
+    const handlePasswordChange = (password) => {
+        setPassword(password);
+        if (wrongAuthenticationMessage !== "")
+        {
+            setWrongAuthenticationMessage("");
+        }
     }
     return (
         <div id="authentication-main-container" className="d-flex flex-column mx-auto align-items-center">
@@ -144,26 +192,26 @@ const Authentication = ({pageType}) => {
                     <>
                         <label className="w-100 mb-3">Imię:
                             <input type="text" className="d-block w-100 rounded px-3 py-1"
-                                   value={firstName} onChange={(e) => setFirstName(e.target.value)}
+                                   value={firstName} onChange={(e) => handleFirstNameChange(e.target.value)}
                             />
                         </label>
                         <label className="w-100 mb-3">Nazwisko:
                             <input type="text" className="d-block w-100 rounded px-3 py-1"
-                                   value={lastName} onChange={(e) => setLastName(e.target.value)}
+                                   value={lastName} onChange={(e) => handleLastNameChange(e.target.value)}
                             />
                         </label>
                     </>
                 }
                 <label className="w-100 mb-3">Email:
                     <input type="email" className="d-block w-100 rounded px-3 py-1"
-                           value={email} onChange={(e) => setEmail(e.target.value)}
+                           value={email} onChange={(e) => handleEmailChange(e.target.value)}
                     />
                 </label>
                 <label className="w-100 mb-1">Hasło:
                     <div className="d-flex align-items-center">
                         <input id="password-input" type={isPasswordHidden ? "password" : "text"}
                                className={"d-block w-100 rounded px-3 py-1 " + (!isPasswordCorrect ? "incorrect-password" : "")}
-                               autoComplete="off" value={password} onChange={(e) => setPassword(e.target.value)}
+                               autoComplete="off" value={password} onChange={(e) => handlePasswordChange(e.target.value)}
                         />
                         <div
                             className={"password-eye-button d-flex align-items-center px-1 " + (!isPasswordCorrect ? "incorrect-password" : "")}
@@ -188,6 +236,11 @@ const Authentication = ({pageType}) => {
                         </>
                     }
                 </div>
+                <div id="wrong-authentication-message" className="text-center user-select-none">
+                {wrongAuthenticationMessage !== "" &&
+                        <div>{wrongAuthenticationMessage}</div>
+                }
+                </div>
             </form>
             <div className="d-flex flex-column align-items-center w-70 mt-auto mb-5">
                 <button id="authenticate-button" form="authentication-form" type="submit"
@@ -202,6 +255,11 @@ const Authentication = ({pageType}) => {
                     <button id="google-button" className="btn shadow-none">Google</button>
                 </div>
             </div>
+            {isAuthenticationInProgress &&
+                <div id="authentication-pending-spinner">
+                    <Spinner/>
+                </div>
+            }
         </div>
     );
 };

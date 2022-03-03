@@ -1,6 +1,7 @@
 import './announcement.css'
 import ImageAPI from "../../components/ImageAPI";
 import {useNavigate} from "react-router-dom";
+import NoImage from "../../components/NoImage";
 
 
 const Announcement = ({ announcement }) => {
@@ -19,7 +20,7 @@ const Announcement = ({ announcement }) => {
                     <ImageAPI imageDirectory={announcement.pictureLocations[0].directoryName}
                         imageName={announcement.pictureLocations[0].fileName} />
                     :
-                    <ImageAPI imageDirectory='site-images' imageName='noPicture.png'/>
+                    <NoImage classNames="bg-light"/>
                 }
             </div>
             <div className="informations-row-1">

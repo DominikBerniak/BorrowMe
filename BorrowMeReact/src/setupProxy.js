@@ -9,13 +9,13 @@ module.exports = function(app) {
             secure: false
         })
     );
-    // app.use(
-    //     '/authentication',
-    //     createProxyMiddleware({
-    //         target: 'https://localhost:7058',
-    //         changeOrigin: true,
-    //         secure: false
-    //     })
-    // );
+    app.use(
+        '/authentication',
+        createProxyMiddleware({
+            target: 'https://localhost:7246',
+            changeOrigin: true,
+            secure: false
+        })
+    );
 
 };

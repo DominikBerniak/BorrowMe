@@ -9,6 +9,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import SearchResultsRedirect from "./pages/searchResults/SearchResultsRedirect";
 import Authentication from "./pages/Authentication";
+import AddAnnouncement from "./pages/AddAnnouncement";
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                 <Route path="announcement/:announcementId" element={<AnnouncementPage/>}/>
                 <Route path="login" element={<Authentication pageType="login"/>}/>
                 <Route path="register" element={<Authentication pageType="register"/>}/>
+                <Route path="announcement/new" element={<AddAnnouncement />}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Route>
         </Routes>

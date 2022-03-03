@@ -14,6 +14,7 @@ import costFilterReducer from "./features/costFilter"
 import sortReducer from "./features/sort";
 import authUserReducer from "./features/authUser";
 import userReducer from "./features/user";
+import allCategoriesReducer from "./features/allCategories";
 
 
 const store = configureStore({
@@ -25,7 +26,8 @@ const store = configureStore({
         costFilter: costFilterReducer,
         sort: sortReducer,
         authUser: authUserReducer,
-        user: userReducer
+        user: userReducer,
+        allCategories: allCategoriesReducer
     },
 })
 

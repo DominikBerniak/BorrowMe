@@ -11,7 +11,6 @@ const Announcement = ({ announcement }) => {
     
     return (
         <div className='announcement' onClick={() => handleAnnouncementClick(announcement.id)}>
-            {console.log(announcement)}
             <div className="title" >
                 <b>{announcement.title}</b>
             </div>

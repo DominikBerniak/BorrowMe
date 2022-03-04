@@ -1,4 +1,4 @@
-USE [borrow_me2]
+USE [borrow_me]
 GO
 
 INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'e6383c02-4e81-48ff-425e-08d9f07ef5f6', N'Dolnośląskie')

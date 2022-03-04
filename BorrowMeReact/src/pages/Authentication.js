@@ -43,16 +43,8 @@ const Authentication = ({pageType}) => {
     },[authUser])
 
     useEffect(()=>{
-        console.log(authUser.userId)
-        // if (authUser.userId !== "")
-        // {
-        //     console.log("dupa")
-        //     navigate("/")
-        //     return;
-        // }
         //Na potrzebe demo zakomentowane
         //setPassword("");
-
     },[pageType])
 
     useEffect(() => {

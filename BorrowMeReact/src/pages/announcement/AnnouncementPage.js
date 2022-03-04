@@ -144,7 +144,9 @@ const AnnouncementPage = () => {
                             <p>Opublikowano {announcementData.publishDate.slice(0, 10)} o godzinie {announcementData.publishDate.slice(11, 16)}</p>
                         </div>
                     </div>
-                </>:<Spinner/>
+                </>
+                :
+                <Spinner/>
             }
         </div>
     )

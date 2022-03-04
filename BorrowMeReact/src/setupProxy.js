@@ -17,5 +17,4 @@ module.exports = function(app) {
             secure: false
         })
     );
-
 };

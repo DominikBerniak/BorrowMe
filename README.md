@@ -26,7 +26,7 @@
   }
 }
 ```
--Don't forget to inculde your server name
+- Don't forget to inculde your server name
 3. Generate databases
 - open Package Manager Console and make sure "Default project" is set to "Api"
 - type "update-database"

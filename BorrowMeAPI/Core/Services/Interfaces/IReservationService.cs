@@ -1,13 +1,20 @@
-﻿using Domain.Entieties;
+﻿using Core.Model.DataTransferObjects;
+using Domain.Entieties;
 
 namespace Core.Services
 {
     public interface IReservationService
     {
+        Task<List<Reservation>> GetByUserId(Guid id);
+
+        Task<List<Reservation>> GetByAnnouncementId(Guid id);
+
+        Task<Reservation> GetReservationById(Guid id);
         // POST
-        void AddReservation(int announcementId, Reservation reservation);
+        Task<Reservation> AddReservation(ReservationDto reservation);
 
         // DELETE
-        void DeleteReservation(int announcementId, Reservation reservation);
+        Task<Reservation> DeleteReservation(Guid id);
+        
     }
 }

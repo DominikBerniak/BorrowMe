@@ -118,3 +118,6 @@ label {
 #reservation-price {
     margin: 10px;
 }
+#confirmation-info-label {
+    font-weight: bold;
+}

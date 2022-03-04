@@ -22,15 +22,22 @@ const AnnouncementPage = () => {
     const [imageDirectory, setPath] = useState("");
     const [imageName, setImageName] = useState("")
     const [count, setCount] = useState(0)
-    const [announcementData, setData] = useState();
+    const [announcementData, setAnnouncementData] = useState();
+    const [reservations, setReservations] = useState();
     const [quantity, setQuantity] = useState(0);
-    const [reservationPrice, setPrice] = useState(0);
     const {announcementId} = useParams();
     const navigate = useNavigate();
     let handleSubmit = () => {
-        setPrice(announcementData.price*quantity)
-        postData(`/api/Announcements/${announcementId}/Reservation`, )
-        navigate(`/announcement/${announcementId}`)
+        let response = postData(`/api/Reservations`, {
+            announcementId: announcementId,
+            userId: "65BBBB86-B46A-4114-2A34-08D9F157CDA3", //zmienic na id użytkownika!!!!!!
+            startDate: date[0],
+            endDate: date[1]
+        })
+            .then(response => {
+                navigate(`/reservation/${response.id}`)
+            })
+
     };
     let handleNextImage = () => {
         if (count < announcementData.pictureLocations.length-1)
@@ -58,8 +65,6 @@ const AnnouncementPage = () => {
         }
         else
         {
-            // funkcja do obliczania ceny rezerwacji w zależności od ilości dni
-
             let differenceInTime = date[1].getTime() - date[0].getTime();
             let differenceInDays = differenceInTime / (1000 * 3600 * 24);
             setQuantity(Math.round(differenceInDays))
@@ -69,9 +74,11 @@ const AnnouncementPage = () => {
     useEffect(() => {
             getData(`/api/Announcements/${announcementId}`)
                 .then(data => {
-                    setData(data);
-                    setPath(data.pictureLocations[count].directoryName);
-                    setImageName(data.pictureLocations[count].fileName);
+                    setAnnouncementData(data.announcement);
+                    setReservations(data.reservations)
+                    setPath(data.announcement.pictureLocations[count].directoryName);
+                    console.log(data.announcement.pictureLocations[count].directoryName)
+                    setImageName(data.announcement.pictureLocations[count].fileName);
                 });
     }, [count])
 

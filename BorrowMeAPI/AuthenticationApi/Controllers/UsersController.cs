@@ -91,7 +91,6 @@ namespace BorrowMeAuth.Controllers
                 HttpOnly = true
             });
 
-
             return Accepted(new
             {
                 message = "Login successful"

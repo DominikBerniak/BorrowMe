@@ -15,10 +15,16 @@ builder.Logging.AddConsole();
 // Add services to the container.
 
 builder.Services.AddControllers();
+//builder.Services.AddDbContext<DataDbContext>(options =>
+//{
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+//});
+
 builder.Services.AddDbContext<DataDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+              options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+              optionsBuilder => optionsBuilder.MigrationsAssembly("Api"))
+             );
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

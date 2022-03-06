@@ -1,0 +1,294 @@
+USE [borrow_me]
+GO
+
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'e6383c02-4e81-48ff-425e-08d9f07ef5f6', N'Dolnośląskie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'ee502fa4-c492-4394-425f-08d9f07ef5f6', N'Kujawsko-pomorskie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'68fec422-9520-4db2-4260-08d9f07ef5f6', N'Lubelskie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'180fc808-2d32-4495-4261-08d9f07ef5f6', N'Lubuskie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'614f2bb3-35fe-4489-4262-08d9f07ef5f6', N'Łódzkie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'4cc77232-2c26-4f70-4263-08d9f07ef5f6', N'Małopolskie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'f289faa2-bbb3-4012-4264-08d9f07ef5f6', N'Mazowieckie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'75848803-8e7d-4cef-4265-08d9f07ef5f6', N'Opolskie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'30bb04b9-8f7f-4cb5-4266-08d9f07ef5f6', N'Podkarpackie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'd5c97f4b-0bbc-4c45-4267-08d9f07ef5f6', N'Podlaskie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'aded293a-4cc7-415c-4268-08d9f07ef5f6', N'Pomorskie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'e17e4710-cdec-4372-4269-08d9f07ef5f6', N'Śląskie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'55dfe538-002f-4840-426a-08d9f07ef5f6', N'Świętokrzyskie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'0952b60c-1861-4662-426b-08d9f07ef5f6', N'Warmińsko-mazurskie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'60399148-447d-4b82-426c-08d9f07ef5f6', N'Wielkopolskie')
+GO
+INSERT [dbo].[Voivodeships] ([Id], [Name]) VALUES (N'6c61f976-0794-4ced-426d-08d9f07ef5f6', N'Zachodniopomorskie')
+GO
+
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'637f8e91-5e5b-4f90-3f3f-08d9f08ed88f', N'Kraków', N'4cc77232-2c26-4f70-4263-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'b8781719-5c40-4198-3f40-08d9f08ed88f', N'Warszawa', N'f289faa2-bbb3-4012-4264-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'8b647a94-9b5f-4b5f-3f41-08d9f08ed88f', N'Dąbrowa Górnicza', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'aa53e245-a496-46e2-2a32-08d9f127cda3', N'Łódź', N'614f2bb3-35fe-4489-4262-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'bc8f9d2d-8318-4146-2a33-08d9f127cda3', N'Wrocław', N'e6383c02-4e81-48ff-425e-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'65bbbb86-b46a-4114-2a34-08d9f127cda3', N'Poznań', N'60399148-447d-4b82-426c-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'3482d18a-ce7b-4eea-2a35-08d9f127cda3', N'Gdańsk', N'aded293a-4cc7-415c-4268-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'f836c2a6-319d-4d3d-0288-08d9f12bd012', N'Szczecin', N'6c61f976-0794-4ced-426d-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'6b2d2af5-2535-40a4-0289-08d9f12bd012', N'Bydgoszcz', N'ee502fa4-c492-4394-425f-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'05b0decc-dd88-46ac-028a-08d9f12bd012', N'Lublin', N'68fec422-9520-4db2-4260-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'ca819191-7cda-4a06-028b-08d9f12bd012', N'Białystok', N'd5c97f4b-0bbc-4c45-4267-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'bf4a3547-dceb-472c-028c-08d9f12bd012', N'Katowice', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'8da2d1ab-2010-4582-028d-08d9f12bd012', N'Gdynia', N'aded293a-4cc7-415c-4268-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'c9a3dfc4-56d7-48e7-028e-08d9f12bd012', N'Częstochowa', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'5dc78e2c-3987-4b3e-028f-08d9f12bd012', N'Radom', N'f289faa2-bbb3-4012-4264-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'f68031d9-3939-44ba-0290-08d9f12bd012', N'Toruń', N'ee502fa4-c492-4394-425f-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'cf90d8a1-9522-4317-0291-08d9f12bd012', N'Sosnowiec', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'36a7864e-5ec0-488f-0292-08d9f12bd012', N'Rzeszów', N'30bb04b9-8f7f-4cb5-4266-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'd8796611-2563-4104-0293-08d9f12bd012', N'Kielce', N'55dfe538-002f-4840-426a-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'9c559522-ee25-4352-0294-08d9f12bd012', N'Gliwice', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'3813f0e0-c80b-4bed-0295-08d9f12bd012', N'Olsztyn', N'0952b60c-1861-4662-426b-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'b7974c2d-5af9-4d19-0296-08d9f12bd012', N'Zabrze', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'f955b520-c3f8-4213-0297-08d9f12bd012', N'Bielsko-Biała', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'61222985-1d6e-48b6-0298-08d9f12bd012', N'Bytom', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'6140d069-1a72-4495-0299-08d9f12bd012', N'Rybnik', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'7e020078-7f6a-4b9a-029a-08d9f12bd012', N'Ruda Śląska', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'56d05cda-69e9-4abf-029b-08d9f12bd012', N'Tychy', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'ccc4c9f0-832b-4eca-029c-08d9f12bd012', N'Zielona Góra', N'180fc808-2d32-4495-4261-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'a847c1e5-43f0-465b-029d-08d9f12bd012', N'Gorzów Wielkopolski', N'180fc808-2d32-4495-4261-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'f0164250-d1c0-4e19-029e-08d9f12bd012', N'Opole', N'75848803-8e7d-4cef-4265-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'1d8140d6-409f-4c77-029f-08d9f12bd012', N'Elbląg', N'0952b60c-1861-4662-426b-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'53eb4df4-0830-4760-02a0-08d9f12bd012', N'Płock', N'f289faa2-bbb3-4012-4264-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'6400d234-7f40-4938-02a1-08d9f12bd012', N'Wałbrzych', N'e6383c02-4e81-48ff-425e-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'a03e463b-5dd8-4a88-02a2-08d9f12bd012', N'Legnica', N'e6383c02-4e81-48ff-425e-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'ab69aeb2-170f-47b6-02a3-08d9f12bd012', N'Jelenia Góra', N'e6383c02-4e81-48ff-425e-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'b7ac0f2a-9b97-4cc9-02a4-08d9f12bd012', N'Włocławek', N'ee502fa4-c492-4394-425f-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'2344c66f-d093-4c73-02a5-08d9f12bd012', N'Inowrocław', N'ee502fa4-c492-4394-425f-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'c25a794d-e439-40e2-02a6-08d9f12bd012', N'Tarnów', N'4cc77232-2c26-4f70-4263-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'9625da95-7f2f-4d22-02a7-08d9f12bd012', N'Nowy Sącz', N'4cc77232-2c26-4f70-4263-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'f93b92d4-77cc-4896-02a8-08d9f12bd012', N'Chorzów', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'bcc28a83-c240-4c2c-02a9-08d9f12bd012', N'Jaworzno', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'1a3baa21-81c2-41b9-02aa-08d9f12bd012', N'Jastrzębie-Zdrój', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'0a515b35-e421-407b-02ab-08d9f12bd012', N'Mysłowice', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'cef22b31-2fb3-402d-02ac-08d9f12bd012', N'Koszalin', N'6c61f976-0794-4ced-426d-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'c6182af6-bae3-4262-02ad-08d9f12bd012', N'Stargard', N'6c61f976-0794-4ced-426d-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'2753e8af-ffbd-4795-02ae-08d9f12bd012', N'Kalisz', N'60399148-447d-4b82-426c-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'eea59e83-43d5-4f4c-02af-08d9f12bd012', N'Konin', N'60399148-447d-4b82-426c-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'e74b8b53-6dd7-4cf9-02b0-08d9f12bd012', N'Ostrów Wielkopolski', N'60399148-447d-4b82-426c-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'20ad4e8f-95ee-410e-02b1-08d9f12bd012', N'Leszno', N'60399148-447d-4b82-426c-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'd717b921-35e5-4683-02b2-08d9f12bd012', N'Grudziądz', N'ee502fa4-c492-4394-425f-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'd1c1c0e0-ded6-49f5-02b3-08d9f12bd012', N'Słupsk', N'aded293a-4cc7-415c-4268-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'd48ee856-5712-4abb-02b4-08d9f12bd012', N'Siedlce', N'f289faa2-bbb3-4012-4264-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'66e6fd86-6a14-45ce-02b5-08d9f12bd012', N'Piła', N'60399148-447d-4b82-426c-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'5d729317-f45a-4dde-02b6-08d9f12bd012', N'Piotrków Trybunalski', N'614f2bb3-35fe-4489-4262-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'f4d4c75c-50da-4ea1-02b7-08d9f12bd012', N'Lubin', N'e6383c02-4e81-48ff-425e-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'4df5e6d1-d6fb-42d8-02b8-08d9f12bd012', N'Suwałki', N'd5c97f4b-0bbc-4c45-4267-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'b34b4784-9732-4cd9-02b9-08d9f12bd012', N'Gniezno', N'60399148-447d-4b82-426c-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'15861e29-4643-4a3d-02ba-08d9f12bd012', N'Ostrowiec Świętokrzyski', N'55dfe538-002f-4840-426a-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'4a43e2c4-23c6-400e-02bb-08d9f12bd012', N'Siemianowice Śląskie', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'161a5cf2-dd50-4296-02bc-08d9f12bd012', N'Żory', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'7787f023-c583-47ac-02bd-08d9f12bd012', N'Tarnowskie Góry', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'9dc46ec8-eee3-4897-02be-08d9f12bd012', N'Będzin', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'9486d216-8d6c-46f4-02bf-08d9f12bd012', N'Piekary Śląskie', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'4ed7a304-8859-4ff0-02c0-08d9f12bd012', N'Racibórz', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'e7aa0c72-f948-411b-02c1-08d9f12bd012', N'Świętochłowice', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'b1ac4d5f-a9df-4e2c-02c2-08d9f12bd012', N'Zawiercie', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'd914cb39-fd16-4bb2-02c3-08d9f12bd012', N'Wodzisław Śląski', N'e17e4710-cdec-4372-4269-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'f4dd2f38-b84a-481a-02c4-08d9f12bd012', N'Głogów', N'e6383c02-4e81-48ff-425e-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'e09a6297-9caf-4e2f-02c5-08d9f12bd012', N'Świdnica', N'e6383c02-4e81-48ff-425e-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'124c60a1-574d-42a8-02c6-08d9f12bd012', N'Pabianice', N'614f2bb3-35fe-4489-4262-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'a10a9aff-4086-497e-02c7-08d9f12bd012', N'Tomaszów Mazowiecki', N'614f2bb3-35fe-4489-4262-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'6d94a52c-c6ac-4856-02c8-08d9f12bd012', N'Bełchatów', N'614f2bb3-35fe-4489-4262-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'087fe48b-ac1f-479e-02c9-08d9f12bd012', N'Zgierz', N'614f2bb3-35fe-4489-4262-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'74e01eed-620d-49a9-02ca-08d9f12bd012', N'Skierniewice', N'614f2bb3-35fe-4489-4262-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'a8f53366-a468-4066-02cb-08d9f12bd012', N'Radomsko', N'614f2bb3-35fe-4489-4262-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'681ea193-c1f5-4872-02cc-08d9f12bd012', N'Zamość', N'68fec422-9520-4db2-4260-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'bd6993a2-8b9c-4c22-02cd-08d9f12bd012', N'Chełm', N'68fec422-9520-4db2-4260-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'0a6c944a-21c4-4a5b-02ce-08d9f12bd012', N'Biała Podlaska', N'68fec422-9520-4db2-4260-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'da851214-32b7-468a-02cf-08d9f12bd012', N'Puławy', N'68fec422-9520-4db2-4260-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'50caab73-73ab-4dcf-02d0-08d9f12bd012', N'Pruszków', N'f289faa2-bbb3-4012-4264-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'25304862-c760-4bde-02d1-08d9f12bd012', N'Legionowo', N'f289faa2-bbb3-4012-4264-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'3d3e98a3-147b-4698-02d2-08d9f12bd012', N'Ostrołęka', N'f289faa2-bbb3-4012-4264-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'25959f8f-39ad-4676-02d3-08d9f12bd012', N'Piaseczno', N'f289faa2-bbb3-4012-4264-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'78a3dfb7-1430-4689-02d4-08d9f12bd012', N'Otwock', N'f289faa2-bbb3-4012-4264-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'fa60c8a4-af63-44cf-02d5-08d9f12bd012', N'Łomża', N'd5c97f4b-0bbc-4c45-4267-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'127755f2-90c8-4a50-02d6-08d9f12bd012', N'Ełk', N'0952b60c-1861-4662-426b-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'04540319-f105-406e-02d7-08d9f12bd012', N'Mielec', N'30bb04b9-8f7f-4cb5-4266-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'9aa263c9-6a1c-45de-02d8-08d9f12bd012', N'Przemyśl', N'30bb04b9-8f7f-4cb5-4266-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'fac68efa-10c0-4348-02d9-08d9f12bd012', N'Stalowa Wola', N'30bb04b9-8f7f-4cb5-4266-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'026dac67-af08-4e36-02da-08d9f12bd012', N'Tarnobrzeg', N'30bb04b9-8f7f-4cb5-4266-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'5a2bedde-3767-4a3b-02db-08d9f12bd012', N'Krosno', N'30bb04b9-8f7f-4cb5-4266-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'cd130b69-27a6-4d17-02dc-08d9f12bd012', N'Dębica', N'30bb04b9-8f7f-4cb5-4266-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'fcc32e1f-9cca-4299-02dd-08d9f12bd012', N'Kędzierzyn-Koźle', N'75848803-8e7d-4cef-4265-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'938fb429-160d-4efe-02de-08d9f12bd012', N'Tczew', N'aded293a-4cc7-415c-4268-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'84a689a8-00ad-404f-02df-08d9f12bd012', N'Rumia', N'aded293a-4cc7-415c-4268-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'4c817b36-e31e-4063-02e0-08d9f12bd012', N'Wejherowo', N'aded293a-4cc7-415c-4268-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'ece5f721-3ade-43b7-02e1-08d9f12bd012', N'Starogard Gdański', N'aded293a-4cc7-415c-4268-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'8e45af5f-3b86-4802-02e2-08d9f12bd012', N'Starachowice', N'55dfe538-002f-4840-426a-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'a3a01cef-a944-4ca1-02e3-08d9f12bd012', N'Skarżysko-Kamienna', N'55dfe538-002f-4840-426a-08d9f07ef5f6')
+GO
+INSERT [dbo].[Cities] ([Id], [Name], [VoivodeshipId]) VALUES (N'7569e56d-e13c-4d6f-02e4-08d9f12bd012', N'Kołobrzeg', N'6c61f976-0794-4ced-426d-08d9f07ef5f6')
+GO
+INSERT [dbo].[MainCategories] ([Id], [Name]) VALUES (N'd18f1509-9b61-4e4c-82a9-08d9f07117a9', N'Elektronika')
+GO
+INSERT [dbo].[MainCategories] ([Id], [Name]) VALUES (N'e4f45c03-91d8-4cbf-82aa-08d9f07117a9', N'Dom i ogród')
+GO
+INSERT [dbo].[MainCategories] ([Id], [Name]) VALUES (N'09f9355e-21e8-49a2-82ab-08d9f07117a9', N'Motoryzacja')
+GO
+INSERT [dbo].[MainCategories] ([Id], [Name]) VALUES (N'963a5565-f096-490b-82ac-08d9f07117a9', N'Rolnictwo')
+GO
+INSERT [dbo].[MainCategories] ([Id], [Name]) VALUES (N'e6a06d88-6e15-427f-82ad-08d9f07117a9', N'Dla zwierząt')
+GO
+INSERT [dbo].[MainCategories] ([Id], [Name]) VALUES (N'b4559273-e394-4cb1-82ae-08d9f07117a9', N'Sport')
+GO
+INSERT [dbo].[MainCategories] ([Id], [Name]) VALUES (N'ec6e7245-86cf-48b0-82af-08d9f07117a9', N'Zdrowie')
+GO
+INSERT [dbo].[MainCategories] ([Id], [Name]) VALUES (N'336da33b-4d5a-431a-82b0-08d9f07117a9', N'Pielęgnacja urody')
+GO
+INSERT [dbo].[MainCategories] ([Id], [Name]) VALUES (N'120f7275-ef31-4d99-82b1-08d9f07117a9', N'Edukacja')
+GO
+INSERT [dbo].[MainCategories] ([Id], [Name]) VALUES (N'344cc006-63be-4d58-82b2-08d9f07117a9', N'Dla dzieci')
+GO
+INSERT [dbo].[MainCategories] ([Id], [Name]) VALUES (N'852d6ccd-d9d2-4853-82b3-08d9f07117a9', N'Nieruchomości')
+GO
+INSERT [dbo].[MainCategories] ([Id], [Name]) VALUES (N'9d3f2c87-878d-49b5-82b4-08d9f07117a9', N'Moda')
+GO
+
+
+INSERT [dbo].[SubCategories] ([Id], [Name], [MainCategoryId]) VALUES (N'3fa85f64-5717-4562-b3fc-2c963f66afa7', N'narzędzia elektryczne', N'd18f1509-9b61-4e4c-82a9-08d9f07117a9')
+GO
+INSERT [dbo].[SubCategories] ([Id], [Name], [MainCategoryId]) VALUES (N'03dab0d4-8f9f-4d75-9703-c74f10178b12', N'sprzęt budowlany', N'e4f45c03-91d8-4cbf-82aa-08d9f07117a9')
+GO
+
+
+INSERT [dbo].[Users] ([Id], [FirstName], [LastName], [Email], [PhoneNumber], [PictureLocationId], [ReputationPoints]) VALUES (N'3fa85f64-5717-4562-b3fc-2c963f66afa6', N'Santa', N'Claus', N'JJ@amorki.pl', N'997', NULL, 5)
+GO
+
+
+INSERT [dbo].[Announcements] ([Id], [Title], [Description], [PublishDate], [OwnerId], [SubCategoryId], [VoivodeshipId], [CityId], [PaymentType], [Price], [OtherPaymentType]) VALUES (N'19b6ce9d-f980-4a03-a022-2ff847f8c593', N'spawarka MIG', N'string', CAST(N'2022-02-17T21:22:03.9810000' AS DateTime2), N'3fa85f64-5717-4562-b3fc-2c963f66afa6', N'3fa85f64-5717-4562-b3fc-2c963f66afa7', N'e6383c02-4e81-48ff-425e-08d9f07ef5f6', N'bc8f9d2d-8318-4146-2a33-08d9f127cda3', N'Money', CAST(30.00 AS Decimal(6, 2)), N'string')
+GO
+INSERT [dbo].[Announcements] ([Id], [Title], [Description], [PublishDate], [OwnerId], [SubCategoryId], [VoivodeshipId], [CityId], [PaymentType], [Price], [OtherPaymentType]) VALUES (N'29660685-d779-4616-ac33-7154fbab0165', N'Betoniarka 150L', N'Super', CAST(N'2022-02-17T21:22:03.9810000' AS DateTime2), N'3fa85f64-5717-4562-b3fc-2c963f66afa6', N'03dab0d4-8f9f-4d75-9703-c74f10178b12', N'f289faa2-bbb3-4012-4264-08d9f07ef5f6', N'78a3dfb7-1430-4689-02d4-08d9f12bd012', N'Free', CAST(23.00 AS Decimal(6, 2)), NULL)
+GO
+INSERT [dbo].[Announcements] ([Id], [Title], [Description], [PublishDate], [OwnerId], [SubCategoryId], [VoivodeshipId], [CityId], [PaymentType], [Price], [OtherPaymentType]) VALUES (N'2b44c247-1ef2-4772-bd27-7cedb10cde0f', N'Zakrętarka DeWalt', N'string', CAST(N'2022-02-17T21:22:03.9810000' AS DateTime2), N'3fa85f64-5717-4562-b3fc-2c963f66afa6', N'3fa85f64-5717-4562-b3fc-2c963f66afa7', N'e6383c02-4e81-48ff-425e-08d9f07ef5f6', N'bc8f9d2d-8318-4146-2a33-08d9f127cda3', N'Free', NULL, NULL)
+GO
+INSERT [dbo].[Announcements] ([Id], [Title], [Description], [PublishDate], [OwnerId], [SubCategoryId], [VoivodeshipId], [CityId], [PaymentType], [Price], [OtherPaymentType]) VALUES (N'8e2e3af8-ef76-4161-9499-cf233a7c9450', N'taczka ujeżdżaczka', N'string', CAST(N'2022-02-17T21:22:03.9810000' AS DateTime2), N'3fa85f64-5717-4562-b3fc-2c963f66afa6', N'03dab0d4-8f9f-4d75-9703-c74f10178b12', N'4cc77232-2c26-4f70-4263-08d9f07ef5f6', N'637f8e91-5e5b-4f90-3f3f-08d9f08ed88f', N'Money', CAST(30.00 AS Decimal(6, 2)), N'string')
+GO
+
+
+INSERT [dbo].[PictureLocations] ([Id], [DirectoryName], [FileName], [AnnouncementId]) VALUES (N'31da8886-8767-46e8-7c1d-08d9f25ca699', N'site-images', N'betoniarka.png', N'29660685-d779-4616-ac33-7154fbab0165')
+GO
+INSERT [dbo].[PictureLocations] ([Id], [DirectoryName], [FileName], [AnnouncementId]) VALUES (N'ba6d7f56-508e-40cf-7c1e-08d9f25ca699', N'site-images', N'zakretarka.png', N'2b44c247-1ef2-4772-bd27-7cedb10cde0f')
+GO
+INSERT [dbo].[PictureLocations] ([Id], [DirectoryName], [FileName], [AnnouncementId]) VALUES (N'a71ae9fc-2827-40bd-792c-08d9f267ebe0', N'site-images', N'spawarka.png', N'19b6ce9d-f980-4a03-a022-2ff847f8c593')
+GO
+INSERT [dbo].[PictureLocations] ([Id], [DirectoryName], [FileName], [AnnouncementId]) VALUES (N'b0664ade-0e05-4712-792d-08d9f267ebe0', N'site-images', N'taczka.png', N'8e2e3af8-ef76-4161-9499-cf233a7c9450')
+GO
+
+
+
+

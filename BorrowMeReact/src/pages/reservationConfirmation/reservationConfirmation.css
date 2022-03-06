@@ -33,18 +33,18 @@
 }
 .home-page-link {
     text-decoration: none;
-    color: #949494;
+    color: white;
 }
-.home-page-link:hover {
+.home-page-link:hover{
     color: white;
 }
 .reference-link:hover {
     color: mediumvioletred;
 }
 .confirmation-bottom {
-
     border-top: 2px solid #949494;
 }
 .homepage-button {
     margin: 10px 0;
+    background-color: #464646;
 }

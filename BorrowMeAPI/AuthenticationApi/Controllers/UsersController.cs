@@ -4,6 +4,7 @@ using BorrowMeAuth.DTO;
 using Core.Model.DataTransferObjects;
 using Core.Services.Interfaces;
 using Domain.Entieties;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyHotels.WebApi.Infrastructure;

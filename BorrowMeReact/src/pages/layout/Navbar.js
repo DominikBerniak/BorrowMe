@@ -37,6 +37,7 @@ const Navbar = ({navBarRef, navbarCategoriesRef}) => {
         getData(`/api/Users/${authUser.userId}`)
             .then(user=>{
                 dispatch(changeUser({
+                    userId: user.id,
                     firstName: user.firstName,
                     lastName: user.lastName,
                     email: user.email,

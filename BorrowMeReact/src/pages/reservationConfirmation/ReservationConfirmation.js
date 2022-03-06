@@ -7,10 +7,11 @@ import Spinner from "../../components/Spinner";
 const ReservationConfirmation = () => {
     const {reservationId} = useParams();
     const [reservation, setData] = useState();
+
     let countPrice = (price) => {
         let differenceInTime = new Date(reservation.reservationEndDay).getTime() - new Date(reservation.reservationStartDay).getTime();
         let differenceInDays = differenceInTime / (1000 * 3600 * 24);
-        return Math.round(differenceInDays)*price
+        return Math.round(differenceInDays) * price
     }
     useEffect(() => {
         getData(`/api/reservations/${reservationId}`)
@@ -30,26 +31,31 @@ const ReservationConfirmation = () => {
                             <label id="confirmation-details-label">Szczegoły rezerwacji:</label>
                             <div className="confirmation-details-container">
                                 <label>Rezerwujesz:</label>
-                                <p><Link className="reference-link" to={"/announcement/"+reservation.announcement.id}>{reservation.announcement.title}</Link></p>
+                                <p><Link className="reference-link"
+                                         to={"/announcement/" + reservation.announcement.id}>{reservation.announcement.title}</Link>
+                                </p>
                                 <label>Od użytkownika:</label>
-                                <p><Link className="reference-link" to={"/users/"+reservation.announcement.owner.id}>{reservation.announcement.owner.firstName} {reservation.announcement.owner.lastName}</Link></p>
+                                <p><Link className="reference-link"
+                                         to={"/users/" + reservation.announcement.owner.id}>{reservation.announcement.owner.firstName} {reservation.announcement.owner.lastName}</Link>
+                                </p>
                                 <label>Zarezerwowane od:</label>
                                 <p>{new Date(reservation.reservationStartDay).toLocaleDateString()}</p>
                                 <label>Zarezerwowane do:</label>
                                 <p>{new Date(reservation.reservationEndDay).toLocaleDateString()}</p>
                                 <label>Cena rezerwacji:</label>
                                 <p>{countPrice(reservation.announcement.price)} zł</p>
-                                <label id="confirmation-info-label">Na swoją pocztę dostaniesz powiadomienie, gdy ogłoszeniodawca zatwierdzi Twoją rezerwację.</label>
+                                <label id="confirmation-info-label">Na swoją pocztę dostaniesz powiadomienie, gdy
+                                    ogłoszeniodawca zatwierdzi Twoją rezerwację.</label>
                             </div>
                         </div>
                     </div>
                     <div className="confirmation-bottom center">
-                        <button className="btn btn-dark homepage-button">
+                        <button className="btn shadow-none homepage-button">
                             <Link className="home-page-link" to="/">Wróć do strony głownej</Link>
                         </button>
                     </div>
                 </>
-             : <Spinner/>}
+                : <Spinner/>}
         </div>
 
     )

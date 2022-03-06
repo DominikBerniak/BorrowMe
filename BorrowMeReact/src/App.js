@@ -12,6 +12,7 @@ import UserPage from "./pages/UserPage";
 import Authentication from "./pages/Authentication";
 import AddAnnouncement from "./pages/AddAnnouncement";
 import ReservationConfirmation from "./pages/reservationConfirmation/ReservationConfirmation";
+import RequireAuth from "./components/RequireAuth";
 
 function App() {
     return (
@@ -29,7 +30,11 @@ function App() {
                 <Route path="login" element={<Authentication pageType="login"/>}/>
                 <Route path="register" element={<Authentication pageType="register"/>}/>
                 <Route path="users/:userId" element={<UserPage/>}/>
-                <Route path="announcement/new" element={<AddAnnouncement/>}/>
+                <Route path="announcement/new" element={
+                    <RequireAuth>
+                        <AddAnnouncement/>
+                    </RequireAuth>
+                }/>
                 <Route path="reservation/:reservationId" element={<ReservationConfirmation/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Route>

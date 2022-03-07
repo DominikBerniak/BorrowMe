@@ -4,6 +4,7 @@ using Core.Services;
 using Core.Services.Interfaces;
 using Domain.Entieties;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 
 namespace Api.Controllers
 {
@@ -61,14 +62,16 @@ namespace Api.Controllers
 
         // /api/Announcements POST
         [HttpPost]
-        public async Task<ActionResult<Announcement>> AddNewAnnouncement(AnnouncementDTO announcementDTO)
+        public async Task<ActionResult<CreateAnnouncementStatusDto>> AddNewAnnouncement([FromForm] CreateAnnouncementDto announcementData)
         {
             _logger.LogInformation("Add new announcements attempt.");
-            _logger.LogInformation(announcementDTO.ToString());
-
-            //return Ok();
-            var createdannouncement = await _announcementService.AddAnnouncement(announcementDTO);
-            return Ok(createdannouncement);
+            var createdannouncementData = await _announcementService.AddAnnouncement(announcementData);
+            _logger.LogInformation(createdannouncementData.StatusMessage);
+            if (createdannouncementData.Status == Status.BadRequest)
+            {
+                return BadRequest(createdannouncementData.StatusMessage);
+            }
+            return Created($"/api/Announcements/{createdannouncementData.CreatedAnnoucement.Id}", createdannouncementData.CreatedAnnoucement);
         }
 
         // /api/Announcements/{id} GET

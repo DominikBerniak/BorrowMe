@@ -26,7 +26,7 @@ namespace Domain.Entieties
         [Required, Column(TypeName = "varchar(50)")]
         public PaymentType PaymentType { get; set; }
         [Precision(6, 2)]
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; } = 0;
         [StringLength(50)]
         public string? OtherPaymentType { get; set; }
     }

@@ -16,7 +16,7 @@ namespace Core.Services.Interfaces
 
 
         // POST
-        Task<Announcement> AddAnnouncement(AnnouncementDTO announcementDTO);
+        Task<CreateAnnouncementStatusDto> AddAnnouncement(CreateAnnouncementDto announcementData);
 
 
         // PUT by ID

@@ -107,43 +107,19 @@ namespace Persistance.Repositories
             return await announcements.FirstOrDefaultAsync();
         }
 
-        public async Task<Announcement> AddNewAnnouncement(AnnouncementDTO announcementDTO)
+        public async Task<Announcement> AddNewAnnouncement(CreateAnnouncementDto announcementData,Announcement newAnnouncement)
         {
-            var owner = _dbContext.Users.FirstOrDefault(u => u.Id == announcementDTO.UserId);
-            var subCategory = _dbContext.SubCategories.FirstOrDefault(sc => sc.Id == announcementDTO.SubCategoryId);
-            var city = _dbContext.Cities.FirstOrDefault(c => c.Id == announcementDTO.CityId);
-            var voivodeship = _dbContext.Voivodeships.FirstOrDefault(v => v.Id == announcementDTO.VoivodeshipId);
-            var pictureLocations = new List<PicturePath>();
-            if (announcementDTO.PictureLocations != null)
-            {
-                foreach (var pictureLocation in announcementDTO.PictureLocations)
-                {
-                    pictureLocations.Add(new PicturePath
-                    {
-                        DirectoryName = pictureLocation.DirectoryName,
-                        FileName = pictureLocation.FileName,
-                    });
-                }
-            }
-
-            var announcement = new Announcement
-            {
-                Id = Guid.NewGuid(),
-                Title = announcementDTO.Title,
-                Description = announcementDTO.Description,
-                PublishDate = announcementDTO.PublishDate,
-                PictureLocations = pictureLocations,
-                Owner = owner,
-                SubCategory = subCategory,
-                City = city,    
-                Voivodeship = voivodeship,
-                PaymentType = announcementDTO.PaymentType,
-                Price = announcementDTO.Price,
-                OtherPaymentType = announcementDTO.OtherPaymentType,
-            };
-            await _dbContext.Set<Announcement>().AddAsync(announcement);
+            var owner = await _dbContext.Users.FindAsync(announcementData.OwnerId);
+            var subCategory = await _dbContext.SubCategories.FindAsync(announcementData.SubCategoryId);
+            var city = await _dbContext.Cities.FirstOrDefaultAsync(c => c.Name == announcementData.CityName);
+            var voivodeship = await _dbContext.Voivodeships.FirstOrDefaultAsync(v => v.Name == announcementData.VoivodeshipName);
+            newAnnouncement.Owner = owner;
+            newAnnouncement.SubCategory = subCategory;
+            newAnnouncement.City = city;
+            newAnnouncement.Voivodeship = voivodeship;
+            await _dbContext.Announcements.AddAsync(newAnnouncement);
             await _dbContext.SaveChangesAsync();
-            return announcement;
+            return newAnnouncement;
         }
     }
 }

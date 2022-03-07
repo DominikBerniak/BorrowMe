@@ -38,7 +38,7 @@ const CategoriesModal = ({handleCategorySelect, hideModal}) => {
                         {chosenMainCategory && chosenMainCategory.subCategories.map(subCategory =>
                             <div key={subCategory.id}
                                  className="w-70 my-2 categories-modal-sub-category p-3 border-bottom border-2"
-                                 onClick={() => handleCategorySelect(chosenMainCategory.name, subCategory.name)}
+                                 onClick={() => handleCategorySelect(chosenMainCategory, subCategory)}
                             >{subCategory.name}</div>
                         )}
                     </div>

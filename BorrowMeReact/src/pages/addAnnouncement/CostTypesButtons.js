@@ -5,7 +5,7 @@ const CostTypesButtons = ({handleCostTypeClick, selectedType}) => {
     return (
         <div className="d-flex w-70 p-5 mx-auto justify-content-around">
             <div id="cost-type-money"
-                 className={"d-flex flex-column w-30 px-3 py-2 add-announcement-cost-type-button align-items-center rounded cursor-pointer p-1 "
+                 className={"d-flex flex-column w-30 px-3 py-2 add-announcement-cost-type-button align-items-center justify-content-center rounded cursor-pointer p-1 "
                      + (selectedType==="money" && "selected-cost-type")}
                 onClick={()=>handleCostTypeClick("money")}
             >
@@ -13,7 +13,7 @@ const CostTypesButtons = ({handleCostTypeClick, selectedType}) => {
                 <AttachMoneyOutlinedIcon sx={{fontSize: 70, color: "#646464"}}/>
             </div>
             <div id="cost-type-free"
-                 className={"d-flex flex-column w-30 px-3 py-2 add-announcement-cost-type-button align-items-center rounded cursor-pointer p-1 "
+                 className={"d-flex flex-column w-30 px-3 py-2 add-announcement-cost-type-button align-items-center justify-content-center rounded cursor-pointer p-1 "
                      + (selectedType==="free" && "selected-cost-type")}
                  onClick={()=>handleCostTypeClick("free")}
             >
@@ -21,7 +21,7 @@ const CostTypesButtons = ({handleCostTypeClick, selectedType}) => {
                 <VolunteerActivismRoundedIcon sx={{fontSize: 60, color: "#646464"}}/>
             </div>
             <div id="cost-type-other"
-                 className={"d-flex flex-column w-30 px-3 py-2 add-announcement-cost-type-button align-items-center rounded cursor-pointer p-1 "
+                 className={"d-flex flex-column w-30 px-3 py-2 add-announcement-cost-type-button align-items-center justify-content-center rounded cursor-pointer p-1 "
                      + (selectedType==="other" && "selected-cost-type")}
                  onClick={()=>handleCostTypeClick("other")}
             >

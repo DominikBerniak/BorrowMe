@@ -1,7 +1,7 @@
 #add-announcement-main-container{
     border-radius: 0.7rem !important;
     background-color: #f1f1f1;
-    min-height: 50rem;
+    min-height: 115rem;
 }
 #add-announcement-categories-modal-main-container{
     position: absolute;
@@ -21,6 +21,41 @@
     min-height: 38rem;
     width: 50rem;
     background-color: white;
+}
+
+#add-announcement-confirm-modal-container{
+    position: absolute;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 2000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+#add-announcement-confirm-modal{
+    position: relative;
+    top: 0;
+    transform: translateY(-50%);
+    border-radius: 0.7rem !important;
+    height: 20rem;
+    width: 40rem;
+    background-color: white;
+    transition: top 0.9s;
+}
+.add-announcement-confirm-modal-button-confirm, .add-announcement-confirm-modal-button-cancel{
+    outline: none;
+    border: 0.1rem solid #b2b2b2;
+    font-size: 1.1rem;
+    background-color: white;
+}
+.add-announcement-confirm-modal-button-confirm:hover{
+    color: #fff;
+    background-color: #008852;
+}
+.add-announcement-confirm-modal-button-cancel:hover{
+    color: #fff;
+    background-color: #5b5b5b;
 }
 #categories-modal-main-categories-container, #categories-modal-sub-categories-container{
     max-height: 30rem;
@@ -123,7 +158,7 @@
 }
 
 #cost-type-money:hover div, #cost-type-free:hover div, #cost-type-other:hover div{
-    height: 50%;
+    height: 40%;
     opacity: 1;
     visibility: visible;
 }
@@ -137,3 +172,18 @@
     -webkit-appearance: none;
 }
 
+#wrong-image-text{
+    height: 2.5rem;
+    font-size: 0.8rem;
+    color: red;
+}
+#add-announcement-submit-button{
+    outline: none;
+    border: 0.1rem solid #b2b2b2;
+    font-size: 1.1rem;
+    background-color: white;
+}
+#add-announcement-submit-button:hover{
+    color: #fff;
+    background-color: #5b5b5b;
+}

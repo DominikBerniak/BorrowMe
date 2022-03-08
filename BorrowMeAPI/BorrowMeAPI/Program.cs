@@ -8,6 +8,7 @@ using Microsoft.Extensions.FileProviders;
 using Persistance;
 using Persistance.Repositories;
 using Services.Implementations;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
@@ -47,6 +48,9 @@ builder.Services.AddTransient<IAnnouncementRepository, AnnouncementRepository>()
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IRepository<User>, Repository<User>>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
 
 var app = builder.Build();
 

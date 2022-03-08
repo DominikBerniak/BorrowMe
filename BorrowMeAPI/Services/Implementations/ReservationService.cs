@@ -32,7 +32,7 @@ namespace Services.Implementations
             return await _reservationRepository.GetReservationsById(id);
         }
 
-        public async Task<Reservation> AddReservation(ReservationDto reservation)
+        public async Task<Reservation> AddReservation(CreateReservationDto reservation)
         {
             return await _reservationRepository.AddNewReservation(reservation);
         }

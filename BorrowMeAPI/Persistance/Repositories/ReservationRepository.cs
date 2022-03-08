@@ -32,10 +32,10 @@ public class ReservationRepository : IReservationRepository
         return await reservations.Where(r => r.Announcement.Id == id).ToListAsync();
     }
 
-    public async Task<Reservation> AddNewReservation(ReservationDto reservationDto)
+    public async Task<Reservation> AddNewReservation(CreateReservationDto reservationDto)
     {
-        var user = _dbContext.Users.FirstOrDefault(user => user.Id == reservationDto.UserId);
-        var announcement = _dbContext.Announcements.FirstOrDefault(ann => ann.Id == reservationDto.AnnouncementId);
+        var user = await _dbContext.Users.FindAsync(reservationDto.UserId);
+        var announcement = await _dbContext.Announcements.FindAsync(reservationDto.AnnouncementId);
 
         var reservation = new Reservation()
         {
@@ -46,7 +46,7 @@ public class ReservationRepository : IReservationRepository
             ReservationEndDay = reservationDto.EndDate
         };
 
-        await _dbContext.Set<Reservation>().AddAsync(reservation);
+        await _dbContext.Reservations.AddAsync(reservation);
         await _dbContext.SaveChangesAsync();
         return reservation;
     }

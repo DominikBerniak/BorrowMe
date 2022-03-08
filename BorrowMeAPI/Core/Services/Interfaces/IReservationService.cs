@@ -11,7 +11,7 @@ namespace Core.Services
 
         Task<Reservation> GetReservationById(Guid id);
         // POST
-        Task<Reservation> AddReservation(ReservationDto reservation);
+        Task<Reservation> AddReservation(CreateReservationDto reservation);
 
         // DELETE
         Task<Reservation> DeleteReservation(Guid id);

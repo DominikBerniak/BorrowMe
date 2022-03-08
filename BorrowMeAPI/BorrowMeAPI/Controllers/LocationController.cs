@@ -22,7 +22,7 @@ namespace Api.Controllers
 
         #region Voivodeships
         [HttpGet("api/Voivodeships")]
-        public async Task<ActionResult<Voivodeship>> GetAllVoivodeships()
+        public async Task<ActionResult<List<Voivodeship>>> GetAllVoivodeships()
         {
             var voivodeships = await _voivodeshipService.GetAllVoivodeships();
             return Ok(voivodeships);

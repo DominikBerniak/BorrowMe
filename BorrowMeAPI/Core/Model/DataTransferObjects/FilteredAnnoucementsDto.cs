@@ -9,10 +9,4 @@ namespace Core.Model.DataTransferObjects
         public Status Status { get; set; }
 
     }
-    public enum Status
-    {
-        Ok,
-        NotFound,
-        BadRequest
-    }
 }

@@ -7,6 +7,6 @@ public interface IReservationRepository
 {
     Task<List<Reservation>> GetReservationsByUserId(Guid id);
     Task<List<Reservation>> GetReservationsByAnnouncementId(Guid id);
-    Task<Reservation> AddNewReservation(ReservationDto reservationDto);
+    Task<Reservation> AddNewReservation(CreateReservationDto reservationDto);
     Task<Reservation> GetReservationsById(Guid id);
 }

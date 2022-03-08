@@ -19,9 +19,60 @@ namespace Services.Implementations
             _userRepository = userRepository;
         }
 
-        public async Task<Announcement> AddAnnouncement(AnnouncementDTO announcementDTO)
+        public async Task<CreateAnnouncementStatusDto> AddAnnouncement(CreateAnnouncementDto announcementData)
         {
-            return await _announcementRepository.AddNewAnnouncement(announcementDTO);
+            CreateAnnouncementStatusDto resultStatus = new CreateAnnouncementStatusDto();
+            try
+            {
+                var userId = announcementData.OwnerId.ToString();
+                var announcementId = Guid.NewGuid();
+                var pictureLocations = new List<PicturePath>();
+                var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Images", "user-images", userId, announcementId.ToString());
+                Directory.CreateDirectory(directoryPath);
+                if (announcementData.ImageFiles is not null)
+                {
+                    string[] allowedImageExtensions = { "jpg", "jpeg", "png" };
+                    for (int i = 0; i < announcementData.ImageFiles.Count; i++)
+                    {
+                        if (!allowedImageExtensions.Contains(announcementData.ImageNames[i].Split('.')[1]))
+                        {
+                            throw new ArgumentOutOfRangeException(announcementData.ImageNames[i]);
+                        }
+                        var imageName = announcementId.ToString() + "-" + announcementData.ImageNames[i];
+                        var imagePath = Path.Combine(directoryPath, imageName);
+                        using (Stream stream = new FileStream(imagePath, FileMode.Create))
+                        {
+                            announcementData.ImageFiles[i].CopyTo(stream);
+                        }
+                        pictureLocations.Add(new PicturePath
+                        {
+                            DirectoryName = Path.Combine("user-images", userId, announcementId.ToString()),
+                            FileName = imageName
+                        });
+                    }
+                }
+                
+                var newAnnouncement = new Announcement
+                {
+                    Id = announcementId,
+                    Title = announcementData.Title,
+                    Description = announcementData.Description,
+                    PublishDate = DateTime.Now,
+                    PictureLocations = pictureLocations,
+                    PaymentType = announcementData.PaymentType,
+                    Price = announcementData.Price,
+                    OtherPaymentType = announcementData.OtherPaymentType,
+                };
+                resultStatus.CreatedAnnoucement = await _announcementRepository.AddNewAnnouncement(announcementData, newAnnouncement);
+                resultStatus.Status = Status.Created;
+                resultStatus.StatusMessage = $"Successfully created new announcement with id: {resultStatus.CreatedAnnoucement.Id}.";
+            }
+            catch (Exception e)
+            {
+                resultStatus.Status = Status.BadRequest;
+                resultStatus.StatusMessage = e.Message;
+            }
+            return resultStatus;
         }
 
         public async Task<Announcement> DeleteAnnouncement(Guid id)
@@ -35,12 +86,11 @@ namespace Services.Implementations
             return await _announcementRepository.GetAnnouncementById(announcementId);
         }
 
-        public async Task<FilteredAnnoucementsDto> GetAnnouncements(string category, string voivodship, 
-            string city, string search_phrase, int currentPage, int costMin, int costMax, string sortBy, string sortDirection)
+        public async Task<FilteredAnnoucementsDto> GetAnnouncements(SearchedAnnouncementFilterDto searchFilter)
         {
             const float numberOfAnnoucementsPerPage = 2f;
 
-            var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(category, voivodship, city, search_phrase, costMin, costMax, sortBy, sortDirection);
+            var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(searchFilter);
 
             var numberOfPages = Math.Ceiling(filteredAnnoucements.Count / numberOfAnnoucementsPerPage);
 
@@ -52,7 +102,7 @@ namespace Services.Implementations
                     Status = Status.NotFound
                 };
             }
-            if (currentPage > numberOfPages || currentPage < 1)
+            if (searchFilter.PageNumber > numberOfPages || searchFilter.PageNumber < 1)
             {
                 return new FilteredAnnoucementsDto
                 {
@@ -61,7 +111,7 @@ namespace Services.Implementations
                 };
             }
             filteredAnnoucements = filteredAnnoucements
-            .Skip((int) ( currentPage - 1 ) * (int) numberOfAnnoucementsPerPage)
+            .Skip((int) ( searchFilter.PageNumber - 1 ) * (int) numberOfAnnoucementsPerPage)
             .Take((int) numberOfAnnoucementsPerPage)
             .ToList();
 

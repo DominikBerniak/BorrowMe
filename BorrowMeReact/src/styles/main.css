@@ -77,6 +77,9 @@ body{
 .w-30{
     width: 30% !important;
 }
+.w-35{
+    width: 35% !important;
+}
 .w-40{
     width: 40% !important;
 }
@@ -91,6 +94,9 @@ body{
 }
 .w-80{
     width: 80% !important;
+}
+.w-85{
+    width: 85% !important;
 }
 .w-90{
     width: 90% !important;
@@ -198,6 +204,11 @@ body{
 .flex-25
 {
     flex: 0 0 25%;
+}
+
+.flex-33
+{
+    flex: 0 0 33%;
 }
 
 /*SCROLL BAR*/

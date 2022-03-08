@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import "./authentication/authentication.css"
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
@@ -24,7 +24,9 @@ const Authentication = ({pageType}) => {
     const [isAuthenticationInProgress, setIsAuthenticationInProgress] = useState(false);
     const [wrongAuthenticationMessage, setWrongAuthenticationMessage] = useState("");
 
-    const authUser = useSelector(state=>state.authUser.value);
+    const authUser = useSelector(state => state.authUser.value);
+
+    const {state} = useLocation();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -33,19 +35,18 @@ const Authentication = ({pageType}) => {
             () => clearTimeout(passwordInputTimeout)
         , [passwordInputTimeout]
     )
-    useEffect(()=>{
-        if (authUser.userId !== "")
-        {
+    useEffect(() => {
+        if (authUser.userId !== "") {
             navigate("/")
             return;
         }
 
-    },[authUser])
+    }, [authUser])
 
-    useEffect(()=>{
+    useEffect(() => {
         //Na potrzebe demo zakomentowane
         //setPassword("");
-    },[pageType])
+    }, [pageType])
 
     useEffect(() => {
         if (passwordInputTimeout) {
@@ -71,45 +72,42 @@ const Authentication = ({pageType}) => {
         e.preventDefault();
         setIsAuthenticationInProgress(true);
         let data =
-        {
-            email: email,
-            password: password
-        }
+            {
+                email: email,
+                password: password
+            }
         if (pageType === "login") {
             handleLogin(data);
 
         } else {
             data =
-            {
-                ...data,
-                firstName: firstName,
-                lastName: lastName
-            }
+                {
+                    ...data,
+                    firstName: firstName,
+                    lastName: lastName
+                }
             handleRegister(data);
         }
     }
 
     const handleRegister = async (registerData) => {
-        const response = await fetch("/authentication/register",{
+        const response = await fetch("/authentication/register", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(registerData)
         });
-        if (response.ok)
-        {
+        if (response.ok) {
             setIsAuthenticationInProgress(false);
             navigate("/login")
-        }
-        else
-        {
+        } else {
             setIsAuthenticationInProgress(false);
             setWrongAuthenticationMessage("Ten adres email jest już zajęty.");
         }
     }
     const handleLogin = async (loginData) => {
-        const response = await fetch("/authentication/login",{
+        const response = await fetch("/authentication/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -117,19 +115,18 @@ const Authentication = ({pageType}) => {
             credentials: 'include',
             body: JSON.stringify(loginData)
         });
-        if (response.ok)
-        {
+        if (response.ok) {
             getAuthUser()
-                .then(user=>{
+                .then(user => {
                     dispatch(changeAuthUser({
+                        status: "logged-in",
                         userId: user.businessUserId,
                         roles: user.roles
                     }))
                     setIsAuthenticationInProgress(false);
-                    navigate("/")
+                    navigate(state?.path || "/")
                 })
-        }
-        else {
+        } else {
             setIsAuthenticationInProgress(false);
             setWrongAuthenticationMessage("Błędny email lub hasło.")
         }
@@ -140,29 +137,25 @@ const Authentication = ({pageType}) => {
     }
     const handleFirstNameChange = (firstName) => {
         setFirstName(firstName);
-        if (wrongAuthenticationMessage !== "")
-        {
+        if (wrongAuthenticationMessage !== "") {
             setWrongAuthenticationMessage("");
         }
     }
     const handleLastNameChange = (lastName) => {
         setLastName(lastName);
-        if (wrongAuthenticationMessage !== "")
-        {
+        if (wrongAuthenticationMessage !== "") {
             setWrongAuthenticationMessage("");
         }
     }
     const handleEmailChange = (email) => {
         setEmail(email);
-        if (wrongAuthenticationMessage !== "")
-        {
+        if (wrongAuthenticationMessage !== "") {
             setWrongAuthenticationMessage("");
         }
     }
     const handlePasswordChange = (password) => {
         setPassword(password);
-        if (wrongAuthenticationMessage !== "")
-        {
+        if (wrongAuthenticationMessage !== "") {
             setWrongAuthenticationMessage("");
         }
     }
@@ -203,7 +196,8 @@ const Authentication = ({pageType}) => {
                     <div className="d-flex align-items-center">
                         <input id="password-input" type={isPasswordHidden ? "password" : "text"}
                                className={"d-block w-100 rounded px-3 py-1 " + (!isPasswordCorrect ? "incorrect-password" : "")}
-                               autoComplete="off" value={password} onChange={(e) => handlePasswordChange(e.target.value)}
+                               autoComplete="off" value={password}
+                               onChange={(e) => handlePasswordChange(e.target.value)}
                         />
                         <div
                             className={"password-eye-button d-flex align-items-center px-1 " + (!isPasswordCorrect ? "incorrect-password" : "")}
@@ -229,9 +223,9 @@ const Authentication = ({pageType}) => {
                     }
                 </div>
                 <div id="wrong-authentication-message" className="text-center user-select-none">
-                {wrongAuthenticationMessage !== "" &&
+                    {wrongAuthenticationMessage !== "" &&
                         <div>{wrongAuthenticationMessage}</div>
-                }
+                    }
                 </div>
             </form>
             <div className="d-flex flex-column align-items-center w-70 mt-auto mb-5">

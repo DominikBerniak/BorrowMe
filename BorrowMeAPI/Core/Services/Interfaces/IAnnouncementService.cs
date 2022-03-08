@@ -11,8 +11,7 @@ namespace Core.Services.Interfaces
         Task<List<Announcement>> GetPromotedAnnouncements();
 
         // GET by Filters
-        Task<FilteredAnnoucementsDto> GetAnnouncements(string category, string voivodship, string city, 
-            string search_phrase, int currentPage, int costMin, int costMax, string sortBy, string sortDirection);
+        Task<FilteredAnnoucementsDto> GetAnnouncements(SearchedAnnouncementFilterDto searchFilter);
 
 
         // POST

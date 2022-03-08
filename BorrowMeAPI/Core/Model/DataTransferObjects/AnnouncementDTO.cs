@@ -27,25 +27,25 @@ namespace Core.Model.DataTransferObjects
 
     public class CreateAnnouncementDto
     {
-        [StringLength(maximumLength: 50, ErrorMessage = "Tytuł ogłoszenia jest za długi!")]
+        [Required, StringLength(maximumLength: 50, ErrorMessage = "Announcement title is too long!")]
         public string Title { get; set; }
-        [StringLength(maximumLength: 500, ErrorMessage = "Opis ogłoszenia jest za długi!")]
+        [Required, StringLength(maximumLength: 500, ErrorMessage = "Announcement description is too long!")]
         public string Description { get; set; }
         public List<IFormFile>? ImageFiles { get; set; }
         public List<string>? ImageNames { get; set; }
-        //[Required]
+        [Required]
         public Guid OwnerId { get; set; }
-        //[Required]
+        [Required]
         public Guid SubCategoryId { get; set; }
-        //[Required]
+        [Required]
         public string VoivodeshipName { get; set; }
-        //[Required]
+        [Required]
         public string CityName { get; set; }
-        //[Required]
+        [Required]
         public PaymentType PaymentType { get; set; }
         [Precision(6, 2)]
-        public decimal Price { get; set; }
-        [StringLength(maximumLength: 50, ErrorMessage = "Inna forma płatności jest za długa!")]
+        public decimal Price { get; set; } = 0;
+        [StringLength(maximumLength: 50, ErrorMessage = "Announcement other payment type is too long!")]
         public string? OtherPaymentType { get; set; }
     }
     public class CreateAnnouncementStatusDto

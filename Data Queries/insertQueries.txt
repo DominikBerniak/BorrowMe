@@ -259,11 +259,29 @@ GO
 INSERT [dbo].[MainCategories] ([Id], [Name]) VALUES (N'9d3f2c87-878d-49b5-82b4-08d9f07117a9', N'Moda')
 GO
 
-
-INSERT [dbo].[SubCategories] ([Id], [Name], [MainCategoryId]) VALUES (N'3fa85f64-5717-4562-b3fc-2c963f66afa7', N'narzędzia elektryczne', N'd18f1509-9b61-4e4c-82a9-08d9f07117a9')
-GO
-INSERT [dbo].[SubCategories] ([Id], [Name], [MainCategoryId]) VALUES (N'03dab0d4-8f9f-4d75-9703-c74f10178b12', N'sprzęt budowlany', N'e4f45c03-91d8-4cbf-82aa-08d9f07117a9')
-GO
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'7518FB93-5954-4ADA-1240-08D9F7B3456C', N'Imadła', N'E4F45C03-91D8-4CBF-82AA-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'F8283AB8-9CC0-4F8B-1241-08D9F7B3456C', N'Szlifierki', N'E4F45C03-91D8-4CBF-82AA-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'86FEAABB-DD01-4589-1242-08D9F7B3456C', N'Młoty udarowe', N'E4F45C03-91D8-4CBF-82AA-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'2BF74E04-D9ED-42FF-1243-08D9F7B3456C', N'Piły', N'E4F45C03-91D8-4CBF-82AA-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'5B03F058-328F-40EA-1244-08D9F7B3456C', N'Spawarki', N'E4F45C03-91D8-4CBF-82AA-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'0109D4D8-D22E-43BA-1245-08D9F7B3456C', N'Klucze', N'E4F45C03-91D8-4CBF-82AA-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'FA3319FE-20BC-4201-1246-08D9F7B3456C', N'Telefony komórkowe', N'D18F1509-9B61-4E4C-82A9-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'16982233-63DE-451F-1247-08D9F7B3456C', N'Ładowarki', N'D18F1509-9B61-4E4C-82A9-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'E74DDC5E-B4E9-4EAB-1248-08D9F7B3456C', N'Projektory', N'D18F1509-9B61-4E4C-82A9-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'8815C7F5-7AEA-4233-F270-08D9FC6DF228', N'Pozostałe', N'D18F1509-9B61-4E4C-82A9-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'DC37DC0F-AC11-46B5-F271-08D9FC6DF228', N'Pozostałe', N'E4F45C03-91D8-4CBF-82AA-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'4CC1B7AE-B719-4A51-F272-08D9FC6DF228', N'Pozostałe', N'09F9355E-21E8-49A2-82AB-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'DC197104-F558-4964-F273-08D9FC6DF228', N'Pozostałe', N'963A5565-F096-490B-82AC-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'0A849ACC-29D2-4734-F274-08D9FC6DF228', N'Pozostałe', N'E6A06D88-6E15-427F-82AD-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'EEAB912B-520D-474E-F275-08D9FC6DF228', N'Pozostałe', N'B4559273-E394-4CB1-82AE-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'0B5797CD-BF07-4B7F-F276-08D9FC6DF228', N'Pozostałe', N'EC6E7245-86CF-48B0-82AF-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'42F2289A-DE93-41DA-F277-08D9FC6DF228', N'Pozostałe', N'336DA33B-4D5A-431A-82B0-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'20796DEE-16EA-45AF-F278-08D9FC6DF228', N'Pozostałe', N'120F7275-EF31-4D99-82B1-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'13A60AFD-3C90-45C9-F279-08D9FC6DF228', N'Pozostałe', N'344CC006-63BE-4D58-82B2-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'8B14750E-693E-459E-F27A-08D9FC6DF228', N'Pozostałe', N'852D6CCD-D9D2-4853-82B3-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'A4B689D7-5A5E-44BD-F27B-08D9FC6DF228', N'Pozostałe', N'9D3F2C87-878D-49B5-82B4-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'4CF77232-3C26-4F70-4263-14D9F07EF5F6', N'Wiertarki', N'E4F45C03-91D8-4CBF-82AA-08D9F07117A9');
+INSERT INTO borrow_me.dbo.SubCategories (Id, Name, MainCategoryId) VALUES (N'4CD79232-3C26-4F70-4263-14D9F07EF5F6', N'Wkrętarki', N'E4F45C03-91D8-4CBF-82AA-08D9F07117A9');
 
 
 INSERT [dbo].[Users] ([Id], [FirstName], [LastName], [Email], [PhoneNumber], [PictureLocationId], [ReputationPoints]) VALUES (N'3fa85f64-5717-4562-b3fc-2c963f66afa6', N'Santa', N'Claus', N'JJ@amorki.pl', N'997', NULL, 5)

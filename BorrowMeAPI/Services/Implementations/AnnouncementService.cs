@@ -25,7 +25,7 @@ namespace Services.Implementations
             try
             {
                 var userId = announcementData.OwnerId.ToString();
-                Guid announcementId = Guid.NewGuid();
+                var announcementId = Guid.NewGuid();
                 var pictureLocations = new List<PicturePath>();
                 var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Images", "user-images", userId, announcementId.ToString());
                 Directory.CreateDirectory(directoryPath);
@@ -86,12 +86,11 @@ namespace Services.Implementations
             return await _announcementRepository.GetAnnouncementById(announcementId);
         }
 
-        public async Task<FilteredAnnoucementsDto> GetAnnouncements(string category, string voivodship, 
-            string city, string search_phrase, int currentPage, int costMin, int costMax, string sortBy, string sortDirection)
+        public async Task<FilteredAnnoucementsDto> GetAnnouncements(SearchedAnnouncementFilterDto searchFilter)
         {
             const float numberOfAnnoucementsPerPage = 2f;
 
-            var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(category, voivodship, city, search_phrase, costMin, costMax, sortBy, sortDirection);
+            var filteredAnnoucements = await _announcementRepository.GetAnnouncementsByFilters(searchFilter);
 
             var numberOfPages = Math.Ceiling(filteredAnnoucements.Count / numberOfAnnoucementsPerPage);
 
@@ -103,7 +102,7 @@ namespace Services.Implementations
                     Status = Status.NotFound
                 };
             }
-            if (currentPage > numberOfPages || currentPage < 1)
+            if (searchFilter.PageNumber > numberOfPages || searchFilter.PageNumber < 1)
             {
                 return new FilteredAnnoucementsDto
                 {
@@ -112,7 +111,7 @@ namespace Services.Implementations
                 };
             }
             filteredAnnoucements = filteredAnnoucements
-            .Skip((int) ( currentPage - 1 ) * (int) numberOfAnnoucementsPerPage)
+            .Skip((int) ( searchFilter.PageNumber - 1 ) * (int) numberOfAnnoucementsPerPage)
             .Take((int) numberOfAnnoucementsPerPage)
             .ToList();
 

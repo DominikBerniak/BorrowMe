@@ -24,15 +24,13 @@ namespace Api.Controllers
         }
         [HttpGet]
         //[Authorize(Roles = "string")]
-        public async Task<ActionResult<List<SearchedAnnoucementsDTO>>> GetAnnouncements([FromQuery] int page = 1,
-            [FromQuery] string? category = "all", [FromQuery] string? voivodeship = "all", [FromQuery] string? city = "all",
-            [FromQuery] string? searchPhrase = "all", [FromQuery] int costMin = 0, [FromQuery] int costMax = 50,
-            [FromQuery] string? sortBy = "publishDate", [FromQuery] string? sortDirection = "desc")
+        public async Task<ActionResult<List<SearchedAnnoucementsDTO>>> GetAnnouncements([FromQuery] SearchedAnnouncementFilterDto searchFilter)
         {
-            _logger.LogInformation($"Getting announcements with params: page: {page}, category: {category}, voivodeship: {voivodeship}, " +
-                $"city: {city}, searchPhrase: {searchPhrase}");
+            _logger.LogInformation($"Getting announcements with params: page: {searchFilter.PageNumber}, " +
+                $"category: {searchFilter.CategoryName}, voivodeship: {searchFilter.VoivodeshipName}, " +
+                $"city: {searchFilter.CityName}, searchPhrase: {searchFilter.SearchPhrase}");
 
-            var announcementDto = await _announcementService.GetAnnouncements(category, voivodeship, city, searchPhrase, page, costMin, costMax, sortBy, sortDirection);
+            var announcementDto = await _announcementService.GetAnnouncements(searchFilter);
             if (announcementDto.Status == Status.NotFound)
             {
                 _logger.LogInformation("No annoucements found");
@@ -47,7 +45,7 @@ namespace Api.Controllers
             {
                 Announcements = announcementDto.Announcements,
                 NumberOfPages = announcementDto.NumberOfPages,
-                CurrentPage = page
+                CurrentPage = searchFilter.PageNumber
             };
             return Ok(response);
         }
@@ -64,6 +62,10 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<ActionResult<CreateAnnouncementStatusDto>> AddNewAnnouncement([FromForm] CreateAnnouncementDto announcementData)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             _logger.LogInformation("Add new announcements attempt.");
             var createdannouncementData = await _announcementService.AddAnnouncement(announcementData);
             _logger.LogInformation(createdannouncementData.StatusMessage);

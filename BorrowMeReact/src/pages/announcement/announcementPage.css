@@ -13,10 +13,9 @@
     display: grid;
     gap: 15px;
     grid-template-columns: 0.9fr 0.8fr 0.8fr ;
-    grid-template-rows: 270px 20px 310px;
+    grid-template-rows: 270px 310px;
     grid-template-areas:
     "picture description description"
-    ". . ."
     "calendar form city"
 }
 .announcement-bottom {
@@ -29,16 +28,13 @@
 #title {
     padding: 10px;
     margin-left: 15px;
-    color: #1d1d1d;
 }
 #price {
     padding: 10px;
     margin-right: 15px;
-    color: #363636;
 }
 .announcement-picture-container {
     grid-area: picture;
-
 }
 .announcement-picture {
     border-radius: 4px;
@@ -110,7 +106,6 @@ label {
 }
 #link-to-user-page {
     text-decoration: none;
-    color: #ffc107;
 }
 #reservation-price-paragraph {
     margin-top: 10px;

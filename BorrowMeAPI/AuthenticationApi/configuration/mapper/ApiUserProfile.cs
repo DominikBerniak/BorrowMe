@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BorrowMeAuth.Areas.Identity.Data;
 using BorrowMeAuth.DTO;
+using Core.Model.DataTransferObjects;
 
 namespace MyHotels.WebApi.Configurations.Mapper
 {
@@ -10,6 +11,7 @@ namespace MyHotels.WebApi.Configurations.Mapper
         {
             CreateMap<BorrowMeAuthUser, LoginApiUserDto>().ReverseMap();
             CreateMap<BorrowMeAuthUser, RegisterApiUserDto>().ReverseMap();
+            CreateMap<CreateUserDto, RegisterApiUserDto>().ReverseMap();
         }
     }
 }

@@ -20,7 +20,7 @@ const SearchResultsAnnouncements = ({announcements}) => {
                         <div className="w-25 h-100 cursor-pointer"
                              onClick={() => handleAnnouncementClick(announcement.id)}>
                             {announcement.pictureLocations.length > 0 ?
-                                <ImageAPI imageDirectory="user-images"
+                                <ImageAPI imageDirectory={announcement.pictureLocations[0].directoryName}
                                           imageName={announcement.pictureLocations[0].fileName}
                                           classNames="search-results-announcement-image search-results-announcement-image-generic"/>
                                 :

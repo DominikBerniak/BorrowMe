@@ -8,6 +8,7 @@ using Microsoft.Extensions.FileProviders;
 using Persistance;
 using Persistance.Repositories;
 using Services.Implementations;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
@@ -15,10 +16,16 @@ builder.Logging.AddConsole();
 // Add services to the container.
 
 builder.Services.AddControllers();
+//builder.Services.AddDbContext<DataDbContext>(options =>
+//{
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+//});
+
 builder.Services.AddDbContext<DataDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+              options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+              optionsBuilder => optionsBuilder.MigrationsAssembly("Api"))
+             );
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -41,6 +48,9 @@ builder.Services.AddTransient<IAnnouncementRepository, AnnouncementRepository>()
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IRepository<User>, Repository<User>>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
 
 var app = builder.Build();
 

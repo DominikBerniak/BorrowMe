@@ -2,7 +2,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistance;
 
 #nullable disable
@@ -10,10 +12,10 @@ using Persistance;
 namespace Api.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    [Migration("20220215141709_CreateInitial")]
-    partial class CreateInitial
+    [Migration("20220308114024_UpdateAnnouncementProperties")]
+    partial class UpdateAnnouncementProperties
     {
-        protected void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +24,7 @@ namespace Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("BorrowMeAPI.Model.Announcement", b =>
+            modelBuilder.Entity("Domain.Entieties.Announcement", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,7 +49,7 @@ namespace Api.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<decimal>("Price")
                         .HasPrecision(6, 2)
                         .HasColumnType("decimal(6,2)");
 
@@ -78,7 +80,7 @@ namespace Api.Migrations
                     b.ToTable("Announcements");
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.AvailabilityNotification", b =>
+            modelBuilder.Entity("Domain.Entieties.AvailabilityNotification", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -104,7 +106,7 @@ namespace Api.Migrations
                     b.ToTable("AvailabilityNotifications");
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.City", b =>
+            modelBuilder.Entity("Domain.Entieties.City", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -125,28 +127,7 @@ namespace Api.Migrations
                     b.ToTable("Cities");
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.Entieties.SubCategory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("MainCategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MainCategoryId");
-
-                    b.ToTable("SubCategories");
-                });
-
-            modelBuilder.Entity("BorrowMeAPI.Model.MainCategory", b =>
+            modelBuilder.Entity("Domain.Entieties.MainCategory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -162,7 +143,7 @@ namespace Api.Migrations
                     b.ToTable("MainCategories");
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.PicturePath", b =>
+            modelBuilder.Entity("Domain.Entieties.PicturePath", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -173,13 +154,13 @@ namespace Api.Migrations
 
                     b.Property<string>("DirectoryName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FileName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
 
                     b.HasKey("Id");
 
@@ -188,7 +169,7 @@ namespace Api.Migrations
                     b.ToTable("PictureLocations");
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.Reservation", b =>
+            modelBuilder.Entity("Domain.Entieties.Reservation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -218,7 +199,28 @@ namespace Api.Migrations
                     b.ToTable("Reservations");
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.User", b =>
+            modelBuilder.Entity("Domain.Entieties.SubCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("MainCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MainCategoryId");
+
+                    b.ToTable("SubCategories");
+                });
+
+            modelBuilder.Entity("Domain.Entieties.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -256,7 +258,7 @@ namespace Api.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.Voivodeship", b =>
+            modelBuilder.Entity("Domain.Entieties.Voivodeship", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -272,27 +274,27 @@ namespace Api.Migrations
                     b.ToTable("Voivodeships");
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.Announcement", b =>
+            modelBuilder.Entity("Domain.Entieties.Announcement", b =>
                 {
-                    b.HasOne("BorrowMeAPI.Model.City", "City")
+                    b.HasOne("Domain.Entieties.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("BorrowMeAPI.Model.User", "Owner")
+                    b.HasOne("Domain.Entieties.User", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("BorrowMeAPI.Model.Entieties.SubCategory", "SubCategory")
+                    b.HasOne("Domain.Entieties.SubCategory", "SubCategory")
                         .WithMany()
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("BorrowMeAPI.Model.Voivodeship", "Voivodeship")
+                    b.HasOne("Domain.Entieties.Voivodeship", "Voivodeship")
                         .WithMany()
                         .HasForeignKey("VoivodeshipId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -307,15 +309,15 @@ namespace Api.Migrations
                     b.Navigation("Voivodeship");
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.AvailabilityNotification", b =>
+            modelBuilder.Entity("Domain.Entieties.AvailabilityNotification", b =>
                 {
-                    b.HasOne("BorrowMeAPI.Model.City", "City")
+                    b.HasOne("Domain.Entieties.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("BorrowMeAPI.Model.User", "User")
+                    b.HasOne("Domain.Entieties.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -326,39 +328,31 @@ namespace Api.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.City", b =>
+            modelBuilder.Entity("Domain.Entieties.City", b =>
                 {
-                    b.HasOne("BorrowMeAPI.Model.Voivodeship", null)
+                    b.HasOne("Domain.Entieties.Voivodeship", null)
                         .WithMany("Cities")
                         .HasForeignKey("VoivodeshipId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.Entieties.SubCategory", b =>
+            modelBuilder.Entity("Domain.Entieties.PicturePath", b =>
                 {
-                    b.HasOne("BorrowMeAPI.Model.MainCategory", null)
-                        .WithMany("SubCategories")
-                        .HasForeignKey("MainCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("BorrowMeAPI.Model.PicturePath", b =>
-                {
-                    b.HasOne("BorrowMeAPI.Model.Announcement", null)
+                    b.HasOne("Domain.Entieties.Announcement", null)
                         .WithMany("PictureLocations")
                         .HasForeignKey("AnnouncementId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.Reservation", b =>
+            modelBuilder.Entity("Domain.Entieties.Reservation", b =>
                 {
-                    b.HasOne("BorrowMeAPI.Model.Announcement", "Announcement")
+                    b.HasOne("Domain.Entieties.Announcement", "Announcement")
                         .WithMany()
                         .HasForeignKey("AnnouncementId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("BorrowMeAPI.Model.User", "User")
+                    b.HasOne("Domain.Entieties.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -369,9 +363,17 @@ namespace Api.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.User", b =>
+            modelBuilder.Entity("Domain.Entieties.SubCategory", b =>
                 {
-                    b.HasOne("BorrowMeAPI.Model.PicturePath", "PictureLocation")
+                    b.HasOne("Domain.Entieties.MainCategory", null)
+                        .WithMany("SubCategories")
+                        .HasForeignKey("MainCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Domain.Entieties.User", b =>
+                {
+                    b.HasOne("Domain.Entieties.PicturePath", "PictureLocation")
                         .WithMany()
                         .HasForeignKey("PictureLocationId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -379,17 +381,17 @@ namespace Api.Migrations
                     b.Navigation("PictureLocation");
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.Announcement", b =>
+            modelBuilder.Entity("Domain.Entieties.Announcement", b =>
                 {
                     b.Navigation("PictureLocations");
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.MainCategory", b =>
+            modelBuilder.Entity("Domain.Entieties.MainCategory", b =>
                 {
                     b.Navigation("SubCategories");
                 });
 
-            modelBuilder.Entity("BorrowMeAPI.Model.Voivodeship", b =>
+            modelBuilder.Entity("Domain.Entieties.Voivodeship", b =>
                 {
                     b.Navigation("Cities");
                 });

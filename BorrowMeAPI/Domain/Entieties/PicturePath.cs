@@ -7,9 +7,9 @@ namespace Domain.Entieties
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        [Required, StringLength(50)]
+        [Required, StringLength(100)]
         public string DirectoryName { get; set; }
-        [Required, StringLength(50)]
+        [Required, StringLength(70)]
         public string FileName { get; set; }
     }
 }

@@ -16,6 +16,7 @@ import {getCorrectPaymentElem, isWithinRanges} from "../../services/announcement
 import NoImage from "../../components/NoImage";
 import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
 import {Helmet} from "react-helmet";
+import {useSelector} from "react-redux";
 
 const AnnouncementPage = () => {
     const [date, setDate] = useState();
@@ -27,14 +28,20 @@ const AnnouncementPage = () => {
     const [quantity, setQuantity] = useState(0);
     const {announcementId} = useParams();
     const navigate = useNavigate();
+    const user = useSelector(state => state.user.value);
+
     let handleSubmit = () => {
-        if (date !== null)
+        if (user.userId === "") {
+            navigate("/login")
+            return;
+        }
+        else if (date !== null)
         {
             console.log(new Date(date[0]));
             console.log(date[1].toString());
             let response = postData(`/api/Reservations`, {
                 announcementId: announcementId,
-                userId: "65BBBB86-B46A-4114-2A34-08D9F157CDA3",
+                userId: user.userId,
                 startDate: date[0],
                 endDate: date[1]
             })
@@ -44,21 +51,17 @@ const AnnouncementPage = () => {
         }
     };
     let handleNextImage = () => {
-        if (count < announcementData.pictureLocations.length-1)
-        {
+        if (count < announcementData.pictureLocations.length - 1) {
             setCount(count + 1);
-        }
-        else {
+        } else {
             setCount(0)
         }
     };
     let handlePreviousImage = () => {
-        if (count > 0)
-        {
+        if (count > 0) {
             setCount(count - 1);
-        }
-        else {
-            setCount(announcementData.pictureLocations.length-1)
+        } else {
+            setCount(announcementData.pictureLocations.length - 1)
         }
     };
     let onChange = (date) => {
@@ -78,8 +81,7 @@ const AnnouncementPage = () => {
             if (date == null || date[0] === null || date[1] === null)
             {
                 setQuantity(0);
-            }
-            else
+            } else
             {
                 let differenceInTime = date[1].getTime() - date[0].getTime();
                 let differenceInDays = differenceInTime / (1000 * 3600 * 24);
@@ -129,14 +131,15 @@ const AnnouncementPage = () => {
                             <p className={"description-text"}>{announcementData.description}</p>
                         </div>
                         <div className="announcement-picture-container center">
-                            {imageDirectory!=="" ?
+                            {imageDirectory !== "" ?
                                 <>
                                     {announcementData.pictureLocations.length > 1 &&
                                         <button type="button" onClick={handlePreviousImage} className="btn btn-success image-buttons">
                                             <ArrowPrevious/>
                                         </button>
                                     }
-                                    <ImageAPI imageDirectory={imageDirectory} imageName={imageName} classNames="announcement-picture"/>
+                                    <ImageAPI imageDirectory={imageDirectory} imageName={imageName}
+                                              classNames="announcement-picture"/>
                                     {announcementData.pictureLocations.length > 1 &&
                                         <button type="button" onClick={handleNextImage} className="btn btn-success image-buttons">
                                             <ArrowNext/>
@@ -162,20 +165,26 @@ const AnnouncementPage = () => {
                                 </div>
                             </div>
                         <div className="city-announcement-container">
-                            <label id="localization-label">Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</label>
-                            <ImageAPI imageDirectory="site-images" imageName="krakow.png" classNames="announcement-picture"/>
+                            <label
+                                id="localization-label">Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</label>
+                            <ImageAPI imageDirectory="site-images" imageName="krakow.png"
+                                      classNames="announcement-picture"/>
                         </div>
                     </div>
                     <div className="announcement-bottom">
                         <div className="owner-announcement-container">
-                                <label>Autor: </label>
-                                <Link className="text-success" id="link-to-user-page" to={"/Users/"+announcementData.owner.id}>{announcementData.owner.firstName} {announcementData.owner.lastName}</Link>
+                            <label>Autor: </label>
+                            <Link id="link-to-user-page"
+                                  to={"/Users/" + announcementData.owner.id}>{announcementData.owner.firstName} {announcementData.owner.lastName}</Link>
                         </div>
                         <div className="publish-date">
-                            <p>Opublikowano {new Date(announcementData.publishDate).toLocaleDateString()} o godzinie {announcementData.publishDate.slice(11, 16)}</p>
+                            <p>Opublikowano {announcementData.publishDate.toLocaleDateString()} o
+                                godzinie {announcementData.publishDate.slice(11, 16)}</p>
                         </div>
                     </div>
-                </>:<Spinner/>
+                </>
+                :
+                <Spinner/>
             }
         </div>
     )

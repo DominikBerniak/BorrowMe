@@ -19,9 +19,15 @@ const Navbar = ({navBarRef, navbarCategoriesRef}) => {
             .then((user) => {
                 if (!user.businessUserId) {
                     console.log("User not logged in")
+                    dispatch(changeAuthUser({
+                        status: "not-logged-in",
+                        userId: "",
+                        roles: ""
+                    }))
                     return;
                 }
                 dispatch(changeAuthUser({
+                    status: "logged-in",
                     userId: user.businessUserId,
                     roles: user.roles
                 }))
@@ -37,6 +43,7 @@ const Navbar = ({navBarRef, navbarCategoriesRef}) => {
         getData(`/api/Users/${authUser.userId}`)
             .then(user=>{
                 dispatch(changeUser({
+                    userId: user.id,
                     firstName: user.firstName,
                     lastName: user.lastName,
                     email: user.email,

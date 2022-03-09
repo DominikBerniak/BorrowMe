@@ -6,6 +6,6 @@ namespace Core.Services.Interfaces
     public interface IUserService
     {
         Task<User> GetUser(Guid userId);
-        Task<User> AddUser(BusinessUserDto userData);
+        Task<User> AddUser(CreateUserDto userData);
     }
 }

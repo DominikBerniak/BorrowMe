@@ -23,7 +23,7 @@ namespace Services.Implementations
             return user;
         }
 
-        public async Task<User> AddUser(BusinessUserDto userData)
+        public async Task<User> AddUser(CreateUserDto userData)
         {
             var user = new User
             {

@@ -4,6 +4,7 @@ using BorrowMeAuth.DTO;
 using Core.Model.DataTransferObjects;
 using Core.Services.Interfaces;
 using Domain.Entieties;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyHotels.WebApi.Infrastructure;
@@ -45,12 +46,7 @@ namespace BorrowMeAuth.Controllers
             var user = _mapper.Map<BorrowMeAuthUser>(userDto);
             user.UserName = user.Email;
 
-            BusinessUserDto businessUserData = new BusinessUserDto
-            {
-                FirstName = userDto.FirstName,
-                LastName = userDto.LastName,
-                Email = userDto.Email
-            };
+            var businessUserData = _mapper.Map<CreateUserDto>(userDto);
             User businessUser = await _userService.AddUser(businessUserData);
             user.BusinessUserId = businessUser.Id.ToString();
             var result = await _userManager.CreateAsync(user, userDto.Password);
@@ -66,7 +62,7 @@ namespace BorrowMeAuth.Controllers
 
                 return BadRequest(ModelState);
             }
-            return Ok();
+            return Created($"/api/Users/{businessUser.Id}", businessUser);
         }
 
         [HttpPost("login")]
@@ -90,7 +86,6 @@ namespace BorrowMeAuth.Controllers
             {
                 HttpOnly = true
             });
-
 
             return Accepted(new
             {

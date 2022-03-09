@@ -66,19 +66,20 @@ const AnnouncementPage = () => {
     };
     let onChange = (date) => {
         let isAvailableDate = true;
-        if (date !== null) {
+        if (date !== null && date[0] !== undefined && date[1] !== undefined && date[0] < date[1]) {
             for(let i = 0; i < reservations.length; i++)
             {
                 console.log(reservations[i][0])
                 if (isWithinRanges(reservations[i][0], [date]) || isWithinRanges(reservations[i][1], [date]))
                 {
                     isAvailableDate = false;
+                    setQuantity(0);
                 }
             }
         }
         if (isAvailableDate) {
             setDate(date)
-            if (date == null || date[0] === null || date[1] === null)
+            if (date == null || date[0] === undefined || date[1] === undefined)
             {
                 setQuantity(0);
             } else
@@ -86,18 +87,21 @@ const AnnouncementPage = () => {
                 let differenceInTime = date[1].getTime() - date[0].getTime();
                 let differenceInDays = differenceInTime / (1000 * 3600 * 24);
                 setQuantity(Math.round(differenceInDays))
-            }
-        } else {
-            setDate(null)
-            setQuantity(0);
-        }
+            }}
+        // } else if (!isAvailableDate) {
+        //     setDate(null)
+        //     setQuantity(0);
+        // }
     }
     let tileDisabled = ({date, view}) => {
         if (view === 'month') {
             return isWithinRanges(date, reservations);
         }
     }
-
+    let handleFailure = () => {
+        // modal
+        return;
+    }
     useEffect(() => {
             getData(`/api/Announcements/${announcementId}`)
                 .then(data => {
@@ -157,10 +161,10 @@ const AnnouncementPage = () => {
                                     <DateRangePicker value={date} disableCalendar={true} onChange={onChange} rangeDivider="-"/>
                                     <div className="reservation-price-container">
                                         <label id="reservation-price-paragraph">Cena rezerwacji:</label>
-                                        <p id="reservation-price">{quantity > 0 ? getCorrectPaymentElem(announcementData, quantity) : ""}</p>
+                                        <p id="reservation-price">{quantity > 0 ? getCorrectPaymentElem(announcementData, quantity) : "data niedostępna"}</p>
                                     </div>
                                     <div className="reservation-button-container center">
-                                        <button type="submit" className="btn btn-success" id="reservation-button" onClick={handleSubmit}>Zarezerwuj</button>
+                                        <button type="submit" className="btn btn-success" id="reservation-button" onClick={quantity > 0 ? handleSubmit : handleFailure}>Zarezerwuj</button>
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +182,7 @@ const AnnouncementPage = () => {
                                   to={"/Users/" + announcementData.owner.id}>{announcementData.owner.firstName} {announcementData.owner.lastName}</Link>
                         </div>
                         <div className="publish-date">
-                            <p>Opublikowano {announcementData.publishDate.toLocaleDateString()} o
+                            <p>Opublikowano {announcementData.publishDate.toLocaleDateString} o
                                 godzinie {announcementData.publishDate.slice(11, 16)}</p>
                         </div>
                     </div>

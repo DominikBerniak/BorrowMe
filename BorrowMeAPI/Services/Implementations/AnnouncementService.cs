@@ -7,16 +7,11 @@ namespace Services.Implementations
 {
     public class AnnouncementService : IAnnouncementService
     {
-        private readonly IRepository<Announcement> _repository;
         private readonly IAnnouncementRepository _announcementRepository;
-        private readonly IRepository<User> _userRepository;
 
-        public AnnouncementService(IRepository<Announcement> repository, IAnnouncementRepository announcementRepository,
-                                    IRepository<User> userRepository)
+        public AnnouncementService(IAnnouncementRepository announcementRepository)
         {
-            _repository = repository;
             _announcementRepository = announcementRepository;
-            _userRepository = userRepository;
         }
 
         public async Task<CreateAnnouncementStatusDto> AddAnnouncement(CreateAnnouncementDto announcementData)
@@ -77,7 +72,7 @@ namespace Services.Implementations
 
         public async Task<Announcement> DeleteAnnouncement(Guid id)
         {
-            return await _repository.Delete(await _repository.GetById(id));
+            return await _announcementRepository.Delete(await _announcementRepository.GetById(id));
         }
 
         public async Task<Announcement> GetAnnouncement(Guid announcementId)
@@ -137,7 +132,7 @@ namespace Services.Implementations
 
         public async Task<Announcement> UpdateAnnouncement(Announcement announcement)
         {
-            return await _repository.Edit(announcement);
+            return await _announcementRepository.Edit(announcement);
         }
     }
 }

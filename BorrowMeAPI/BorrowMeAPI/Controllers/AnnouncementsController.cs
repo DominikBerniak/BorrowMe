@@ -59,7 +59,7 @@ namespace Api.Controllers
         }
 
         // /api/Announcements POST
-        [Authorize(Roles = "user")]
+        //[Authorize(Roles = "user")]
         [HttpPost]
         public async Task<ActionResult<CreateAnnouncementStatusDto>> AddNewAnnouncement([FromForm] CreateAnnouncementDto announcementData)
         {

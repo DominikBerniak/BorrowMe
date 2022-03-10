@@ -1,10 +1,16 @@
 global using Microsoft.EntityFrameworkCore;
+using BorrowMeAuth.Areas.Identity.Data;
+using BorrowMeAuth.Data;
 using Core.Repositories;
 using Core.Repositories.Interfaces;
 using Core.Services;
 using Core.Services.Interfaces;
 using Domain.Entieties;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Persistance;
 using Persistance.Repositories;
 using Services.Implementations;
@@ -27,7 +33,19 @@ builder.Services.AddDbContext<DataDbContext>(options =>
              );
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      Example: 'Bearer 12345abcdef'",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+});
 
 builder.Services.AddTransient<DataDbContext, DataDbContext>();
 builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
@@ -52,6 +70,36 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
+//builder.Services.AddAuthentication();
+//var b = builder.Services.AddIdentityCore<BorrowMeAuthUser>(q => q.User.RequireUniqueEmail = true);
+//b = new IdentityBuilder(b.UserType, typeof(IdentityRole), builder.Services);
+//b.AddRoles<IdentityRole>();
+//b.AddEntityFrameworkStores<BorrowMeAuthContext>().AddDefaultTokenProviders();
+
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var key = "tajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucz";
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "BorrowMeAuth",
+        ValidAudience = "http://BorrowMe.com",
+        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(key))
+    };
+});
+
+
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -70,6 +118,7 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/api/StaticFiles"
 });
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

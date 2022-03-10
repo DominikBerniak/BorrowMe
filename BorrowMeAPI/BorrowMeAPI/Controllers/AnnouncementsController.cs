@@ -3,6 +3,7 @@ using Core.Model.DataTransferObjects;
 using Core.Services;
 using Core.Services.Interfaces;
 using Domain.Entieties;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 
@@ -23,7 +24,7 @@ namespace Api.Controllers
             _reservationService = reservationService;
         }
         [HttpGet]
-        //[Authorize(Roles = "string")]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult<List<SearchedAnnoucementsDTO>>> GetAnnouncements([FromQuery] SearchedAnnouncementFilterDto searchFilter)
         {
             _logger.LogInformation($"Getting announcements with params: page: {searchFilter.PageNumber}, " +
@@ -59,6 +60,7 @@ namespace Api.Controllers
         }
 
         // /api/Announcements POST
+        [Authorize(Roles = "user")]
         [HttpPost]
         public async Task<ActionResult<CreateAnnouncementStatusDto>> AddNewAnnouncement([FromForm] CreateAnnouncementDto announcementData)
         {

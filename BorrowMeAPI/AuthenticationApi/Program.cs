@@ -13,6 +13,7 @@ using Domain.Entieties;
 using Persistance.Repositories;
 using Core.Repositories.Interfaces;
 using Persistance;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("BorrowMeAuthContextConnection");
@@ -24,7 +25,7 @@ builder.Services.AddDbContext<BorrowMeAuthContext>(options =>
 
 IConfiguration configuration = builder.Configuration;
 
-builder.Services.AddAuthentication();
+//builder.Services.AddAuthentication();
 var b = builder.Services.AddIdentityCore<BorrowMeAuthUser>(q => q.User.RequireUniqueEmail = true);
 b = new IdentityBuilder(b.UserType, typeof(IdentityRole), builder.Services);
 b.AddRoles<IdentityRole>();
@@ -33,7 +34,19 @@ b.AddEntityFrameworkStores<BorrowMeAuthContext>().AddDefaultTokenProviders();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      Example: 'Bearer 12345abcdef'",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+});
 //builder.Services.AddSingleton<IConfiguration, configuration>();
 
 //JWT
@@ -85,6 +98,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllers();
 

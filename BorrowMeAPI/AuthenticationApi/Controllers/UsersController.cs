@@ -132,5 +132,15 @@ namespace BorrowMeAuth.Controllers
                 message = "Logout successful"
             });
         }
+
+        [HttpGet("test")]
+        [Authorize(Roles = "User")]
+        public IActionResult test()
+        {
+            return Ok(new
+            {
+                message = "test successful"
+            });
+        }
     }
 }

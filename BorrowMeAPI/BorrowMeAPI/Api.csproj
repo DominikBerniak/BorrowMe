@@ -24,11 +24,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Configurations\Roles\" />
     <Folder Include="Images\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AuthenticationApi\AuthenticationApi.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 

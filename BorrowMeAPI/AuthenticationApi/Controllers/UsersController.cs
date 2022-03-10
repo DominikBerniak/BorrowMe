@@ -37,6 +37,7 @@ namespace BorrowMeAuth.Controllers
 
 
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task<IActionResult> RegisterApiUser([FromBody] RegisterApiUserDto userDto)
         {
             bool isEmailTaken = await _userManager.FindByEmailAsync(userDto.Email) is not null;
@@ -68,6 +69,7 @@ namespace BorrowMeAuth.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> LoginApiUser([FromBody] LoginApiUserDto userDto)
         {
             _logger.LogInformation($"{nameof(LoginApiUser)} called...");
@@ -126,6 +128,7 @@ namespace BorrowMeAuth.Controllers
         }
 
         [HttpPost("logout")]
+        [Authorize]
         public IActionResult LogoutUser()
         {
             Response.Cookies.Delete("jwt");

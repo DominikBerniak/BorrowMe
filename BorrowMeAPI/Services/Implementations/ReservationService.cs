@@ -27,7 +27,7 @@ namespace Services.Implementations
 
         public async Task<Reservation> GetReservationById(Guid id)
         {
-            return await _reservationRepository.GetReservationsById(id);
+            return await _reservationRepository.GetReservationById(id);
         }
 
         public async Task<Reservation> AddReservation(CreateReservationDto reservation)

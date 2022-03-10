@@ -12,19 +12,19 @@ import CaretNext from "../../components/CaretNext";
 import CaretPrevious from "../../components/CaretPrevious";
 import ArrowPrevious from "../../components/ArrowPrevious";
 import ArrowNext from "../../components/ArrowNext";
-import {getCorrectPaymentElem} from "../../services/announcementUtils";
+import {getCorrectPaymentElem, isWithinRanges} from "../../services/announcementUtils";
 import NoImage from "../../components/NoImage";
 import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
 import {Helmet} from "react-helmet";
 import {useSelector} from "react-redux";
 
 const AnnouncementPage = () => {
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState();
     const [imageDirectory, setPath] = useState("");
     const [imageName, setImageName] = useState("")
     const [count, setCount] = useState(0)
     const [announcementData, setAnnouncementData] = useState();
-    const [reservations, setReservations] = useState();
+    const [reservations, setReservations] = useState([]);
     const [quantity, setQuantity] = useState(0);
     const {announcementId} = useParams();
     const navigate = useNavigate();
@@ -35,15 +35,18 @@ const AnnouncementPage = () => {
             navigate("/login")
             return;
         }
-        postData(`/api/Reservations`, {
-            announcementId: announcementId,
-            userId: user.userId,
-            startDate: date[0],
-            endDate: date[1]
-        })
-            .then(response => {
-                navigate(`/reservation/${response.id}`)
+        else if (date !== null)
+        {
+            let response = postData(`/api/Reservations`, {
+                announcementId: announcementId,
+                userId: user.userId,
+                startDate: date[0],
+                endDate: date[1]
             })
+                .then(response => {
+                    navigate(`/reservation/${response.id}`)
+                })
+        }
     };
     let handleNextImage = () => {
         if (count < announcementData.pictureLocations.length - 1) {
@@ -60,35 +63,69 @@ const AnnouncementPage = () => {
         }
     };
     let onChange = (date) => {
-        setDate(date)
-        if (date == null || date[0] === null || date[1] === null) {
-            setQuantity(0);
-        } else {
-            let differenceInTime = date[1].getTime() - date[0].getTime();
-            let differenceInDays = differenceInTime / (1000 * 3600 * 24);
-            setQuantity(Math.round(differenceInDays))
+        let isAvailableDate = true;
+        if (date !== null && date[0] !== undefined && date[1] !== undefined && date[0] < date[1]) {
+            for(let i = 0; i < reservations.length; i++)
+            {
+                console.log(reservations[i][0])
+                if (isWithinRanges(reservations[i][0], [date]) || isWithinRanges(reservations[i][1], [date]))
+                {
+                    isAvailableDate = false;
+                    setQuantity(0);
+                }
+            }
+        }
+        if (isAvailableDate) {
+            setDate(date)
+            if (date == null || date[0] === undefined || date[1] === undefined)
+            {
+                setQuantity(0);
+            } else
+            {
+                let differenceInTime = date[1].getTime() - date[0].getTime();
+                let differenceInDays = differenceInTime / (1000 * 3600 * 24);
+                setQuantity(Math.round(differenceInDays))
+            }}
+        // } else if (!isAvailableDate) {
+        //     setDate(null)
+        //     setQuantity(0);
+        // }
+    }
+    let tileDisabled = ({date, view}) => {
+        if (view === 'month') {
+            return isWithinRanges(date, reservations);
         }
     }
-
+    let handleFailure = () => {
+        // modal
+        return;
+    }
     useEffect(() => {
-        getData(`/api/Announcements/${announcementId}`)
-            .then(data => {
-                setAnnouncementData(data.announcement);
-                setReservations(data.reservations)
-                setPath(data.announcement.pictureLocations[count].directoryName);
-                console.log(data.announcement.pictureLocations[count].directoryName)
-                setImageName(data.announcement.pictureLocations[count].fileName);
-            });
+            getData(`/api/Announcements/${announcementId}`)
+                .then(data => {
+                    console.log(data)
+                    setAnnouncementData(data.announcement);
+                    setReservations(() => {
+                        let reservations = [];
+                        for(let i = 0; i < data.reservations.length; i++)
+                        {
+                            reservations.push([new Date(data.reservations[i].reservationStartDay), new Date(data.reservations[i].reservationEndDay)])
+                        }
+                        return reservations
+                    })
+                    setPath(data.announcement.pictureLocations[count].directoryName);
+                    setImageName(data.announcement.pictureLocations[count].fileName);
+                });
     }, [count])
 
     return (
         <div className="announcement-container">
             {announcementData ?
-                <>
-                    <Helmet>
-                        <title>{announcementData.title} | BorrowMe</title>
-                    </Helmet>
-                    <div className="btn-warning announcement-top">
+               <>
+                   <Helmet>
+                       <title>{announcementData.title} | BorrowMe</title>
+                   </Helmet>
+                    <div className="bg-success announcement-top">
                         <h2 id="title">{announcementData.title}</h2>
                         <h2 id="price">{getCorrectPaymentElem(announcementData)}</h2>
                     </div>
@@ -100,16 +137,14 @@ const AnnouncementPage = () => {
                             {imageDirectory !== "" ?
                                 <>
                                     {announcementData.pictureLocations.length > 1 &&
-                                        <button type="button" onClick={handlePreviousImage}
-                                                className="btn btn-warning image-buttons">
+                                        <button type="button" onClick={handlePreviousImage} className="btn btn-success image-buttons">
                                             <ArrowPrevious/>
                                         </button>
                                     }
                                     <ImageAPI imageDirectory={imageDirectory} imageName={imageName}
                                               classNames="announcement-picture"/>
                                     {announcementData.pictureLocations.length > 1 &&
-                                        <button type="button" onClick={handleNextImage}
-                                                className="btn btn-warning image-buttons">
+                                        <button type="button" onClick={handleNextImage} className="btn btn-success image-buttons">
                                             <ArrowNext/>
                                         </button>
                                     }
@@ -117,27 +152,22 @@ const AnnouncementPage = () => {
                                 : <NoImage/>
                             }
                         </div>
-                        <div className="calendar-container center">
-                            <Calendar onChange={onChange} value={date} nextLabel={<ArrowNext/>}
-                                      prevLabel={<ArrowPrevious/>} next2Label={<CaretNext/>}
-                                      prev2Label={<CaretPrevious/>} minDate={new Date()} selectRange={true}
-                                      returnValue="range"/>
-                        </div>
-                        <div className="choosing-date-form">
-                            <div id="reservation-form">
-                                <DateRangePicker value={date} disableCalendar={true} onChange={onChange}
-                                                 rangeDivider="-"/>
-                                <div className="reservation-price-container">
-                                    <label id="reservation-price-paragraph">Cena rezerwacji:</label>
-                                    <p id="reservation-price">{quantity > 0 ? getCorrectPaymentElem(announcementData, quantity) : ""}</p>
-                                </div>
-                                <div className="reservation-button-container center">
-                                    <button type="submit" className="btn btn-warning" id="reservation-button"
-                                            onClick={handleSubmit}>Zarezerwuj
-                                    </button>
+                            <div className="calendar-container center">
+                                <Calendar locale="pl-PL" onChange={onChange} value={date} nextLabel={<ArrowNext/>} prevLabel={<ArrowPrevious/>} next2Label={<CaretNext/>} prev2Label={<CaretPrevious/>} tileDisabled={tileDisabled} minDate={new Date()} selectRange={true} returnValue="range"/>
+                            </div>
+                            <div className="choosing-date-form">
+                                <div id="reservation-form" >
+                                    <DateRangePicker value={date} disableCalendar={true} onChange={onChange} rangeDivider="-"/>
+                                    <div className="reservation-price-container">
+                                        <label id="reservation-price-paragraph">Cena rezerwacji:</label>
+                                        <p id="reservation-price">{quantity > 0 ? getCorrectPaymentElem(announcementData, quantity) : ""}</p>
+                                    </div>
+                                    {quantity > 0 &&
+                                    <div className="reservation-button-container center">
+                                        <button type="submit" className="btn btn-success" id="reservation-button" onClick={handleSubmit}>Zarezerwuj</button>
+                                    </div>}
                                 </div>
                             </div>
-                        </div>
                         <div className="city-announcement-container">
                             <label
                                 id="localization-label">Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</label>
@@ -152,7 +182,7 @@ const AnnouncementPage = () => {
                                   to={"/Users/" + announcementData.owner.id}>{announcementData.owner.firstName} {announcementData.owner.lastName}</Link>
                         </div>
                         <div className="publish-date">
-                            <p>Opublikowano {announcementData.publishDate.slice(0, 10)} o
+                            <p>Opublikowano {new Date(announcementData.publishDate).toLocaleDateString()} o
                                 godzinie {announcementData.publishDate.slice(11, 16)}</p>
                         </div>
                     </div>

@@ -17,6 +17,7 @@ const ReservationConfirmation = () => {
         getData(`/api/reservations/${reservationId}`)
             .then(data => {
                 setData(data);
+                console.log(data)
             })
     }, [])
     return (
@@ -43,9 +44,9 @@ const ReservationConfirmation = () => {
                                 <label>Zarezerwowane do:</label>
                                 <p>{new Date(reservation.reservationEndDay).toLocaleDateString()}</p>
                                 <label>Cena rezerwacji:</label>
-                                <p>{countPrice(reservation.announcement.price)} zł</p>
-                                <label id="confirmation-info-label">Na swoją pocztę dostaniesz powiadomienie, gdy
-                                    ogłoszeniodawca zatwierdzi Twoją rezerwację.</label>
+                                <p>{reservation.announcement.paymentType ? countPrice(reservation.announcement.price) : "Za "+reservation.announcement.otherPaymentType} zł</p>
+                                <label id="confirmation-info-label">Na swoją pocztę dostaniesz powiadomienie,
+                                    gdy ogłoszeniodawca zatwierdzi Twoją rezerwację.</label>
                             </div>
                         </div>
                     </div>

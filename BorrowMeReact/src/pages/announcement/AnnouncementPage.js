@@ -37,8 +37,6 @@ const AnnouncementPage = () => {
         }
         else if (date !== null)
         {
-            console.log(new Date(date[0]));
-            console.log(date[1].toString());
             let response = postData(`/api/Reservations`, {
                 announcementId: announcementId,
                 userId: user.userId,
@@ -105,6 +103,7 @@ const AnnouncementPage = () => {
     useEffect(() => {
             getData(`/api/Announcements/${announcementId}`)
                 .then(data => {
+                    console.log(data)
                     setAnnouncementData(data.announcement);
                     setReservations(() => {
                         let reservations = [];
@@ -161,11 +160,12 @@ const AnnouncementPage = () => {
                                     <DateRangePicker value={date} disableCalendar={true} onChange={onChange} rangeDivider="-"/>
                                     <div className="reservation-price-container">
                                         <label id="reservation-price-paragraph">Cena rezerwacji:</label>
-                                        <p id="reservation-price">{quantity > 0 ? getCorrectPaymentElem(announcementData, quantity) : "data niedostępna"}</p>
+                                        <p id="reservation-price">{quantity > 0 ? getCorrectPaymentElem(announcementData, quantity) : ""}</p>
                                     </div>
+                                    {quantity > 0 &&
                                     <div className="reservation-button-container center">
-                                        <button type="submit" className="btn btn-success" id="reservation-button" onClick={quantity > 0 ? handleSubmit : handleFailure}>Zarezerwuj</button>
-                                    </div>
+                                        <button type="submit" className="btn btn-success" id="reservation-button" onClick={handleSubmit}>Zarezerwuj</button>
+                                    </div>}
                                 </div>
                             </div>
                         <div className="city-announcement-container">
@@ -182,7 +182,7 @@ const AnnouncementPage = () => {
                                   to={"/Users/" + announcementData.owner.id}>{announcementData.owner.firstName} {announcementData.owner.lastName}</Link>
                         </div>
                         <div className="publish-date">
-                            <p>Opublikowano {announcementData.publishDate.toLocaleDateString} o
+                            <p>Opublikowano {new Date(announcementData.publishDate).toLocaleDateString()} o
                                 godzinie {announcementData.publishDate.slice(11, 16)}</p>
                         </div>
                     </div>

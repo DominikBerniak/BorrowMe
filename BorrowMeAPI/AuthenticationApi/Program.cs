@@ -1,102 +1,38 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BorrowMeAuth.Data;
-using BorrowMeAuth.Areas.Identity.Data;
 using System.Reflection;
-using MyHotels.WebApi.Infrastructure;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Core.Services.Interfaces;
-using Services.Implementations;
-using Core.Repositories;
-using Domain.Entieties;
-using Persistance.Repositories;
-using Core.Repositories.Interfaces;
 using Persistance;
-using Microsoft.OpenApi.Models;
+using AuthenticationApi;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("BorrowMeAuthContextConnection");
 builder.Services.AddDbContext<BorrowMeAuthContext>(options =>
     options.UseSqlServer(connectionString));
-//builder.Services.AddDefaultIdentity<BorrowMeAuthUser>(options => options.SignIn.RequireConfirmedAccount = false)
-//    .AddEntityFrameworkStores<BorrowMeAuthContext>();
-// Add services to the container.
 
 IConfiguration configuration = builder.Configuration;
 
-//builder.Services.AddAuthentication();
-var b = builder.Services.AddIdentityCore<BorrowMeAuthUser>(q => q.User.RequireUniqueEmail = true);
-b = new IdentityBuilder(b.UserType, typeof(IdentityRole), builder.Services);
-b.AddRoles<IdentityRole>();
-b.AddEntityFrameworkStores<BorrowMeAuthContext>().AddDefaultTokenProviders();
+//Configure Identity
+ConfigureStartup.ConfigureIdentity(builder.Services);
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
-                      Enter 'Bearer' [space] and then your token in the text input below.
-                      Example: 'Bearer 12345abcdef'",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
-    });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-    {
-        new OpenApiSecurityScheme
-        {
-            Reference = new OpenApiReference
-            {
-                Type = ReferenceType.SecurityScheme,
-                Id = "Bearer"
-            }
-        },
-        new string[] { }
-    }});
-});
-//builder.Services.AddSingleton<IConfiguration, configuration>();
 
-//JWT
-var jwtSettings = configuration.GetSection("Jwt");
-var key = builder.Configuration.GetSection("Jwt").GetSection("Key").Value;
+//Configure Swagger
+ConfigureStartup.ConfigureSwagger(builder.Services);
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings.GetSection("Issuer").Value,
-        ValidAudience = jwtSettings.GetSection("Audience").Value,
-        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(key))
-    };
-});
+//Configure authentication
+ConfigureStartup.AddAuthentication(builder);
 
+//Inject services
+ConfigureStartup.InjectServices(builder.Services);
 
-builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
+//Add AutoMapper
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddDbContext<DataDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
-builder.Services.AddTransient<DataDbContext, DataDbContext>();
-builder.Services.AddTransient<IRepository<User>, Repository<User>>();
-builder.Services.AddTransient<IUserRepository, UserRepository>();
-builder.Services.AddTransient<IUserService, UserService>();
-
-//Add AutoMapper
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

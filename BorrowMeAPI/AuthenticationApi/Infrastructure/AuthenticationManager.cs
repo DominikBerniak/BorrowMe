@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace MyHotels.WebApi.Infrastructure
+namespace AuthenticationApi.Infrastructure
 {
     public class AuthenticationManager : IAuthenticationManager
     {

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BorrowMeAuth.Migrations
+namespace AuthenticationApi.Migrations
 {
     [DbContext(typeof(BorrowMeAuthContext))]
     partial class BorrowMeAuthContextModelSnapshot : ModelSnapshot
@@ -116,6 +116,22 @@ namespace BorrowMeAuth.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b27206e6-2596-4abc-8d29-c5007415dcaf",
+                            ConcurrencyStamp = "efa20d97-137d-4dd8-a7cc-302535957995",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "331b5f44-5155-4acd-af84-2b349c873d19",
+                            ConcurrencyStamp = "58c79313-b4c4-48ae-ae32-9fb92d4f4f95",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

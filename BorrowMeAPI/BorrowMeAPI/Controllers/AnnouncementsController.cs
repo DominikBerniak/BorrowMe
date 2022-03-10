@@ -3,6 +3,7 @@ using Core.Model.DataTransferObjects;
 using Core.Services;
 using Core.Services.Interfaces;
 using Domain.Entieties;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 
@@ -23,7 +24,6 @@ namespace Api.Controllers
             _reservationService = reservationService;
         }
         [HttpGet]
-        //[Authorize(Roles = "string")]
         public async Task<ActionResult<List<SearchedAnnoucementsDTO>>> GetAnnouncements([FromQuery] SearchedAnnouncementFilterDto searchFilter)
         {
             _logger.LogInformation($"Getting announcements with params: page: {searchFilter.PageNumber}, " +
@@ -51,7 +51,6 @@ namespace Api.Controllers
         }
 
         [HttpGet("promoted")]
-        //[Authorize(Roles = "string")]
         public async Task<ActionResult<List<Announcement>>> GetPromotedAnnouncements()
         {
             var announcements = await _announcementService.GetPromotedAnnouncements();
@@ -59,6 +58,7 @@ namespace Api.Controllers
         }
 
         // /api/Announcements POST
+        [Authorize(Roles = "User")]
         [HttpPost]
         public async Task<ActionResult<CreateAnnouncementStatusDto>> AddNewAnnouncement([FromForm] CreateAnnouncementDto announcementData)
         {
@@ -93,6 +93,7 @@ namespace Api.Controllers
 
         // /api/Announcements/ PUT
         [HttpPut]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult<Announcement>> EditWholeAnnouncement(Announcement announcement)
         {
             _logger.LogInformation($"Edit announcement attempt. Id = '{announcement.Id}'");
@@ -101,6 +102,7 @@ namespace Api.Controllers
 
         // /api/Announcements/{id} PATCH
         [HttpPatch("{id:int}")]
+        [Authorize(Roles = "User")]
         public IActionResult EditOneInAnnouncement(Guid id)
         {
             return Ok("Not Implemented");
@@ -108,6 +110,7 @@ namespace Api.Controllers
 
         // /api/Announcements/{id} DELETE
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> DeleteAnnouncement(Guid id)
         {
             _logger.LogInformation($"Delete announcement attempt. Id = '{id}'");

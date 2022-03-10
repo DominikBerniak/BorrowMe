@@ -5,13 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistance.Repositories
 {
-    public class AnnouncementRepository : IAnnouncementRepository
+    public class AnnouncementRepository : Repository<Announcement>, IAnnouncementRepository
     {
-        private readonly DataDbContext _dbContext;
-
         public AnnouncementRepository(DataDbContext dbContext)
+            : base (dbContext)
         {
-            _dbContext = dbContext;
         }
 
         public async Task<List<Announcement>> GetAnnouncementsByFilters(SearchedAnnouncementFilterDto searchFilter)

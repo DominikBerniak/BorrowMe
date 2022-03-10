@@ -72,6 +72,7 @@ const AnnouncementPage = () => {
                 {
                     isAvailableDate = false;
                     setQuantity(0);
+                    setDate(null)
                 }
             }
         }
@@ -80,25 +81,18 @@ const AnnouncementPage = () => {
             if (date == null || date[0] === undefined || date[1] === undefined)
             {
                 setQuantity(0);
-            } else
+            } else if (date[0] >= new Date().setTime(date[0].getTime()))
             {
                 let differenceInTime = date[1].getTime() - date[0].getTime();
                 let differenceInDays = differenceInTime / (1000 * 3600 * 24);
                 setQuantity(Math.round(differenceInDays))
-            }}
-        // } else if (!isAvailableDate) {
-        //     setDate(null)
-        //     setQuantity(0);
-        // }
+            }
+        }
     }
     let tileDisabled = ({date, view}) => {
         if (view === 'month') {
             return isWithinRanges(date, reservations);
         }
-    }
-    let handleFailure = () => {
-        // modal
-        return;
     }
     useEffect(() => {
             getData(`/api/Announcements/${announcementId}`)

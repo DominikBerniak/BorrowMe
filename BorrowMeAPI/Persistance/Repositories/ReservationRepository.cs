@@ -35,15 +35,17 @@ public class ReservationRepository : IReservationRepository
     public async Task<Reservation> AddNewReservation(CreateReservationDto reservationDto)
     {
         var user = await _dbContext.Users.FindAsync(reservationDto.UserId);
-        var announcement = await _dbContext.Announcements.FindAsync(reservationDto.AnnouncementId);
+        var announcement = await _dbContext.Announcements.Where(a => a.Id == reservationDto.AnnouncementId)
+            .Include(a => a.Owner)
+            .FirstOrDefaultAsync();
 
         var reservation = new Reservation()
         {
             Id = Guid.NewGuid(),
             User = user,
             Announcement = announcement,
-            ReservationStartDay = reservationDto.StartDate,
-            ReservationEndDay = reservationDto.EndDate
+            ReservationStartDay = TimeZoneInfo.ConvertTimeFromUtc(reservationDto.StartDate, TimeZoneInfo.Local),
+            ReservationEndDay = TimeZoneInfo.ConvertTimeFromUtc(reservationDto.EndDate, TimeZoneInfo.Local)
         };
 
         await _dbContext.Reservations.AddAsync(reservation);
@@ -51,13 +53,12 @@ public class ReservationRepository : IReservationRepository
         return reservation;
     }
 
-    public async Task<Reservation> GetReservationsById(Guid id)
+    public async Task<Reservation> GetReservationById(Guid id)
     {
-        var reservations = _dbContext.Reservations
+        return await _dbContext.Reservations.Where(r => r.Id == id)
             .Include(r => r.User)
             .Include(r => r.Announcement)
-            .AsQueryable();
-        reservations = reservations.Where(r => r.Id == id);
-        return await reservations.FirstOrDefaultAsync();
+            .ThenInclude(a=>a.Owner)
+            .FirstOrDefaultAsync();
     }
 }

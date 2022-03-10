@@ -1,56 +1,33 @@
 global using Microsoft.EntityFrameworkCore;
-using Core.Repositories;
-using Core.Repositories.Interfaces;
-using Core.Services;
-using Core.Services.Interfaces;
-using Domain.Entieties;
 using Microsoft.Extensions.FileProviders;
 using Persistance;
-using Persistance.Repositories;
-using Services.Implementations;
 using System.Reflection;
+using Api;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
-// Add services to the container.
 
 builder.Services.AddControllers();
-//builder.Services.AddDbContext<DataDbContext>(options =>
-//{
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-//});
-
 builder.Services.AddDbContext<DataDbContext>(options =>
               options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
               optionsBuilder => optionsBuilder.MigrationsAssembly("Api"))
              );
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<DataDbContext, DataDbContext>();
-builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
-builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
-builder.Services.AddScoped<IRepository<Reservation>, Repository<Reservation>>();
-builder.Services.AddScoped<IReservationService, ReservationService>();
-builder.Services.AddTransient<IRepository<Announcement>, Repository<Announcement>>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddTransient<IRepository<MainCategory>, Repository<MainCategory>>();
-builder.Services.AddTransient<IRepository<SubCategory>, Repository<SubCategory>>();
-builder.Services.AddScoped<ICityService, CityService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddTransient<IRepository<City>, Repository<City>>();
-builder.Services.AddTransient<IRepository<Voivodeship>, Repository<Voivodeship>>();
-builder.Services.AddTransient<IVoivodeshipRepository, VoivodeshipRepository>();
-builder.Services.AddTransient<IVoivodeshipService, VoivodeshipService>();
-builder.Services.AddTransient<IAnnouncementRepository, AnnouncementRepository>();
-builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-builder.Services.AddTransient<IRepository<User>, Repository<User>>();
-builder.Services.AddTransient<IUserRepository, UserRepository>();
+//Configure swagger
+ConfigureStartup.ConfigureSwagger(builder.Services);
 
+// Add services to the container.
+ConfigureStartup.InjectServices(builder.Services);
+
+//Add automapper
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
+//Add Authentication
+ConfigureStartup.AddAuthentication(builder);
 
 var app = builder.Build();
 
@@ -70,6 +47,7 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/api/StaticFiles"
 });
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

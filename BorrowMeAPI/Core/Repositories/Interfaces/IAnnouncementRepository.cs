@@ -3,7 +3,7 @@ using Domain.Entieties;
 
 namespace Core.Repositories
 {
-    public interface IAnnouncementRepository
+    public interface IAnnouncementRepository : IRepository<Announcement>
     {
         Task<List<Announcement>> GetAnnouncementsByFilters(SearchedAnnouncementFilterDto searchFilter);
         Task<List<Announcement>> GetAllAnnouncements();

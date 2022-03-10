@@ -5,13 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistance.Repositories;
 
-public class ReservationRepository : IReservationRepository
+public class ReservationRepository : Repository<Reservation>, IReservationRepository
 {
-    private readonly DataDbContext _dbContext;
-
     public ReservationRepository(DataDbContext dbContext)
+        : base(dbContext)
     {
-        _dbContext = dbContext;
     }
 
     public async Task<List<Reservation>> GetReservationsByUserId(Guid id)

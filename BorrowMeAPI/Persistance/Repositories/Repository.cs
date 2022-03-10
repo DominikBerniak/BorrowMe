@@ -7,7 +7,7 @@ namespace Persistance.Repositories
 
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
-        private readonly DataDbContext _dbContext;
+        protected readonly DataDbContext _dbContext;
         public Repository(DataDbContext dbContext)
         {
             _dbContext = dbContext;

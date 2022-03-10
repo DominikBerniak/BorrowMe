@@ -8,12 +8,10 @@ namespace Services.Implementations
 {
     public class ReservationService : IReservationService
     {
-        private readonly IRepository<Reservation> _repository;
         private readonly IReservationRepository _reservationRepository;
 
-        public ReservationService(IRepository<Reservation> repository, IReservationRepository reservationRepository)
+        public ReservationService(IReservationRepository reservationRepository)
         {
-            _repository = repository;
             _reservationRepository = reservationRepository;
         }
 
@@ -39,7 +37,7 @@ namespace Services.Implementations
 
         public async Task<Reservation> DeleteReservation(Guid id)
         {
-            return await _repository.Delete(await _repository.GetById(id));
+            return await _reservationRepository.Delete(await _reservationRepository.GetById(id));
         }
     }
 }

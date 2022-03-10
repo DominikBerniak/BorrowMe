@@ -9,12 +9,10 @@ namespace Services.Implementations
     public class UserService : IUserService
     {
         private readonly IUserRepository _repository;
-        private readonly IRepository<User> _genericRepository;
 
-        public UserService(IUserRepository repository, IRepository<User> genericRepository)
+        public UserService(IUserRepository repository)
         {
             _repository = repository;
-            _genericRepository = genericRepository;
         }
 
         public async Task<User> GetUser(Guid userId)
@@ -31,7 +29,7 @@ namespace Services.Implementations
                 LastName = userData.LastName,
                 Email = userData.Email,
             };
-            return await _genericRepository.Add(user);
+            return await _repository.Add(user);
         }
     }
 }

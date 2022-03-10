@@ -3,7 +3,7 @@ using Domain.Entieties;
 
 namespace Core.Repositories.Interfaces;
 
-public interface IReservationRepository
+public interface IReservationRepository : IRepository<Reservation>
 {
     Task<List<Reservation>> GetReservationsByUserId(Guid id);
     Task<List<Reservation>> GetReservationsByAnnouncementId(Guid id);

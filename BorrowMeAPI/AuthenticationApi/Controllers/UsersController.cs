@@ -21,16 +21,18 @@ namespace BorrowMeAuth.Controllers
         private readonly UserManager<BorrowMeAuthUser> _userManager;
         private readonly IAuthenticationManager _authenticationManager;
         private readonly IUserService _userService;
+        private readonly IConfiguration config;
 
         public UsersController(ILogger<UsersController> logger, IMapper mapper,
             UserManager<BorrowMeAuthUser> userManager, IAuthenticationManager authenticationManager,
-            IUserService userService)
+            IUserService userService, IConfiguration config)
         {
             _logger = logger;
             _mapper = mapper;
             _userManager = userManager;
             _authenticationManager = authenticationManager;
             _userService = userService;
+            this.config = config;
         }
 
 
@@ -139,7 +141,7 @@ namespace BorrowMeAuth.Controllers
         {
             return Ok(new
             {
-                message = "test successful"
+                message = $"test successful  {config.GetSection("Jwt").GetSection("Key").Value}"
             });
         }
     }

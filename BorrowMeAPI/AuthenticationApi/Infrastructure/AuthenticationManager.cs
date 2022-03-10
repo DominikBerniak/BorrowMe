@@ -67,7 +67,7 @@ namespace MyHotels.WebApi.Infrastructure
 
         private SigningCredentials GetSigningCredentials()
         {
-            var key = "tajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucz";
+            var key = _configuration.GetSection("Jwt").GetSection("Key").Value;
             var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
@@ -81,7 +81,7 @@ namespace MyHotels.WebApi.Infrastructure
 
         public JwtSecurityToken Verify(string jtw)
         {
-            var secretKey = "tajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucz";
+            var secretKey = _configuration.GetSection("Jwt").GetSection("Key").Value;
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secretKey);
 

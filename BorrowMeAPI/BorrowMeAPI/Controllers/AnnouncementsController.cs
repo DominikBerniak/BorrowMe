@@ -52,7 +52,6 @@ namespace Api.Controllers
         }
 
         [HttpGet("promoted")]
-        //[Authorize(Roles = "string")]
         public async Task<ActionResult<List<Announcement>>> GetPromotedAnnouncements()
         {
             var announcements = await _announcementService.GetPromotedAnnouncements();

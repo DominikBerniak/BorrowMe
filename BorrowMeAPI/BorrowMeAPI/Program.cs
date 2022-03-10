@@ -77,7 +77,7 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 //b.AddEntityFrameworkStores<BorrowMeAuthContext>().AddDefaultTokenProviders();
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");
-var key = "tajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucz";
+var key = builder.Configuration.GetSection("Jwt").GetSection("Key").Value;
 
 builder.Services.AddAuthentication(options =>
 {
@@ -90,8 +90,8 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = "BorrowMeAuth",
-        ValidAudience = "http://BorrowMe.com",
+        ValidIssuer = jwtSettings.GetSection("Issuer").Value,
+        ValidAudience = jwtSettings.GetSection("Audience").Value,
         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(key))
     };
 });

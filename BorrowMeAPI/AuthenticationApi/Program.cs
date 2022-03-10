@@ -51,7 +51,7 @@ builder.Services.AddSwaggerGen(c =>
 
 //JWT
 var jwtSettings = configuration.GetSection("Jwt");
-var key = "tajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucztajnyKlucz";
+var key = builder.Configuration.GetSection("Jwt").GetSection("Key").Value;
 
 builder.Services.AddAuthentication(options =>
 {

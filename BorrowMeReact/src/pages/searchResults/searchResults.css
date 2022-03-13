@@ -23,7 +23,7 @@
 }
 .search-results-announcement
 {
-    min-height: 20rem;
+    height: 20rem;
     background-color: white;
 }
 .search-results-announcement-image-generic{

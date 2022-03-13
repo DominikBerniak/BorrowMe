@@ -130,10 +130,10 @@ const SearchResults = () => {
         let searchPhraseParam = searchParams.get("search");
         searchPhraseParam = searchPhraseParam ? searchPhraseParam : "all";
 
-        let categoryQuery = `category=${category}`;
-        let locationQuery = `&voivodeship=${voivodeship}&city=${city}`;
+        let categoryQuery = `categoryName=${category}`;
+        let locationQuery = `&voivodeshipName=${voivodeship}&cityName=${city}`;
         let searchPhraseQuery = `&searchPhrase=${searchPhraseParam}`;
-        let pageNumQuery = `&page=${isInitialLoad ? pageNum : pageNumber}`;
+        let pageNumQuery = `&pageNumber=${isInitialLoad ? pageNum : pageNumber}`;
         let costFilterQuery = `&costMin=${costFilter.minCost}&costMax=${costFilter.maxCost}`;
         let sortQuery = `&sortBy=${sortFilter.sortBy}&sortDirection=${sortFilter.sortDirection}`;
         return "/api/Announcements?" + categoryQuery + locationQuery + searchPhraseQuery + pageNumQuery + costFilterQuery + sortQuery;

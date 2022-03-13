@@ -13,6 +13,7 @@ import Authentication from "./pages/Authentication";
 import AddAnnouncement from "./pages/AddAnnouncement";
 import ReservationConfirmation from "./pages/reservationConfirmation/ReservationConfirmation";
 import RequireAuth from "./components/RequireAuth";
+import Chat from "./pages/Chat";
 
 function App() {
     return (
@@ -33,6 +34,11 @@ function App() {
                 <Route path="announcement/new" element={
                     <RequireAuth>
                         <AddAnnouncement/>
+                    </RequireAuth>
+                }/>
+                <Route path="chat" element={
+                    <RequireAuth>
+                        <Chat/>
                     </RequireAuth>
                 }/>
                 <Route path="reservation/:reservationId" element={<ReservationConfirmation/>}/>

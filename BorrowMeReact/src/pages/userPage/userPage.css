@@ -1,0 +1,27 @@
+.user-details-container{
+    display: grid;
+    padding-left: 2%;
+    padding-right: 2%;
+    grid-template-rows: 100px 1fr 70px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "about about about"
+        "announcements announcements announcements"
+        ". home .";
+}
+
+.about-user-container {
+    grid-area: about;
+    background-color: #dddddd;
+    border-radius: 4px;
+}
+.user-name-container {
+    margin: 1em;
+}
+
+.user-announcements-container {
+    grid-area: announcements;
+}
+
+.back-home-button-container {
+    grid-area: home;
+}

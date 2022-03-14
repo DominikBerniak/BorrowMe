@@ -97,7 +97,6 @@ const AnnouncementPage = () => {
     useEffect(() => {
             getData(`/api/Announcements/${announcementId}`)
                 .then(data => {
-                    console.log(data)
                     setAnnouncementData(data.announcement);
                     setReservations(() => {
                         let reservations = [];
@@ -173,7 +172,7 @@ const AnnouncementPage = () => {
                         <div className="owner-announcement-container">
                             <label>Autor: </label>
                             <Link id="link-to-user-page"
-                                  to={"/Users/" + announcementData.owner.id}>{announcementData.owner.firstName} {announcementData.owner.lastName}</Link>
+                                  to={`/Users/${announcementData.owner.id}`}>{announcementData.owner.firstName} {announcementData.owner.lastName}</Link>
                         </div>
                         <div className="publish-date">
                             <p>Opublikowano {new Date(announcementData.publishDate).toLocaleDateString()} o

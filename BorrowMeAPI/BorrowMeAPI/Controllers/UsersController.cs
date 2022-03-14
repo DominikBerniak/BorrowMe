@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Core.Model.DataTransferObjects;
 using Core.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -23,6 +24,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult<GetUserDto>> GetUserById(Guid id)
         {
             _logger.LogInformation($"Get user attempt. Id = '{id}'");
@@ -36,6 +38,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}/details")]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult<UserDetailsDto>> GetUserDetails(Guid id)
         {
             _logger.LogInformation($"Get user details attempt. Id = '{id}'");

@@ -106,6 +106,20 @@ namespace Persistance.Repositories
             return await announcements.FirstOrDefaultAsync();
         }
 
+        public async Task<List<Announcement>> GetAnnouncementsByUserId(Guid userId)
+        {
+            var announcements = _dbContext.Announcements
+                .Include(a => a.PictureLocations)
+                .Include(a => a.Owner)
+                .ThenInclude(o => o.PictureLocation)
+                .Include(a => a.SubCategory)
+                .Include(a => a.City)
+                .Include(c => c.Voivodeship)
+                .AsQueryable();
+            announcements = announcements.Where(a => a.Owner.Id == userId);
+            return await announcements.ToListAsync();
+        }
+
         public async Task<Announcement> AddNewAnnouncement(CreateAnnouncementDto announcementData,Announcement newAnnouncement)
         {
             var owner = await _dbContext.Users.FindAsync(announcementData.OwnerId);

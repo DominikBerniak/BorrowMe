@@ -134,5 +134,10 @@ namespace Services.Implementations
         {
             return await _announcementRepository.Edit(announcement);
         }
+
+        public async Task<List<Announcement>> GetAnnouncementsByUserId(Guid userId)
+        {
+            return await _announcementRepository.GetAnnouncementsByUserId(userId);
+        }
     }
 }

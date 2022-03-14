@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text;
 
 namespace BorrowMeAuth.Controllers
 {
@@ -134,14 +135,28 @@ namespace BorrowMeAuth.Controllers
             });
         }
 
-        [HttpGet("test")]
+        [HttpPost("resetPassword")]
         [Authorize(Roles = "User")]
-        public IActionResult test()
+        public async Task<IActionResult> ResetPassword([FromBody]string password)
         {
-            return Ok(new
+            var jwt = Request.Cookies["jwt"];
+            var token = _authenticationManager.Verify(jwt);
+            var userEmail = token.Claims.Where(c => c.Type == ClaimTypes.Email).First().Value;
+            var user = await _userManager.FindByEmailAsync(userEmail);
+            if (user == null)
             {
-                message = $"test successful  {config.GetSection("Jwt").GetSection("Key").Value}"
-            });
+                // Don't reveal that the user does not exist
+                return Ok();
+            }
+
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, resetToken, password);
+            if (result.Succeeded)
+            {
+                return Ok("true success");
+            }
+
+            return BadRequest(result.Errors);
         }
     }
 }

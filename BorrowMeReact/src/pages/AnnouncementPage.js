@@ -1,19 +1,19 @@
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import ImageAPI from "../../components/ImageAPI";
-import {getData, postData} from "../../services/apiFetch";
-import "./announcementPage.css"
-import Spinner from "../../components/Spinner";
+import ImageAPI from "../components/ImageAPI";
+import {getData, postData} from "../services/apiFetch";
+import "./announcementPage/announcementPage.css"
+import Spinner from "../components/Spinner";
 import {useNavigate} from "react-router-dom";
 import Calendar from 'react-calendar'
-import '../../styles/Custom-calendar.css';
-import '../../styles/Custom-DatePicker.css';
-import CaretNext from "../../components/CaretNext";
-import CaretPrevious from "../../components/CaretPrevious";
-import ArrowPrevious from "../../components/ArrowPrevious";
-import ArrowNext from "../../components/ArrowNext";
-import {getCorrectPaymentElem, isWithinRanges} from "../../services/announcementUtils";
-import NoImage from "../../components/NoImage";
+import '../styles/Custom-calendar.css';
+import '../styles/Custom-DatePicker.css';
+import CaretNext from "../components/CaretNext";
+import CaretPrevious from "../components/CaretPrevious";
+import ArrowPrevious from "../components/ArrowPrevious";
+import ArrowNext from "../components/ArrowNext";
+import {getCorrectPaymentElem, isWithinRanges} from "../services/announcementUtils";
+import NoImage from "../components/NoImage";
 import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
 import {Helmet} from "react-helmet";
 import {useSelector} from "react-redux";
@@ -97,7 +97,6 @@ const AnnouncementPage = () => {
     useEffect(() => {
             getData(`/api/Announcements/${announcementId}`)
                 .then(data => {
-                    console.log(data)
                     setAnnouncementData(data.announcement);
                     setReservations(() => {
                         let reservations = [];
@@ -173,7 +172,7 @@ const AnnouncementPage = () => {
                         <div className="owner-announcement-container">
                             <label>Autor: </label>
                             <Link id="link-to-user-page"
-                                  to={"/Users/" + announcementData.owner.id}>{announcementData.owner.firstName} {announcementData.owner.lastName}</Link>
+                                  to={`/Users/${announcementData.owner.id}`}>{announcementData.owner.firstName} {announcementData.owner.lastName}</Link>
                         </div>
                         <div className="publish-date">
                             <p>Opublikowano {new Date(announcementData.publishDate).toLocaleDateString()} o

@@ -26,5 +26,7 @@ namespace Core.Services.Interfaces
 
         // DELETE by ID
         Task<Announcement> DeleteAnnouncement(Guid id);
+
+        Task<List<Announcement>> GetAnnouncementsByUserId(Guid userId);
     }
 }

@@ -1,0 +1,72 @@
+.user-details-container{
+    display: grid;
+    padding-left: 2%;
+    padding-right: 2%;
+    grid-template-rows: 100px 1fr 70px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "about about about"
+        "announcements announcements announcements"
+        ". home .";
+}
+
+.about-user-container {
+    grid-area: about;
+    border-radius: 4px;
+    text-align: center;
+    font-size: large;
+}
+.user-name-container {
+    margin: 1em;
+}
+
+.user-announcements-container {
+    grid-area: announcements;
+}
+
+.back-home-button-container {
+    grid-area: home;
+}
+
+.user-page-container{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: [row1-start] 20rem [row1-end] 0 [third-line] max-content [last-line];
+}
+
+
+.item1{
+    display: grid;
+    grid-template-columns: 2rem 18rem 70rem max-content;
+    grid-template-rows: 2rem 6rem;
+    background-image: url("../../images/701802.jpg");
+    background-repeat: no-repeat;
+    background-position: -2rem -145rem;
+
+
+
+}
+.avatar{
+    grid-column-start: 2;
+    grid-row-start: 2;
+}
+
+.user-name{
+    grid-column-start: 3;
+    grid-row-start: 3;
+    font-size: xx-large;
+}
+.contact{
+    grid-column-start: 4;
+    grid-row-start: 2;
+    font-size: xx-large;
+}
+.additonal-info{
+    grid-column-start: 4;
+    grid-row-start: 3;
+    font-size: xx-large;
+}
+
+
+.item2{
+    margin-bottom: 20rem;
+}

@@ -143,8 +143,10 @@ namespace BorrowMeAuth.Controllers
             var token = _authenticationManager.Verify(jwt);
             var userEmail = token.Claims.Where(c => c.Type == ClaimTypes.Email).First().Value;
             var user = await _userManager.FindByEmailAsync(userEmail);
+            _logger.LogInformation($"Attempting to change passord for user {userEmail}");
             if (user == null)
             {
+                _logger.LogInformation($"User {userEmail} not found in db.");
                 // Don't reveal that the user does not exist
                 return Ok();
             }
@@ -153,9 +155,11 @@ namespace BorrowMeAuth.Controllers
             var result = await _userManager.ResetPasswordAsync(user, resetToken, password);
             if (result.Succeeded)
             {
-                return Ok("true success");
+                _logger.LogInformation($"Password successfully changed for user {userEmail}");
+                return Ok();
             }
 
+            _logger.LogInformation($"Password successfully changed for user {userEmail}");
             return BadRequest(result.Errors);
         }
     }

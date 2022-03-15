@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
-import {getData} from "../../services/apiFetch";
+import {getData} from "../services/apiFetch";
 import {Link, useParams} from "react-router-dom";
-import "./reservationConfirmation.css";
-import Spinner from "../../components/Spinner";
+import "./reservationConfirmation/reservationConfirmation.css";
+import Spinner from "../components/Spinner";
 
 const ReservationConfirmation = () => {
     const {reservationId} = useParams();
@@ -33,7 +33,7 @@ const ReservationConfirmation = () => {
                             <div className="confirmation-details-container">
                                 <label>Rezerwujesz:</label>
                                 <p><Link className="reference-link"
-                                         to={"/announcement/" + reservation.announcement.id}>{reservation.announcement.title}</Link>
+                                         to={"/announcementPage/" + reservation.announcement.id}>{reservation.announcement.title}</Link>
                                 </p>
                                 <label>Od użytkownika:</label>
                                 <p><Link className="reference-link"

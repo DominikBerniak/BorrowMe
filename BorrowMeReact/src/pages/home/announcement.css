@@ -1,9 +1,9 @@
 .announcement {
     width: 20rem;
     height: 28rem;
-    border-radius: 2px;
-    box-shadow: rgb(83, 83, 83) 1px 1px 1px 1px;
-    margin: 20px;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: 17px;
     padding: 1rem;
     font-family: 'Roboto Condensed', sans-serif;
     align-content: center;
@@ -12,36 +12,45 @@
 }
 .announcement:hover{
     cursor: pointer;
-    transform: scale(1.02);
-    transition: transform 0.5s;
+    box-shadow: rgba(0, 0, 0, 0.75) 0px 5px 15px;
+    transition: all 0.4s ease-in;
 }
-
-
 .title {
+    margin-bottom: 4px;
     text-align: center;
+    font-size: larger;
 }
-
 .picture {
     text-align: center;
-    display: grid;
     justify-items: center;
-    width: 280px;
-    height: 275px;
+    width: 100%;
+    height: 66.5%;
 }
-
 .informations-row-1{
+    margin-top: 0.5em;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 10px;
-    margin-top: 30px;
+    justify-content: center;
+    padding: 5px;
 }
-
+.price {
+    margin-top: 0.7rem;
+    font-weight: bold;
+}
+.city{
+    margin-top: 1em;
+ }
+.category {
+    margin-top: 0.5em;
+}
+.announcement-image-tile {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
 .picture img {
     border: 1px solid #ddd;
     border-radius: 2px;
     padding: 2px;
-    max-width: 280px;
-    max-height: 275px;
-    margin: auto;
+
 }

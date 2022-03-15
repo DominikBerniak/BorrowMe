@@ -4,6 +4,7 @@ using Core.Services;
 using Core.Services.Interfaces;
 using Domain.Entieties;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistance;
@@ -63,6 +64,7 @@ namespace Api
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IRepository<User>, Repository<User>>();
             services.AddTransient<IUserRepository, UserRepository>();
+            //services.AddSingleton<IUserIdProvider, UserEmailProvider>();
         }
         public static void AddAuthentication(WebApplicationBuilder builder)
         {

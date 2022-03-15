@@ -36,9 +36,6 @@ ConfigureStartup.InjectServices(builder.Services);
 //Add automapper
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-//Add signalR
-builder.Services.AddSignalR();
-
 //Add Authentication
 ConfigureStartup.AddAuthentication(builder);
 
@@ -64,9 +61,6 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
-app.MapHub<ChatHub>("/api/chat");
 
 app.Run();

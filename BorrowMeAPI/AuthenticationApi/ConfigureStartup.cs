@@ -7,6 +7,7 @@ using Core.Services.Interfaces;
 using Domain.Entieties;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistance;
@@ -67,7 +68,17 @@ namespace AuthenticationApi
                 {
                     OnMessageReceived = context =>
                     {
-                        context.Token = context.Request.Cookies["jwt"];
+                        var accessToken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) &&
+                            ( path.StartsWithSegments("/chat") ))
+                        {
+                            context.Token = accessToken;
+                        }
+                        else
+                        {
+                            context.Token = context.Request.Cookies["jwt"];
+                        }
                         return Task.CompletedTask;
                     }
                 };
@@ -90,6 +101,7 @@ namespace AuthenticationApi
             services.AddTransient<IRepository<User>, Repository<User>>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
+            services.AddSingleton<IUserIdProvider, UserEmailProvider>();
         }
     }
 

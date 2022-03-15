@@ -1,6 +1,93 @@
-#chat-messages{
-    height: 30rem;
-    width: 50%;
+#chat-main-container{
+    display: grid;
+    /*grid-template-columns: 23rem 55rem 23rem;*/
+    grid-template-columns: 20vw 45vw 20vw;
+    grid-template-areas: 'convo-list chat-window message-receiver';
+    grid-column-gap: 2%;
+    /*height: 45rem;*/
+    height: 70vh;
+}
+#chat-conversation-list-container{
     background-color: white;
-    border: 0.2rem solid #5b5b5b;
+    grid-area: convo-list;
+    border-radius: 0 0.7rem 0.7rem 0 !important;
+}
+#chat-window-container{
+    background-color: white;
+    grid-area: chat-window;
+    border-radius: 0.7rem !important;
+}
+#message-receiver-info-container{
+    background-color: white;
+    grid-area: message-receiver;
+    border-radius: 0.7rem 0 0 0.7rem !important;
+}
+#chat-input-container{
+    max-width: 100%;
+    width: 100%;
+}
+#active-chat-messages-container{
+    max-height: 37rem;
+    overflow-y: auto;
+    background-color: #f6f6f6;
+}
+.react-emoji{
+    flex-direction: row-reverse;
+    max-width: 90% !important;
+}
+.react-emoji-picker{
+    animation: none !important;
+}
+.react-input-emoji--container{
+    margin: 0 !important;
+    max-width: 90% !important;
+}
+.react-input-emoji--button--icon, .react-input-emoji--button__show svg{
+    fill: #989898 !important;
+}
+.react-emoji-picker--wrapper{
+    right: initial !important;
+    overflow: initial !important;
+}
+.react-input-emoji--input{
+    padding: 0.5rem 1rem 0.5rem !important;
+}
+.react-input-emoji--input:active{
+    outline: 0.5rem solid red !important;
+}
+.emoji-mart-scroll::-webkit-scrollbar-track{
+    background-color: #ececec;
+    border-radius: 10px 10px 0 0;
+}
+.react-input-emoji--input::-webkit-scrollbar-track
+{
+    background-color: transparent;
+    margin: 0.7rem 0;
+    border-radius: 10px 10px 0 0;
+}
+#active-chat-messages-container::-webkit-scrollbar-track{
+    background-color: #c7c7c7;
+    /*border-radius: 10px 10px 0 0;*/
+}
+.emoji-mart-scroll::-webkit-scrollbar,
+.react-input-emoji--input::-webkit-scrollbar
+{
+    width: 0.6rem;
+}
+#active-chat-messages-container::-webkit-scrollbar{
+    width: 0.8rem;
+}
+.emoji-mart-scroll::-webkit-scrollbar-thumb,
+.react-input-emoji--input::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #a6a6a6;
+}
+.emoji-mart-search-icon{
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+.chat-message{
+    border-radius: 1.1rem;
 }

@@ -15,6 +15,7 @@ import sortReducer from "./features/sort";
 import authUserReducer from "./features/authUser";
 import userReducer from "./features/user";
 import allCategoriesReducer from "./features/allCategories";
+import activeChatWindowReducer from "./features/activeChatWindow";
 
 
 const store = configureStore({
@@ -27,7 +28,8 @@ const store = configureStore({
         sort: sortReducer,
         authUser: authUserReducer,
         user: userReducer,
-        allCategories: allCategoriesReducer
+        allCategories: allCategoriesReducer,
+        activeChatWindow: activeChatWindowReducer
     },
 })
 

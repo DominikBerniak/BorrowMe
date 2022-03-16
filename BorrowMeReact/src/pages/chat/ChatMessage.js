@@ -1,19 +1,13 @@
 import {useSelector} from "react-redux";
-import {useEffect} from "react";
+import ChatMessageTime from "./ChatMessageTime";
 
-const ChatMessage = ({message}) => {
+const ChatMessage = ({message, lastMessageTime, updateLastMessageTime}) => {
     const userData = useSelector(state=>state.user.value);
-    useEffect(()=>{
-        console.log(userData.email)
-    },[])
+
     return (
         <div className="my-2">
-            <div className="d-flex align-items-center w-50 mx-auto mb-2 user-select-none">
-                <hr className="w-50"/>
-                <div className="mx-3">{message.time}</div>
-                <hr className="w-50"/>
-            </div>
-            {message.from === userData.email ?
+            <ChatMessageTime lastMessageTime={lastMessageTime} messageTime={message.sendTime} updateLastMessageTime={updateLastMessageTime} message={message}/>
+            {message.sender.id === userData.userId ?
                 //sent message
                 <div className="d-flex justify-content-end">
                     <div className="bg-primary text-white d-inline-block py-2 px-3 chat-message">

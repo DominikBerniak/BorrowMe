@@ -18,7 +18,7 @@ const ChatWindow = () => {
         }).then(response => response.text())
             .then(token =>{
                 const newConnection = new HubConnectionBuilder()
-                    .withUrl(`https://localhost:7246/chat`, {accessTokenFactory: () => token})
+                    .withUrl(`https://localhost:7058/chat`, {accessTokenFactory: () => token})
                     .withAutomaticReconnect()
                     .build();
                 setConnection(newConnection);

@@ -90,4 +90,6 @@
 }
 .chat-message{
     border-radius: 1.1rem;
+    max-width: 35vw;
+    overflow-wrap:break-word;
 }

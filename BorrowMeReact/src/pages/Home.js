@@ -39,8 +39,8 @@ const Home = () => {
                 <title>Strona główna | BorrowMe</title>
             </Helmet>
             <h2 className="text-center">Promowane ogłoszenia</h2>
-            {announcements
-                ? <div className="d-flex flex-wrap justify-content-center">
+            {announcements ?
+                <div className="d-flex flex-wrap justify-content-center">
                     {announcements.map((announcement) => {
                         return (
                             <Announcement key={announcement.id} announcement={announcement}/>

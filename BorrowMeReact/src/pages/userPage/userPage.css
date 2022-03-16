@@ -1,14 +1,16 @@
 .user-details-container{
     display: grid;
+    column-gap: 15px;
     padding-left: 2%;
     padding-right: 2%;
-    grid-template-rows: 100px 1fr 70px;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-areas: "about about about"
-        "announcements announcements announcements"
-        ". home .";
+    grid-template-rows: 100px minmax(10px, 30rem) minmax(10px, 31rem) 100px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+            "about about"
+            "announcements announcements"
+            "reservations announcements-reservations"
+            "home home";
 }
-
 .about-user-container {
     grid-area: about;
     background-color: #dddddd;
@@ -17,11 +19,36 @@
 .user-name-container {
     margin: 1em;
 }
-
 .user-announcements-container {
     grid-area: announcements;
 }
-
+.user-reservations-container {
+    grid-area: reservations;
+}
+.user-announcements-reservations {
+    grid-area: announcements-reservations;
+}
 .back-home-button-container {
     grid-area: home;
+    margin: 1rem 0;
+}
+#accepted-reservations-label, #expired-reservations-label, #no-announcement-reservations-label {
+    margin-top: 1rem;
+}
+.unaccepted-reservations-container, .accepted-reservation-container, .expired-reservation-container {
+    max-height: 31rem;
+    overflow-y: auto;
+}
+.unaccepted-reservation-container::-webkit-scrollbar-track,  .accepted-reservation-container::-webkit-scrollbar-track,
+.expired-reservation-container::-webkit-scrollbar-track{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #dddddd;
+}
+.unaccepted-reservation-container::-webkit-scrollbar-thumb,  .accepted-reservation-container::-webkit-scrollbar-thumb,
+.expired-reservation-container::-webkit-scrollbar-thumb{
+    background-color: white;
+}
+.margin-top-1rem {
+    margin-top: 1rem;
 }

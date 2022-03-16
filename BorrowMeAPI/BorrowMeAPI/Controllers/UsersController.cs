@@ -42,7 +42,6 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}/details")]
-        [Authorize(Roles = "User")]
         public async Task<ActionResult<UserDetailsDto>> GetUserDetails(Guid id)
         {
             _logger.LogInformation($"Get user details attempt. Id = '{id}'");

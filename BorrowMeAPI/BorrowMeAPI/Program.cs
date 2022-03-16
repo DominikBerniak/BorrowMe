@@ -39,6 +39,9 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 //Add Authentication
 ConfigureStartup.AddAuthentication(builder);
 
+//Add signalR
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -62,5 +65,7 @@ app.UseStaticFiles(new StaticFileOptions
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chat");
 
 app.Run();

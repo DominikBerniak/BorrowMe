@@ -3,7 +3,6 @@ using BorrowMeAuth.Data;
 using System.Reflection;
 using Persistance;
 using AuthenticationApi;
-using Api.Hubs.Api.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("BorrowMeAuthContextConnection");
@@ -40,9 +39,6 @@ ConfigureStartup.InjectServices(builder.Services);
 //Add AutoMapper
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-//Add signalR
-builder.Services.AddSignalR();
-
 builder.Services.AddDbContext<DataDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -65,6 +61,5 @@ app.UseAuthorization();
 
 
 app.MapControllers();
-app.MapHub<ChatHub>("/chat");
 
 app.Run();

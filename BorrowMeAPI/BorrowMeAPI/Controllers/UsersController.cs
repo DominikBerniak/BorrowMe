@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Core.Model.DataTransferObjects;
 using Core.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Api.Controllers
 {

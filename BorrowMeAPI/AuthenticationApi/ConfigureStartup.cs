@@ -101,7 +101,6 @@ namespace AuthenticationApi
             services.AddTransient<IRepository<User>, Repository<User>>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
-            services.AddSingleton<IUserIdProvider, UserEmailProvider>();
         }
     }
 

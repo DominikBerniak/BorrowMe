@@ -41,9 +41,9 @@
     display: grid;
     grid-template-columns: 2rem 18rem 71rem max-content;
     grid-template-rows: 2rem 6rem;
-    background-image: url("../../images/701802.jpg");
+    background-image: url("../../images/userBackground.png");
     background-repeat: no-repeat;
-    background-position: -2rem -145rem;
+    background-position: 0 -2rem;
 }
 .avatar{
     grid-column-start: 2;

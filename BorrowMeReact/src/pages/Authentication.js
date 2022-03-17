@@ -24,6 +24,8 @@ const Authentication = ({pageType}) => {
     const [isAuthenticationInProgress, setIsAuthenticationInProgress] = useState(false);
     const [wrongAuthenticationMessage, setWrongAuthenticationMessage] = useState("");
 
+    const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
+
     const authUser = useSelector(state => state.authUser.value);
 
     const {state} = useLocation();
@@ -45,10 +47,15 @@ const Authentication = ({pageType}) => {
 
     useEffect(() => {
         //Na potrzebe demo zakomentowane
+        setIsSubmitDisabled(pageType==="register");
         //setPassword("");
     }, [pageType])
 
     useEffect(() => {
+        if (pageType === "register")
+        {
+            setIsSubmitDisabled(true);
+        }
         if (passwordInputTimeout) {
             clearTimeout(passwordInputTimeout);
         }
@@ -58,11 +65,13 @@ const Authentication = ({pageType}) => {
         }
         let passwordCheck = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
         if (!passwordCheck.test(password)) {
+            setIsSubmitDisabled(true);
             setPasswordInputTimeout(
                 setTimeout(() => {
                     setIsPasswordCorrect(false);
                 }, 1000));
         } else {
+            setIsSubmitDisabled(false);
             setIsPasswordCorrect(true)
         }
     }, [password])
@@ -230,7 +239,9 @@ const Authentication = ({pageType}) => {
             </form>
             <div className="d-flex flex-column align-items-center w-70 mt-auto mb-5">
                 <button id="authenticate-button" form="authentication-form" type="submit"
-                        className="w-100 btn shadow-none rounded py-2">{pageType === "login" ? "Zaloguj się" : "Zarejestruj się"}</button>
+                        className="w-100 btn shadow-none rounded py-2" disabled={isSubmitDisabled}
+
+                >{pageType === "login" ? "Zaloguj się" : "Zarejestruj się"}</button>
                 <div className="d-flex w-100 justify-content-center my-4 align-items-center">
                     <hr className="w-50"/>
                     <div className="px-3 user-select-none">lub</div>

@@ -21,7 +21,6 @@ export const userSlice = createSlice({
             state.value = initialStateValue
         }
     },
-
 });
 
 export const {changeUser, clearUser} = userSlice.actions;

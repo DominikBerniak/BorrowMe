@@ -52,6 +52,7 @@ namespace BorrowMeAuth.Controllers
             User businessUser = await _userService.AddUser(businessUserData);
             user.BusinessUserId = businessUser.Id.ToString();
             var result = await _userManager.CreateAsync(user, userDto.Password);
+
             await _userManager.AddToRoleAsync(user, "User");
 
             if (!result.Succeeded)
@@ -123,6 +124,13 @@ namespace BorrowMeAuth.Controllers
                 _logger.LogError(e.Message);
                 return Unauthorized();
             }
+        }
+
+        [Authorize(Roles = "User")]
+        [HttpGet("token")]
+        public ActionResult<string> GetAuthenticatedUserToken()
+        {
+            return Ok(Request.Cookies["jwt"]);
         }
 
         [HttpPost("logout")]

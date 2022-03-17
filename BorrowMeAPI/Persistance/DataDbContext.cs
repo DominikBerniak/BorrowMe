@@ -28,5 +28,6 @@ namespace Persistance
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Voivodeship> Voivodeships { get; set; }
+        public DbSet<Message> Messages { get; set; }
     }
 }

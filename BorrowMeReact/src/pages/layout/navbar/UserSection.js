@@ -23,7 +23,7 @@ const UserSection = () => {
             <Link to="/announcement/new">
                 <AddIcon id="navbar-add-icon" sx={{fontSize: 35, color: "#ffffff"}} className="me-4"/>
             </Link>
-            <Link to="/">
+            <Link to="/chat">
                 <EmailOutlinedIcon id="navbar-messages-icon" sx={{fontSize: 35, color: "#ffffff"}}
                                    className="me-4"/>
             </Link>

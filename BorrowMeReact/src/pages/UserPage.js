@@ -120,7 +120,7 @@ const UserPage = () => {
                             <div className="avatar">
                                 {userDetails.user.pictureLocation ?
                                     <Avatar sx={{ width: 225, height: 225 }}
-                                        srcSet={`/api/StaticFiles/user-images/${userDetails.user.pictureLocation.fileName}`} />
+                                        srcSet={`/api/StaticFiles/user-images/${userDetails.user.id}/avatar/${userDetails.user.pictureLocation.fileName}`} />
                                     : <Avatar sx={{ width: 225, height: 225 }} />}
                             </div>
                             <div className="user-name">

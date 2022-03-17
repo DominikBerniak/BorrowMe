@@ -1,5 +1,6 @@
 ﻿using BorrowMeAuth.Areas.Identity.Data;
 using BorrowMeAuth.DTO;
+using Domain.Entieties;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -21,7 +22,6 @@ namespace AuthenticationApi.Infrastructure
             this._configuration = configuration;
             this._logger = logger;
         }
-
         public async Task<string> CreateJwtToken()
         {
             var signingCredentials = GetSigningCredentials();
@@ -53,7 +53,7 @@ namespace AuthenticationApi.Infrastructure
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, _user.Email)
+                new Claim(ClaimTypes.Email, _user.Email),
             };
             var roles = await _userManager.GetRolesAsync(_user);
 

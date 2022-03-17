@@ -39,11 +39,11 @@
 }
 .user-info{
     display: grid;
-    grid-template-columns: 2rem 18rem 50rem max-content;
+    grid-template-columns: 2rem 18rem 71rem max-content;
     grid-template-rows: 2rem 6rem;
     background-image: url("../../images/701802.jpg");
     background-repeat: no-repeat;
-    background-position: 0 -145rem;
+    background-position: -2rem -145rem;
 }
 .avatar{
     grid-column-start: 2;

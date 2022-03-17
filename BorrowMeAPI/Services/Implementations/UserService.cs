@@ -29,7 +29,7 @@ namespace Services.Implementations
 
         public async Task<User> GetUser(string email)
         {
-            var user = await _repository.GetByProperty(u =>  u.Email == email);
+            var user = await _userRepository.GetByProperty(u =>  u.Email == email);
             return user;
         }
 
@@ -127,7 +127,7 @@ namespace Services.Implementations
 
         public async Task<User> UpdateUser(User userData)
         {
-            return await _repository.Edit(userData);
+            return await _userRepository.Edit(userData);
         }
     }
 }

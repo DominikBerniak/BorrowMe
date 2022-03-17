@@ -26,7 +26,7 @@ const MessageReceiverInfo = () => {
                 <div className="mt-5">
                     {chatData.receiverPicture !== "" ?
                         <Avatar sx={{width: 120, height: 120}}
-                                src={`/api/StaticFiles/user-images/${chatData.receiverId}/${chatData.receiverPicture}`}
+                                src={`/api/StaticFiles/user-images/${chatData.receiverId}/avatar/${chatData.receiverPicture}`}
                                 draggable={"false"}
                         />
                         :

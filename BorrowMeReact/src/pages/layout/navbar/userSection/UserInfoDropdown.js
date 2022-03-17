@@ -156,7 +156,12 @@ const UserInfoDropdown = ({ hideDropDownMenu }) => {
             }
             else {
                 setWrongAuthenticationMessage("Dane zmienione pomyślnie. Zmieniono adres email, zaraz nastąpi wylogowanie.");
-                setTimeout(() => { handleLogout(); }, 3000);
+                setTimeout(() => { 
+                    handleLogout();
+                    setTimeout(() => { 
+                        navigate("/login");
+                    }, 500);
+                }, 3000);
             }
 
         } else {
@@ -206,7 +211,7 @@ const UserInfoDropdown = ({ hideDropDownMenu }) => {
             <Link to="/" className="list-group-item">Moje ogłoszenia</Link>
             <Link to="/" className="list-group-item">Dodaj ogłoszenie</Link>
             <Link to="/" className="list-group-item">Wiadomości</Link>
-            <p className="list-group-item" onClick={handleOpen} style={{ cursor: "pointer" }}>Ustawienia</p>
+            <p className="list-group-item mb-0 cursor-pointer" onClick={handleOpen}>Ustawienia</p>
             <div className="p-3 bg-light border border-top-0 border-bottom-0"></div>
             <Link to="" className="list-group-item text-center" onClick={handleLogout}>Wyloguj się</Link>
 

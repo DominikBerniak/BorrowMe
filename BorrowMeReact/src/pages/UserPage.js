@@ -37,15 +37,20 @@ const UserPage = () => {
         setSecondBoxValue(newValue)
     }
 
-    let setCorrectReservations = (reservation) => {
+    let setCorrectReservations = (reservation, isAnnouncementReservation = false) => {
         if (!reservation.isAccepted && new Date(reservation.reservationEndDay) > new Date())
         {
+            if (isAnnouncementReservation)
+            {
+                setUnacceptedAnnouncementReservations(unacceptedAnnouncementReservations => unacceptedAnnouncementReservations.concat(reservation))
+            } else
             setUnacceptedReservations(unacceptedReservations => unacceptedReservations.concat(reservation))
-            //próbne
-            setAcceptedReservations(acceptedReservations => acceptedReservations.concat(reservation))
-            setExpiredReservations(expiredReservations => expiredReservations.concat(reservation))
         }
         else if (reservation.isAccepted && new Date(reservation.reservationEndDay) > new Date()) {
+            if (isAnnouncementReservation)
+            {
+                setAcceptedAnnouncementReservations(acceptedAnnouncementReservations => acceptedAnnouncementReservations.concat(reservation))
+            } else
             setAcceptedReservations(acceptedReservations => acceptedReservations.concat(reservation))
         }
         else if (reservation.isAccepted && new Date(reservation.reservationEndDay) < new Date())
@@ -96,8 +101,12 @@ const UserPage = () => {
             let response = getData(`/api/users/${userId}/details`)
                 .then(data => {
                     setDetails(data);
-                    data.reservations.map(reservation => {
+                    console.log(data)
+                    data.userReservations.map(reservation => {
                         setCorrectReservations(reservation)
+                    })
+                    data.announcementReservations.map(reservation => {
+                        setCorrectReservations(reservation, true)
                     })
                 })
         }, []
@@ -143,7 +152,7 @@ const UserPage = () => {
                         <>
                         <div className="user-reservations-container margin-top-1rem">
                             <label className="center">Twoje rezerwacje:</label>
-                            {userDetails.reservations.length > 0 ?
+                            {userDetails.userReservations.length > 0 ?
                                 <>
                                 <Box className="margin-top-1rem" sx={{ width: '100%', justifyContent: "center" }}>
                                 <TabContext value={firstBoxValue}>
@@ -155,7 +164,7 @@ const UserPage = () => {
                                         </TabList>
                                     </Box>
                                     <TabPanel value="1">
-                                        <div className="unaccepted-reservations-container">
+                                        <div className="unaccepted-reservations-container" id="1">
                                             {unacceptedReservations.map(reservation => {
                                                 return <ReservationTile key={reservation.id} reservation={reservation}
                                                                         classNames="unaccepted-reservation-tile-container" isAccepted={false}/>
@@ -171,7 +180,7 @@ const UserPage = () => {
                                         </div>
                                     </TabPanel>
                                     <TabPanel value="3">
-                                        <div className="expired-reservation-tiles-container">
+                                        <div className="expired-reservation-container">
                                             {expiredReservations.map(reservation => {
                                                 return <ReservationTile key={reservation.id} reservation={reservation}
                                                                         classNames="disable-reservation-tile-container" isExpired={true}/>
@@ -184,10 +193,7 @@ const UserPage = () => {
                         </div>
                         <div className="user-announcements-reservations margin-top-1rem">
                             <label className="center">Rezerwacje do twoich ogłoszeń:</label>
-
-                            {/*zmienić gdy będę mieć rezerwacje od ogłoszeń użytkownika z backu*/}
-
-                            {userDetails.reservations === 0 ?
+                            {userDetails.announcementReservations > 0 ?
                                 <Box className='margin-top-1rem' sx={{ width: '100%', justifyContent: "center" }}>
                                     <TabContext value={secondBoxValue}>
                                         <Box>
@@ -200,7 +206,7 @@ const UserPage = () => {
                                             <div className="unaccepted-user-announcement-reservations-container">
                                                 {unacceptedAnnouncementReservations.map(reservation => {
                                                     return <ReservationTile key={reservation.id} reservation={reservation}
-                                                                            classNames="unaccepted-reservation-tile-container" isAccepted={false}/>
+                                                                            classNames="unaccepted-reservation-tile-container" isAccepted={false} isUserReservation={false}/>
                                                 })}
                                             </div>
                                         </TabPanel>
@@ -208,7 +214,7 @@ const UserPage = () => {
                                             <div className="accepted-user-announcement-reservations-container">
                                                 {acceptedAnnouncementReservations.map(reservation => {
                                                     return <ReservationTile key={reservation.id} reservation={reservation}
-                                                                            classNames="accepted-reservation-tile-container"/>
+                                                                            classNames="accepted-reservation-tile-container" isUserReservation={false}/>
                                                 })}
                                             </div>
                                         </TabPanel>

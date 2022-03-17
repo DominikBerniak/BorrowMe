@@ -64,20 +64,23 @@
     grid-row-start: 3;
     font-size: xx-large;
 }
-.unaccepted-reservations-container, .accepted-reservation-container, .expired-reservation-container {
+.unaccepted-reservations-container, .accepted-reservation-container, .expired-reservation-container,
+.unaccepted-user-announcement-reservations-container, .accepted-user-announcement-reservations-container{
     max-height: 31rem;
     overflow-y: auto;
 }
-.unaccepted-reservation-container::-webkit-scrollbar-track,  .accepted-reservation-container::-webkit-scrollbar-track,
-.expired-reservation-container::-webkit-scrollbar-track{
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    border-radius: 10px;
-    background-color: #dddddd;
-}
-.unaccepted-reservation-container::-webkit-scrollbar-thumb,  .accepted-reservation-container::-webkit-scrollbar-thumb,
-.expired-reservation-container::-webkit-scrollbar-thumb{
-    background-color: white;
-}
+/*.unaccepted-reservation-container::-webkit-scrollbar-track, .accepted-reservation-container::-webkit-scrollbar-track,*/
+/*.expired-reservation-container::-webkit-scrollbar-track, .unaccepted-user-announcement-reservations-container::-webkit-scrollbar-track,*/
+/*.accepted-user-announcement-reservations-container::-webkit-scrollbar-track{*/
+/*    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;*/
+/*    border-radius: 10px;*/
+/*    background-color: #dddddd !important;*/
+/*}*/
+/*.unaccepted-reservation-container::-webkit-scrollbar-thumb,  .accepted-reservation-container::-webkit-scrollbar-thumb,*/
+/*.expired-reservation-container::-webkit-scrollbar-thumb, .unaccepted-user-announcement-reservations-container::-webkit-scrollbar-thumb,*/
+/*.accepted-user-announcement-reservations-container::-webkit-scrollbar-thumb{*/
+/*    background-color: white !important;*/
+/*}*/
 .margin-top-1rem {
     margin-top: 1rem;
 }

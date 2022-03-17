@@ -36,7 +36,7 @@
     align-items: center;
 }
 .delete-reservation-button {
-    width: 166px;
+    width: 10.5rem;
     justify-content: end;
 }
 .delete-button {
@@ -44,8 +44,13 @@
     display: flex;
     align-items: center;
 }
-.accept-button, .rate-button{
+.accept-button{
     transition: 0.5s;
+}
+.rate-button {
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
 }
 .contact-button {
     transition: 0.5s;

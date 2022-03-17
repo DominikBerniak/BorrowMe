@@ -19,7 +19,8 @@ import "./userPage/userPage.css"
 const UserPage = () => {
     const authUser = useSelector(state => state.authUser.value);
     const dispatch = useDispatch();
-    const { userId } = useParams();
+    const navigate = useNavigate();
+    const {userId} = useParams();
     const [firstBoxValue, setFirstBoxValue] = useState("1");
     const [secondBoxValue, setSecondBoxValue] = useState("1");
     const [userDetails, setDetails] = useState();
@@ -35,14 +36,20 @@ const UserPage = () => {
         setSecondBoxValue(newValue)
     }
 
-    let setCorrectReservations = (reservation) => {
-        if (!reservation.isAccepted && new Date(reservation.reservationEndDay) > new Date()) {
+    let setCorrectReservations = (reservation, isAnnouncementReservation = false) => {
+        if (!reservation.isAccepted && new Date(reservation.reservationEndDay) > new Date())
+        {
+            if (isAnnouncementReservation)
+            {
+                setUnacceptedAnnouncementReservations(unacceptedAnnouncementReservations => unacceptedAnnouncementReservations.concat(reservation))
+            } else
             setUnacceptedReservations(unacceptedReservations => unacceptedReservations.concat(reservation))
-            //próbne
-            setAcceptedReservations(acceptedReservations => acceptedReservations.concat(reservation))
-            setExpiredReservations(expiredReservations => expiredReservations.concat(reservation))
         }
         else if (reservation.isAccepted && new Date(reservation.reservationEndDay) > new Date()) {
+            if (isAnnouncementReservation)
+            {
+                setAcceptedAnnouncementReservations(acceptedAnnouncementReservations => acceptedAnnouncementReservations.concat(reservation))
+            } else
             setAcceptedReservations(acceptedReservations => acceptedReservations.concat(reservation))
         }
         else if (reservation.isAccepted && new Date(reservation.reservationEndDay) < new Date()) {
@@ -90,14 +97,18 @@ const UserPage = () => {
     }, [authUser])
 
     useEffect(() => {
-        let response = getData(`/api/users/${userId}/details`)
-            .then(data => {
-                setDetails(data);
-                data.reservations.map(reservation => {
-                    setCorrectReservations(reservation)
+            let response = getData(`/api/users/${userId}/details`)
+                .then(data => {
+                    setDetails(data);
+                    console.log(data)
+                    data.userReservations.map(reservation => {
+                        setCorrectReservations(reservation)
+                    })
+                    data.announcementReservations.map(reservation => {
+                        setCorrectReservations(reservation, true)
+                    })
                 })
-            })
-    }, []
+        }, []
     )
 
     return (
@@ -136,11 +147,11 @@ const UserPage = () => {
                                 </>
                                 : <label className="margin-top-1rem center text-secondary">{authUser.userId === userId ? "Nie posiadasz żadnych ogłoszeń" : "Użytkownik nie posiada żadnych ogłoszeń"}</label>}
                         </div>
-                        {authUser.userId === userId ?
+                        {authUser.userId === userId &&
                             <>
                                 <div className="user-reservations-container margin-top-1rem">
                                     <label className="center">Twoje rezerwacje:</label>
-                                    {userDetails.reservations.length > 0 ?
+                                    {userDetails.userReservations.length > 0 ?
                                         <>
                                             <Box className="margin-top-1rem" sx={{ width: '100%', justifyContent: "center" }}>
                                                 <TabContext value={firstBoxValue}>
@@ -181,9 +192,7 @@ const UserPage = () => {
                                 </div>
                                 <div className="user-announcements-reservations margin-top-1rem">
                                     <label className="center">Rezerwacje do twoich ogłoszeń:</label>
-
-                                    {/*zmienić gdy będę mieć rezerwacje od ogłoszeń użytkownika z backu*/}
-                                    {userDetails.reservations === 0 ?
+                                    {userDetails.announcementReservations > 0 ?
                                         <Box className='margin-top-1rem' sx={{ width: '100%', justifyContent: "center" }}>
                                             <TabContext value={secondBoxValue}>
                                                 <Box>
@@ -211,11 +220,11 @@ const UserPage = () => {
                                             </TabContext>
                                         </Box> : <label className="margin-top-1rem center text-secondary">{userDetails.announcements.length > 0 ? "Nikt niczego jeszcze od Ciebie nie zarezerwował." : "Nie posiadasz żadnych ogłoszeń."}</label>}
                                 </div>
-                            </> : ""}
-                        {/* <div className="back-home-button-container center">
+                            </>}
+                        <div className="back-home-button-container center">
                             <button className="btn homepage-button" onClick={() => navigate("/")}>Wróć do strony głównej
                             </button>
-                        </div> */}
+                        </div>
                     </div>
                 </> : <Spinner />
             }

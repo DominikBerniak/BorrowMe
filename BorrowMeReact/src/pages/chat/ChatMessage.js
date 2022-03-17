@@ -1,12 +1,12 @@
 import {useSelector} from "react-redux";
 import ChatMessageTime from "./ChatMessageTime";
 
-const ChatMessage = ({message, lastMessageTime, updateLastMessageTime}) => {
+const ChatMessage = ({message}) => {
     const userData = useSelector(state=>state.user.value);
 
     return (
         <div className="my-2">
-            <ChatMessageTime lastMessageTime={lastMessageTime} messageTime={message.sendTime} updateLastMessageTime={updateLastMessageTime} message={message}/>
+            <ChatMessageTime message={message}/>
             {message.sender.id === userData.userId ?
                 //sent message
                 <div className="d-flex justify-content-end">

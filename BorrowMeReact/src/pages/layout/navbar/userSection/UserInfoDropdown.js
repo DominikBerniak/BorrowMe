@@ -30,8 +30,8 @@ const UserInfoDropdown = ({hideDropDownMenu}) => {
             </div>
             <Link to="/" className="list-group-item">Mój profil</Link>
             <Link to="/" className="list-group-item">Moje ogłoszenia</Link>
-            <Link to="/" className="list-group-item">Dodaj ogłoszenie</Link>
-            <Link to="/" className="list-group-item">Wiadomości</Link>
+            <Link to="/announcement/new" className="list-group-item">Dodaj ogłoszenie</Link>
+            <Link to="/chat" className="list-group-item">Wiadomości</Link>
             <div className="p-3 bg-light border border-top-0 border-bottom-0"></div>
             <Link to="/" className="list-group-item text-center" onClick={handleLogout}>Wyloguj się</Link>
         </div>

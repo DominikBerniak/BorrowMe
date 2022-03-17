@@ -16,6 +16,7 @@ import authUserReducer from "./features/authUser";
 import userReducer from "./features/user";
 import allCategoriesReducer from "./features/allCategories";
 import activeChatWindowReducer from "./features/activeChatWindow";
+import activeChatFetchedMessagesReducer from "./features/activeChatFetchedMessages";
 
 
 const store = configureStore({
@@ -29,7 +30,8 @@ const store = configureStore({
         authUser: authUserReducer,
         user: userReducer,
         allCategories: allCategoriesReducer,
-        activeChatWindow: activeChatWindowReducer
+        activeChatWindow: activeChatWindowReducer,
+        activeChatFetchedMessages: activeChatFetchedMessagesReducer
     },
 })
 

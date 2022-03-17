@@ -3,8 +3,10 @@ import "./chat/chat.css"
 import ConversationList from "./chat/ConversationList";
 import ChatWindow from "./chat/ChatWindow";
 import MessageReceiverInfo from "./chat/MessageReceiverInfo";
+import {useSelector} from "react-redux";
 
 const Chat = () => {
+    const isChatActive = useSelector(state => state.activeChatWindow.value).isActive;
     return (
         <div id="chat-main-container" className="mx-auto">
             <Helmet>
@@ -12,7 +14,9 @@ const Chat = () => {
             </Helmet>
             <ConversationList/>
             <ChatWindow/>
-            <MessageReceiverInfo/>
+            {isChatActive &&
+                <MessageReceiverInfo/>
+            }
         </div>
     );
 };

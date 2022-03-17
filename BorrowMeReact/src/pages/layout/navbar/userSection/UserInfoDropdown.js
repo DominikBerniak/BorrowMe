@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { useDispatch, useSelector } from "react-redux";
-import { clearAuthUser } from "../../../../features/authUser";
+import authUser, { clearAuthUser } from "../../../../features/authUser";
 import { clearUser } from "../../../../features/user";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -13,13 +13,15 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 const UserInfoDropdown = ({ hideDropDownMenu }) => {
+    const navigate = useNavigate(); 
+    const authUser = useSelector(state => state.authUser.value);
     const style = {
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: 600,
-        height: 470,
+        height: 500,
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
@@ -144,7 +146,13 @@ const UserInfoDropdown = ({ hideDropDownMenu }) => {
         });
         if (response.ok) {
             if (!isEmailChanged) {
-                setWrongAuthenticationMessage("Dane zmienione pomyślnie.");
+                setWrongAuthenticationMessage("Dane zmienione pomyślnie. zaraz nastąpi przekierowanie do strony użytkownika.");
+                setTimeout(() => { 
+                    navigate(`/`); 
+                    navigate(`Users/${authUser.userId}`); 
+                    handleClose();
+                    hideDropDownMenu()
+                }, 3000);
             }
             else {
                 setWrongAuthenticationMessage("Dane zmienione pomyślnie. Zmieniono adres email, zaraz nastąpi wylogowanie.");
@@ -194,7 +202,7 @@ const UserInfoDropdown = ({ hideDropDownMenu }) => {
                 <p className="fw-bold">{user.firstName},</p>
                 fajnie, że jesteś!
             </div>
-            <Link to="/" className="list-group-item">Mój profil</Link>
+            <Link to={`Users/${authUser.userId}`} className="list-group-item">Mój profil</Link>
             <Link to="/" className="list-group-item">Moje ogłoszenia</Link>
             <Link to="/" className="list-group-item">Dodaj ogłoszenie</Link>
             <Link to="/" className="list-group-item">Wiadomości</Link>

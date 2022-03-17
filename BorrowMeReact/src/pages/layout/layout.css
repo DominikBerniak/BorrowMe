@@ -139,7 +139,7 @@
 .modal-content-container{
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 16rem 2rem 3rem;
+    grid-template-rows: 16rem 3rem 3rem;
 }
 
 .input-section{

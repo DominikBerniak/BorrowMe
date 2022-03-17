@@ -162,5 +162,50 @@ namespace BorrowMeAuth.Controllers
             _logger.LogInformation($"Password successfully changed for user {userEmail}");
             return BadRequest(result.Errors);
         }
+
+        [HttpPut("user")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> EditUser([FromBody] EditApiUserDto userDto)
+        {
+            var jwt = Request.Cookies["jwt"];
+            var token = _authenticationManager.Verify(jwt);
+            var userEmail = token.Claims.Where(c => c.Type == ClaimTypes.Email).First().Value;
+            BorrowMeAuthUser authUser = await _userManager.FindByEmailAsync(userEmail);
+            User newBuisnessUser = await _userService.GetUser(userEmail);
+
+            if (userDto.Email != null)
+            {
+                var changeEmailToken = await _userManager.GenerateChangeEmailTokenAsync(authUser, userDto.Email);
+                var result = await _userManager.ChangeEmailAsync(authUser, userDto.Email, changeEmailToken);
+                await _userManager.SetUserNameAsync(authUser, userDto.Email);
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(error.Code, error.Description);
+                    }
+
+                    return BadRequest(ModelState);
+                }
+                newBuisnessUser.Email = userDto.Email;
+            }
+            if (userDto.FirstName != null)
+            {
+                newBuisnessUser.FirstName = userDto.FirstName;
+            }
+            if (userDto.LastName != null)
+            {
+                newBuisnessUser.LastName = userDto.LastName;
+            }
+            if (userDto.PhoneNumber != null)
+            {
+                newBuisnessUser.PhoneNumber = userDto.PhoneNumber;
+            }
+
+            await _userService.UpdateUser(newBuisnessUser);
+
+            return Ok();
+        }
+
     }
 }

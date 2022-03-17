@@ -24,4 +24,13 @@ namespace BorrowMeAuth.DTO
         [Required]
         public string LastName { get; set; }
     }
+
+    public class EditApiUserDto
+    {
+        [DataType(DataType.EmailAddress)]
+        public string? Email { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? PhoneNumber { get; set; }
+    }
 }

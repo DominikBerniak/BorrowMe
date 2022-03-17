@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { useDispatch, useSelector } from "react-redux";
-import { clearAuthUser } from "../../../../features/authUser";
+import authUser, { clearAuthUser } from "../../../../features/authUser";
 import { clearUser } from "../../../../features/user";
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Tabs from '@mui/material/Tabs';
@@ -14,13 +13,15 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 const UserInfoDropdown = ({ hideDropDownMenu }) => {
+    const navigate = useNavigate(); 
+    const authUser = useSelector(state => state.authUser.value);
     const style = {
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: 600,
-        height: 400,
+        height: 500,
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
@@ -34,6 +35,7 @@ const UserInfoDropdown = ({ hideDropDownMenu }) => {
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(true);
     const [isPasswordHidden, setIsPasswordHidden] = useState(true);
     const [password, setPassword] = useState("");
+
 
     useEffect(() => {
         if (passwordInputTimeout) {
@@ -51,7 +53,6 @@ const UserInfoDropdown = ({ hideDropDownMenu }) => {
     }, [password])
     const ref = useDetectClickOutside({
         onTriggered: () => {
-            console.log("outsite")
             if (!open) {
                 hideDropDownMenu()
             }
@@ -118,6 +119,52 @@ const UserInfoDropdown = ({ hideDropDownMenu }) => {
         }
     }
 
+
+    const handleSubmitUserData = async (e) => {
+        e.preventDefault();
+        let data = {};
+        let isEmailChanged = false;
+        if (document.getElementById("email-input").value !== "") {
+            data["email"] = document.getElementById("email-input").value;
+            isEmailChanged = true;
+        }
+        if (document.getElementById("name-input").value !== "") {
+            data["firstName"] = document.getElementById("name-input").value;
+        }
+        if (document.getElementById("lastname-input").value !== "") {
+            data["lastName"] = document.getElementById("lastname-input").value;
+        }
+        if (document.getElementById("phone-num-input").value !== "") {
+            data["phoneNumber"] = document.getElementById("phone-num-input").value;
+        }
+        const response = await fetch("/authentication/user", {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        if (response.ok) {
+            if (!isEmailChanged) {
+                setWrongAuthenticationMessage("Dane zmienione pomyślnie. zaraz nastąpi przekierowanie do strony użytkownika.");
+                setTimeout(() => { 
+                    navigate(`/`); 
+                    navigate(`Users/${authUser.userId}`); 
+                    handleClose();
+                    hideDropDownMenu()
+                }, 3000);
+            }
+            else {
+                setWrongAuthenticationMessage("Dane zmienione pomyślnie. Zmieniono adres email, zaraz nastąpi wylogowanie.");
+                setTimeout(() => { handleLogout(); }, 3000);
+            }
+
+        } else {
+            console.log(response)
+            setWrongAuthenticationMessage("Coś poszło nie tak :(");
+        }
+    }
+
     const handlePasswordChange = (password) => {
         setPassword(password);
         if (wrongAuthenticationMessage !== "") {
@@ -149,13 +196,13 @@ const UserInfoDropdown = ({ hideDropDownMenu }) => {
     }
 
     return (
-        
+
         <div id="user-info-dropdown-container" className="list-group rounded-0" ref={!open ? ref : null}>
             <div className="list-group-item p-4 user-select-none">
                 <p className="fw-bold">{user.firstName},</p>
                 fajnie, że jesteś!
             </div>
-            <Link to="/" className="list-group-item">Mój profil</Link>
+            <Link to={`Users/${authUser.userId}`} className="list-group-item">Mój profil</Link>
             <Link to="/" className="list-group-item">Moje ogłoszenia</Link>
             <Link to="/" className="list-group-item">Dodaj ogłoszenie</Link>
             <Link to="/" className="list-group-item">Wiadomości</Link>
@@ -178,50 +225,104 @@ const UserInfoDropdown = ({ hideDropDownMenu }) => {
                             </Tabs>
                         </Box>
                         <TabPanel value={value} index={0}>
-                            Work in progress
-                        </TabPanel>
-                        <TabPanel value={value} index={1}>
-                            <><form id="authentication-form" className="d-flex flex-column w-70 my-auto" spellCheck="false"
-                                onSubmit={handleSubmit}>
-                                <label className="w-100 mb-1">Hasło:
-                                    <div className="d-flex align-items-center">
-                                        <input id="password-input" type={isPasswordHidden ? "password" : "text"}
-                                            className={"d-block w-100 rounded px-3 py-1 " + (!isPasswordCorrect ? "incorrect-password" : "")}
-                                            autoComplete="off" value={password}
-                                             onChange={(e) => handlePasswordChange(e.target.value)}
-                                             autoFocus
-                                        />
-                                        <div
-                                            className={"password-eye-button d-flex align-items-center px-1 " + (!isPasswordCorrect ? "incorrect-password" : "")}
-                                            onClick={togglePassword}>
-                                            {isPasswordHidden ?
-                                                <VisibilityOutlinedIcon sx={{ color: "#8c8c8c" }} />
-                                                :
-                                                <VisibilityOffOutlinedIcon sx={{ color: "#8c8c8c" }} />
+                            <div className="modal-content-container">
+
+                                    <div className="input-section">
+
+                                    <form id="update-user-data-form" className="d-flex align-content-center flex-wrap" onSubmit={handleSubmitUserData}>
+
+                                        <label className="w-100 mb-1">Email:
+                                            <input id="email-input" type="email" className={"d-block w-50 rounded px-3 py-1"}></input>
+                                        </label>
+                                        <label className="w-100 mb-1">Imię:
+                                            <input id="name-input" className={"d-block w-50 rounded px-3 py-1"}></input>
+                                        </label>
+                                        <label className="w-100 mb-1">Nazwisko:
+                                            <input id="lastname-input" className={"d-block w-50 rounded px-3 py-1"}></input>
+                                        </label>
+                                        <label className="w-100 mb-1">Nr telefonu:
+                                            <input id="phone-num-input" className={"d-block w-50 rounded px-3 py-1"}></input>
+                                        </label>
+                                        </form>
+
+
+                                    </div>
+                                    <div className="message-section">
+                                        <div id="wrong-authentication-message" className="text-center user-select-none">
+                                            {wrongAuthenticationMessage !== "" &&
+                                                <div>{wrongAuthenticationMessage}</div>
                                             }
                                         </div>
                                     </div>
-                                </label>
-                                <div id="password-check-message" className="text-center user-select-none">
-                                    {!isPasswordCorrect &&
-                                        <>
-                                            {password.length < 8 ?
-                                                <div>Hasło musi zawierać przynajmniej 8 znaków.</div>
-                                                :
-                                                <div>Hasło musi zawierać przynajmniej jedną wielką i jedną małą literę,
-                                                    cyfrę oraz znak specjalny.</div>
+                                <div className="button-section">
+                                    <button id="authenticate-button" form="update-user-data-form" type="submit"
+                                        className="w-100 btn shadow-none rounded py-2">Zakualizuj dane</button>
+                                </div>
+                            </div>
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            <div className="modal-content-container">
+
+
+                                <div className="input-section">
+                                    <form id="reset-password-form" className="d-flex flex-column w-70 my-auto" spellCheck="false"
+                                        onSubmit={handleSubmit}>
+                                        <label className="w-100 mb-1">Hasło:
+                                            <div className="d-flex align-items-center">
+                                                <input id="password-input" type={isPasswordHidden ? "password" : "text"}
+                                                    className={"d-block w-100 rounded px-3 py-1 " + (!isPasswordCorrect ? "incorrect-password" : "")}
+                                                    autoComplete="off" value={password}
+                                                    onChange={(e) => handlePasswordChange(e.target.value)}
+                                                    autoFocus
+                                                />
+                                                <div
+                                                    className={"password-eye-button d-flex align-items-center px-1 " + (!isPasswordCorrect ? "incorrect-password" : "")}
+                                                    onClick={togglePassword}>
+                                                    {isPasswordHidden ?
+                                                        <VisibilityOutlinedIcon sx={{ color: "#8c8c8c" }} />
+                                                        :
+                                                        <VisibilityOffOutlinedIcon sx={{ color: "#8c8c8c" }} />
+                                                    }
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <div id="password-check-message" className="text-center user-select-none">
+                                            {!isPasswordCorrect &&
+                                                <>
+                                                    {password.length < 8 ?
+                                                        <div>Hasło musi zawierać przynajmniej 8 znaków.</div>
+                                                        :
+                                                        <div>Hasło musi zawierać przynajmniej jedną wielką i jedną małą literę,
+                                                            cyfrę oraz znak specjalny.</div>
+                                                    }
+                                                </>
                                             }
-                                        </>
-                                    }
+                                        </div>
+                                    </form>
+
                                 </div>
-                                <div id="wrong-authentication-message" className="text-center user-select-none">
-                                    {wrongAuthenticationMessage !== "" &&
-                                        <div>{wrongAuthenticationMessage}</div>
-                                    }
+                                <div className="message-section">
+                                    <div id="wrong-authentication-message" className="text-center user-select-none">
+                                        {wrongAuthenticationMessage !== "" &&
+                                            <div>{wrongAuthenticationMessage}</div>
+                                        }
+                                    </div>
+
+
                                 </div>
-                            </form></>
-                            <button id="authenticate-button" form="authentication-form" type="submit" disabled={isPasswordCorrect && password !== ""? false : true}
-                                className="w-100 btn shadow-none rounded py-2">zmień hasło</button>
+                                <div className="button-section">
+                                    <button id="authenticate-button" form="reset-password-form" type="submit" disabled={isPasswordCorrect && password !== "" ? false : true}
+                                        className="w-100 btn shadow-none rounded py-2">zmień hasło</button>
+
+                                </div>
+
+                            </div>
+
+
+
+
+
+
                         </TabPanel>
                     </Box>
                 </Box>

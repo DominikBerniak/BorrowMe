@@ -11,6 +11,16 @@ builder.Services.AddDbContext<BorrowMeAuthContext>(options =>
 
 IConfiguration configuration = builder.Configuration;
 
+builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
+                builder =>
+                {
+                    builder
+                    .WithOrigins("http://localhost:3000")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+                }));
+
 //Configure Identity
 ConfigureStartup.ConfigureIdentity(builder.Services);
 
@@ -42,6 +52,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

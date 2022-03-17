@@ -9,5 +9,6 @@ namespace Core.Services.Interfaces
         Task<User> AddUser(CreateUserDto userData);
         Task<User> UpdateUser(User userData);
         Task<User> GetUser(string email);
+        Task<GetConversationsDto> GetUserConversations(Guid id);
     }
 }

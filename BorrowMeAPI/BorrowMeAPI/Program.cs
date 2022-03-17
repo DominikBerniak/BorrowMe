@@ -1,13 +1,23 @@
 global using Microsoft.EntityFrameworkCore;
+using Api;
+using Api.Hubs.Api.Messaging;
 using Microsoft.Extensions.FileProviders;
 using Persistance;
 using System.Reflection;
-using Api;
-
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
+
+builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
+                builder =>
+                {
+                    builder
+                    .WithOrigins("http://localhost:3000")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+                }));
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<DataDbContext>(options =>
@@ -29,6 +39,9 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 //Add Authentication
 ConfigureStartup.AddAuthentication(builder);
 
+//Add signalR
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -37,6 +50,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 
@@ -49,7 +64,8 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chat");
 
 app.Run();

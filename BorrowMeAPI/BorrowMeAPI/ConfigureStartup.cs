@@ -4,6 +4,7 @@ using Core.Services;
 using Core.Services.Interfaces;
 using Domain.Entieties;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistance;
@@ -44,25 +45,29 @@ namespace Api
         }
         public static void InjectServices(IServiceCollection services)
         {
-            services.AddTransient<DataDbContext, DataDbContext>();
+            services.AddScoped<DataDbContext, DataDbContext>();
             services.AddScoped<IAnnouncementService, AnnouncementService>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IRepository<Reservation>, Repository<Reservation>>();
             services.AddScoped<IReservationService, ReservationService>();
-            services.AddTransient<IRepository<Announcement>, Repository<Announcement>>();
+            services.AddScoped<IRepository<Announcement>, Repository<Announcement>>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddTransient<IRepository<MainCategory>, Repository<MainCategory>>();
-            services.AddTransient<IRepository<SubCategory>, Repository<SubCategory>>();
+            services.AddScoped<IRepository<MainCategory>, Repository<MainCategory>>();
+            services.AddScoped<IRepository<SubCategory>, Repository<SubCategory>>();
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddTransient<IRepository<City>, Repository<City>>();
-            services.AddTransient<IRepository<Voivodeship>, Repository<Voivodeship>>();
-            services.AddTransient<IVoivodeshipRepository, VoivodeshipRepository>();
-            services.AddTransient<IVoivodeshipService, VoivodeshipService>();
-            services.AddTransient<IAnnouncementRepository, AnnouncementRepository>();
-            services.AddTransient<ICategoryRepository, CategoryRepository>();
-            services.AddTransient<IRepository<User>, Repository<User>>();
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddScoped<IRepository<City>, Repository<City>>();
+            services.AddScoped<IRepository<Voivodeship>, Repository<Voivodeship>>();
+            services.AddScoped<IVoivodeshipRepository, VoivodeshipRepository>();
+            services.AddScoped<IVoivodeshipService, VoivodeshipService>();
+            services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IRepository<User>, Repository<User>>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IMessageService, MessageService>();
+            services.AddSingleton<IUserIdProvider, UserEmailProvider>();
+            services.AddScoped<IUserService, UserService>();
         }
         public static void AddAuthentication(WebApplicationBuilder builder)
         {
@@ -78,7 +83,18 @@ namespace Api
                 {
                     OnMessageReceived = context =>
                     {
-                        context.Token = context.Request.Cookies["jwt"];
+
+                        var accessToken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) &&
+                            ( path.StartsWithSegments("/chat") ))
+                        {
+                            context.Token = accessToken;
+                        }
+                        else
+                        {
+                            context.Token = context.Request.Cookies["jwt"];
+                        }
                         return Task.CompletedTask;
                     }
                 };

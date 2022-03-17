@@ -97,10 +97,12 @@ namespace AuthenticationApi
         public static void InjectServices(IServiceCollection services)
         {
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
-            services.AddTransient<DataDbContext, DataDbContext>();
-            services.AddTransient<IRepository<User>, Repository<User>>();
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddScoped<DataDbContext, DataDbContext>();
+            services.AddScoped<IRepository<User>, Repository<User>>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
+            services.AddScoped<IReservationRepository, ReservationRepository>();
         }
     }
 

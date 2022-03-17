@@ -14,20 +14,41 @@ public class ReservationRepository : Repository<Reservation>, IReservationReposi
 
     public async Task<List<Reservation>> GetReservationsByUserId(Guid id)
     {
-        var reservations = _dbContext.Reservations
+        return await _dbContext.Reservations
+            .Where(r => r.User.Id == id)
             .Include(r => r.User)
             .Include(r => r.Announcement)
-            .AsQueryable();
-        return await reservations.Where(r => r.User.Id == id).ToListAsync();
+            .ToListAsync();
+    }
+
+    public async Task<List<Reservation>> GetReservationsByUserIdIncludeAnnouncementLocation(Guid id)
+    {
+        return await _dbContext.Reservations
+            .Where(r => r.User.Id == id)
+            .Include(r => r.Announcement)
+                .ThenInclude(a=>a.Owner.PictureLocation)
+            .Include(r => r.Announcement)
+                .ThenInclude(a => a.City)
+            .Include(r => r.Announcement)
+                .ThenInclude(a => a.Voivodeship)
+            .ToListAsync();
     }
 
     public async Task<List<Reservation>> GetReservationsByAnnouncementId(Guid id)
     {
-        var reservations = _dbContext.Reservations
+        return await _dbContext.Reservations
+            .Where(r => r.Announcement.Id == id)
             .Include(r => r.User)
             .Include(r => r.Announcement)
-            .AsQueryable();
-        return await reservations.Where(r => r.Announcement.Id == id).ToListAsync();
+            .ToListAsync();
+    }
+
+    public async Task<List<Reservation>> GetReservationsByAnnouncementIdIncludeUser(Guid announcementId)
+    {
+        return await _dbContext.Reservations
+            .Where(r => r.Announcement.Id == announcementId)
+            .Include(r => r.User.PictureLocation)
+            .ToListAsync();
     }
 
     public async Task<Reservation> AddNewReservation(CreateReservationDto reservationDto)

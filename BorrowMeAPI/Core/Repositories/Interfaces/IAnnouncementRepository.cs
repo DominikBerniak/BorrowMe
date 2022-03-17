@@ -9,5 +9,6 @@ namespace Core.Repositories
         Task<List<Announcement>> GetAllAnnouncements();
         Task<Announcement> AddNewAnnouncement(CreateAnnouncementDto announcementData, Announcement newAnnouncement);
         Task<Announcement> GetAnnouncementById(Guid announcementId);
+        Task<List<Announcement>> GetUserAnnouncemntsWithLocation(Guid userId);
     }
 }

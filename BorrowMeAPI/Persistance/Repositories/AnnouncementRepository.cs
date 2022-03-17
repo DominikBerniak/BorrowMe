@@ -120,5 +120,14 @@ namespace Persistance.Repositories
             await _dbContext.SaveChangesAsync();
             return newAnnouncement;
         }
+
+        public async Task<List<Announcement>> GetUserAnnouncemntsWithLocation(Guid userId)
+        {
+            return await _dbContext.Announcements
+                .Where(a=>a.Owner.Id == userId)
+                .Include(a=>a.City)
+                .Include(a=>a.Voivodeship)
+                .ToListAsync();
+        }
     }
 }

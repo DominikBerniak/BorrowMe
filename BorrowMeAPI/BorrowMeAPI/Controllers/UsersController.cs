@@ -34,5 +34,16 @@ namespace Api.Controllers
             var userData = _mapper.Map<GetUserDto>(user);
             return Ok(userData);
         }
+
+        [HttpGet("{id}/conversations")]
+        public async Task<ActionResult<GetConversationsDto>> GetUserConversations(Guid id)
+        {
+            var conversations = await _userService.GetUserConversations(id);
+            if (conversations is null)
+            {
+                return NotFound();
+            }
+            return Ok(conversations);
+        }
     }
 }

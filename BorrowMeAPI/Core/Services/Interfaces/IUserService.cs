@@ -7,5 +7,6 @@ namespace Core.Services.Interfaces
     {
         Task<User> GetUser(Guid userId);
         Task<User> AddUser(CreateUserDto userData);
+        Task<GetConversationsDto> GetUserConversations(Guid id);
     }
 }

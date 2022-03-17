@@ -67,7 +67,6 @@ const AnnouncementPage = () => {
         if (date !== null && date[0] !== undefined && date[1] !== undefined && date[0] < date[1]) {
             for(let i = 0; i < reservations.length; i++)
             {
-                console.log(reservations[i][0])
                 if (isWithinRanges(reservations[i][0], [date]) || isWithinRanges(reservations[i][1], [date]))
                 {
                     isAvailableDate = false;

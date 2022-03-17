@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Core.Model.DataTransferObjects;
+using Core.Services;
 using Core.Services.Interfaces;
+using Domain.Entieties;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,14 +15,16 @@ namespace Api.Controllers
         private readonly ILogger _logger;
         private readonly IUserService _userService;
         private readonly IAnnouncementService _announcementService;
+        private readonly IReservationService _reservationService;
         private readonly IMapper _mapper;
 
-        public UsersController(ILogger<AnnouncementsController> logger, IUserService userService, IMapper mapper, IAnnouncementService announcementService)
+        public UsersController(ILogger<AnnouncementsController> logger, IUserService userService, IMapper mapper, IAnnouncementService announcementService, IReservationService reservationService)
         {
             _logger = logger;
             _userService = userService;
             _mapper = mapper;
             _announcementService = announcementService;
+            _reservationService = reservationService;
         }
 
         [HttpGet("{id}")]
@@ -47,10 +51,12 @@ namespace Api.Controllers
                 return NotFound();
             }
             var announcements = await _announcementService.GetAnnouncementsByUserId(id);
+            var reservations = await _reservationService.GetByUserId(id);
             var userDetails = new UserDetailsDto()
             {
                 User = user,
-                Announcements = announcements
+                Announcements = announcements,
+                Reservations = reservations
             };
             return Ok(userDetails);
         }

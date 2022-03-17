@@ -283,7 +283,7 @@ const AddAnnouncement = () => {
                         <div className="">Zdjęcia:</div>
                         <div id="add-announcement-image-add-button"
                              className={"mt-auto d-flex p-2 w-70 flex-column rounded align-items-center " +
-                                 (isImagesArrayFull ? "add-announcement-image-add-button-disabled" : "cursor-pointer")}>
+                                 (isImagesArrayFull ? "add-announcementPage-image-add-button-disabled" : "cursor-pointer")}>
                             Dodaj zdjęcie
                             <AddBoxOutlinedIcon
                                 sx={{fontSize: 50, color: (isImagesArrayFull ? "#eeeeee" : "#646464")}}/>

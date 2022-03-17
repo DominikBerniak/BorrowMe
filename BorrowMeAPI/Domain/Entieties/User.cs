@@ -22,5 +22,10 @@ namespace Domain.Entieties
 
         [Required]
         public int ReputationPoints { get; set; } = 0;
+
+        public override string ToString()
+        {
+            return $"Id = {Id}\nFirstName = {FirstName}\nLastName = {LastName}\nEmail = {Email}\nPhoneNumber = {PhoneNumber}\nReputationPoints = {ReputationPoints}";
+        }
     }
 }

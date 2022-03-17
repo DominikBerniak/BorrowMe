@@ -135,3 +135,21 @@
 .cursor-pointer{
     cursor: pointer;
 }
+
+.modal-content-container{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 16rem 3rem 3rem;
+}
+
+.input-section{
+    grid-row-start: 1;
+}
+
+.message-section{
+    grid-row-start: 2;
+}
+
+.button-section{
+    grid-row-start: 3;
+}

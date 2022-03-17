@@ -10,5 +10,6 @@ namespace Core.Repositories
         Task<Announcement> AddNewAnnouncement(CreateAnnouncementDto announcementData, Announcement newAnnouncement);
         Task<Announcement> GetAnnouncementById(Guid announcementId);
         Task<List<Announcement>> GetUserAnnouncemntsWithLocation(Guid userId);
+        Task<List<Announcement>> GetAnnouncementsByUserId(Guid userId);
     }
 }

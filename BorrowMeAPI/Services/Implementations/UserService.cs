@@ -27,6 +27,12 @@ namespace Services.Implementations
             return user;
         }
 
+        public async Task<User> GetUser(string email)
+        {
+            var user = await _repository.GetByProperty(u =>  u.Email == email);
+            return user;
+        }
+
         public async Task<User> AddUser(CreateUserDto userData)
         {
             var user = new User
@@ -117,6 +123,11 @@ namespace Services.Implementations
                 };
                 conversations.Reservations.Add(conversationReservationDto);
             }
+        }
+
+        public async Task<User> UpdateUser(User userData)
+        {
+            return await _repository.Edit(userData);
         }
     }
 }

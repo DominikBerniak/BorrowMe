@@ -51,6 +51,14 @@ namespace Api.Controllers
             return Ok(reservationData);
         }
 
+        [HttpPatch("{id:guid}/accept")]
+        public async Task<ActionResult<Reservation>> AcceptReservation(Guid id, [FromBody] bool isAccepted)
+        {
+            _logger.LogInformation($"Patch reservation attempt. Id = '{id}'");
+            var updatedReservation = await _reservationService.UpdateIsAcceptedReservation(id, isAccepted);
+            return Ok(updatedReservation);
+        }
+
         // /api/Reservations/{id} DELETE
         [HttpDelete("{id:Guid}")]
         public async Task<ActionResult<Reservation>> DeleteReservation(Guid id)

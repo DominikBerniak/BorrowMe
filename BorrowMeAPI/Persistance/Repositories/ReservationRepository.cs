@@ -59,4 +59,16 @@ public class ReservationRepository : Repository<Reservation>, IReservationReposi
             .ThenInclude(a=>a.Owner)
             .FirstOrDefaultAsync();
     }
+
+    public async Task<Reservation> UpdateIsAcceptedReservation(Guid id, bool isAccepted)
+    {
+        var reservation = await _dbContext.Reservations.SingleOrDefaultAsync(r => r.Id == id);
+        if (reservation != null)
+        {
+            reservation.IsAccepted = isAccepted;
+            _dbContext.SaveChanges();
+        }
+
+        return reservation;
+    }
 }

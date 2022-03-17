@@ -51,9 +51,7 @@ namespace Api.Controllers
                 return NotFound();
             }
             var announcements = await _announcementService.GetAnnouncementsByUserId(id);
-            
             var announcementReservations = new List<List<Reservation>>();
-            
             var userReservations = await _reservationService.GetByUserId(id);
             for (var i = 0; i < announcements.Count; i++)
             {

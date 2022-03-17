@@ -35,7 +35,16 @@
     display: flex;
     align-items: center;
 }
-.delete-button, .accept-button, .rate-button{
+.delete-reservation-button {
+    width: 166px;
+    justify-content: end;
+}
+.delete-button {
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+}
+.accept-button, .rate-button{
     transition: 0.5s;
 }
 .contact-button {
@@ -51,11 +60,18 @@
     transform: scale(120%);
 }
 #reservation-details-label {
-    display: flex;
-    align-items: center;
+    font-size: small;
 }
 .title-button {
+    transition: 0.5s;
     font-weight: bold;
+    font-size: smaller;
+    margin-top: 0.8rem;
+}
+.title-button:hover {
+    cursor: pointer;
+    transform: scale(105%);
+    color: midnightblue;
 }
 .accept-button:hover, .rate-button:hover {
     transform: scale(110%);

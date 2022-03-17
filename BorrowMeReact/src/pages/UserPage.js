@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAuthUser } from "../services/getAuthUser";
@@ -11,16 +11,18 @@ import Avatar from '@mui/material/Avatar';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import ReservationTile from "./userPage/ReservationTile";
-import {Box, Link, Tab, Tabs} from "@mui/material";
+import {Box, Link, Tab} from "@mui/material";
 import TabPanel from '@mui/lab/TabPanel';
 import {TabContext, TabList} from "@mui/lab";
 import "./userPage/userPage.css"
 
-
 const UserPage = () => {
     const authUser = useSelector(state => state.authUser.value);
     const dispatch = useDispatch();
-    const {userId} = useParams()
+    const navigate = useNavigate();
+    const {userId} = useParams();
+    const [firstBoxValue, setFirstBoxValue] = useState("1");
+    const [secondBoxValue, setSecondBoxValue] = useState("1");
     const [userDetails, setDetails] = useState();
     const [isSameUser, setIsSameUser] = useState(true);
     const [unacceptedReservations, setUnacceptedReservations] = useState([]);
@@ -28,6 +30,13 @@ const UserPage = () => {
     const [expiredReservations, setExpiredReservations] = useState([]);
     const [unacceptedAnnouncementReservations, setUnacceptedAnnouncementReservations] = useState([]);
     const [acceptedAnnouncementReservations, setAcceptedAnnouncementReservations] = useState([]);
+    const handleFirstContainerChange = (event, newValue) => {
+        setFirstBoxValue(newValue);
+    }
+    const handleSecondContainerChange = (event, newValue) => {
+        setSecondBoxValue(newValue)
+    }
+
     let setCorrectReservations = (reservation) => {
         if (!reservation.isAccepted && new Date(reservation.reservationEndDay) > new Date())
         {
@@ -43,10 +52,6 @@ const UserPage = () => {
         {
             setExpiredReservations(expiredReservations => expiredReservations.concat(reservation))
         }}
-    const [value, setValue] = useState("1")
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    }
 
     useEffect(() => {
         getAuthUser()
@@ -98,7 +103,6 @@ const UserPage = () => {
         }, []
     )
 
-
     return (
     <>
         {userDetails ?
@@ -133,24 +137,24 @@ const UserPage = () => {
                                     )
                                 })}
                             </>
-                            : <label>{isSameUser ? "Nie posiadasz żadnych ogłoszeń" : "Użytkownik nie posiada żadnych ogłoszeń"}</label>}
+                            : <label className="margin-top-1rem center text-secondary">{isSameUser ? "Nie posiadasz żadnych ogłoszeń" : "Użytkownik nie posiada żadnych ogłoszeń"}</label>}
                     </div>
                     {isSameUser ?
                         <>
                         <div className="user-reservations-container margin-top-1rem">
                             <label className="center">Twoje rezerwacje:</label>
-                            {userDetails.reservations.length > 0 &&
+                            {userDetails.reservations.length > 0 ?
                                 <>
-                                <Box className='margin-top-1rem' sx={{ width: '100%', justifyContent: "center" }}>
-                                <TabContext value={value}>
+                                <Box className="margin-top-1rem" sx={{ width: '100%', justifyContent: "center" }}>
+                                <TabContext value={firstBoxValue}>
                                     <Box>
-                                        <TabList onChange={handleChange} TabIndicatorProps={{style: {display: "none"}}} textColor="primary" centered>
+                                        <TabList onChange={handleFirstContainerChange} TabIndicatorProps={{style: {display: "none"}}} textColor="primary" centered>
                                             <Tab label="Niezaakceptowane" value="1" disabled={unacceptedReservations.length===0}/>
                                             <Tab label="Zaakceptowane" value="2" disabled={acceptedReservations.length === 0}/>
                                             <Tab label="Wygaśnięte" value="3" disabled={expiredReservations.length===0}/>
                                         </TabList>
                                     </Box>
-                                    <TabPanel value="1" aria-label={unacceptedReservations.length === 0 && "disabled"}>
+                                    <TabPanel value="1">
                                         <div className="unaccepted-reservations-container">
                                             {unacceptedReservations.map(reservation => {
                                                 return <ReservationTile key={reservation.id} reservation={reservation}
@@ -166,7 +170,7 @@ const UserPage = () => {
                                             })}
                                         </div>
                                     </TabPanel>
-                                    <TabPanel value="3" aria-label={expiredReservations.length === 0 && "disabled"}>
+                                    <TabPanel value="3">
                                         <div className="expired-reservation-tiles-container">
                                             {expiredReservations.map(reservation => {
                                                 return <ReservationTile key={reservation.id} reservation={reservation}
@@ -176,34 +180,44 @@ const UserPage = () => {
                                     </TabPanel>
                                 </TabContext>
                                 </Box>
-                                </>}
+                                </> : <label className="margin-top-1rem center text-secondary">Nie masz żadnych rezerwacji</label>}
                         </div>
                         <div className="user-announcements-reservations margin-top-1rem">
                             <label className="center">Rezerwacje do twoich ogłoszeń:</label>
+
+                            {/*zmienić gdy będę mieć rezerwacje od ogłoszeń użytkownika z backu*/}
+
                             {userDetails.reservations === 0 ?
-                            <div className="margin-top-1rem">
-                                <div className="unaccepted-user-announcement-reservations-container">
-                                    {unacceptedAnnouncementReservations.length > 0 ?
-                                        <>
-                                            <label>Niezaakceptowane rezerwacje:</label>
-                                        </> : ""}
-                                </div>
-                                <div className="accepted-user-announcement-reservations-container">
-                                    {acceptedAnnouncementReservations.length > 0 ?
-                                        <>
-                                            <label>Zaakceptowane rezerwacje:</label>
-                                            {acceptedAnnouncementReservations.map(reservation => {
-                                                console.log(reservation)
-                                            })}
-                                        </> : ""}
-                                </div>
-                            </div> : <label className="center margin-top-1rem" id="no-announcement-reservations-label">
-                                    Nikt jeszcze niczego od Ciebie nie zarezerwował :(</label>}
+                                <Box className='margin-top-1rem' sx={{ width: '100%', justifyContent: "center" }}>
+                                    <TabContext value={secondBoxValue}>
+                                        <Box>
+                                            <TabList onChange={handleSecondContainerChange} TabIndicatorProps={{style: {display: "none"}}} textColor="primary" centered>
+                                                <Tab label="Niezaakceptowane" value="1" disabled={unacceptedReservations.length===0}/>
+                                                <Tab label="Zaakceptowane" value="2" disabled={acceptedReservations.length === 0}/>
+                                            </TabList>
+                                        </Box>
+                                        <TabPanel value="1">
+                                            <div className="unaccepted-user-announcement-reservations-container">
+                                                {unacceptedAnnouncementReservations.map(reservation => {
+                                                    return <ReservationTile key={reservation.id} reservation={reservation}
+                                                                            classNames="unaccepted-reservation-tile-container" isAccepted={false}/>
+                                                })}
+                                            </div>
+                                        </TabPanel>
+                                        <TabPanel value="2">
+                                            <div className="accepted-user-announcement-reservations-container">
+                                                {acceptedAnnouncementReservations.map(reservation => {
+                                                    return <ReservationTile key={reservation.id} reservation={reservation}
+                                                                            classNames="accepted-reservation-tile-container"/>
+                                                })}
+                                            </div>
+                                        </TabPanel>
+                                    </TabContext>
+                                </Box> : <label className="margin-top-1rem center text-secondary">{userDetails.announcements.length > 0 ? "Nikt niczego jeszcze od Ciebie nie zarezerwował." : "Nie posiadasz żadnych ogłoszeń."}</label>}
                         </div>
                         </> : ""}
                     <div className="back-home-button-container center">
-                        <button className="btn shadow-none homepage-button">
-                            <Link className="home-page-link" to="/">Wróć do strony głownej</Link>
+                        <button className="btn homepage-button" onClick={() => navigate("/")}>Wróć do strony głównej
                         </button>
                     </div>
                 </div>

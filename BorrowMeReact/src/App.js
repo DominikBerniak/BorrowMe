@@ -4,14 +4,14 @@ import Layout from "./pages/Layout";
 import PageNotFound from "./pages/PageNotFound";
 import Home from "./pages/Home";
 import SearchResults from "./pages/SearchResults";
-import AnnouncementPage from "./pages/announcement/AnnouncementPage";
+import AnnouncementPage from "./pages/AnnouncementPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import SearchResultsRedirect from "./pages/searchResults/SearchResultsRedirect";
 import UserPage from "./pages/UserPage";
 import Authentication from "./pages/Authentication";
 import AddAnnouncement from "./pages/AddAnnouncement";
-import ReservationConfirmation from "./pages/reservationConfirmation/ReservationConfirmation";
+import ReservationConfirmation from "./pages/ReservationConfirmation";
 import RequireAuth from "./components/RequireAuth";
 
 function App() {

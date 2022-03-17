@@ -1,0 +1,86 @@
+.user-details-container{
+    margin-top: 2rem;
+    display: grid;
+    column-gap: 15px;
+    padding-left: 2%;
+    padding-right: 2%;
+    grid-template-rows: minmax(0, auto) minmax(0, auto) 100px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+            "announcements announcements"
+            "reservations announcements-reservations"
+            "home home";
+}
+.user-announcements-container {
+    grid-area: announcements;
+}
+.user-reservations-container {
+    grid-area: reservations;
+}
+.user-announcements-reservations {
+    grid-area: announcements-reservations;
+}
+.back-home-button-container {
+    grid-area: home;
+    margin: 1rem 0;
+}
+.homepage-button {
+    background-color: #363636;
+    color: white;
+}
+.homepage-button:hover {
+    background-color: #555555;
+    color: white;
+}
+.user-page-container{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: [row1-start] 20rem [row1-end] 0 [third-line] max-content [last-line];
+}
+.user-info{
+    display: grid;
+    grid-template-columns: 2rem 18rem 71rem max-content;
+    grid-template-rows: 2rem 6rem;
+    background-image: url("../../images/userBackground.png");
+    background-repeat: no-repeat;
+    background-position: 0 -2rem;
+}
+.avatar{
+    grid-column-start: 2;
+    grid-row-start: 2;
+}
+.user-name{
+    grid-column-start: 3;
+    grid-row-start: 3;
+    font-size: xx-large;
+}
+.contact{
+    grid-column-start: 4;
+    grid-row-start: 2;
+    font-size: xx-large;
+}
+.additonal-info{
+    grid-column-start: 4;
+    grid-row-start: 3;
+    font-size: xx-large;
+}
+.unaccepted-reservations-container, .accepted-reservation-container, .expired-reservation-container,
+.unaccepted-user-announcement-reservations-container, .accepted-user-announcement-reservations-container{
+    max-height: 31rem;
+    overflow-y: auto;
+}
+/*.unaccepted-reservation-container::-webkit-scrollbar-track, .accepted-reservation-container::-webkit-scrollbar-track,*/
+/*.expired-reservation-container::-webkit-scrollbar-track, .unaccepted-user-announcement-reservations-container::-webkit-scrollbar-track,*/
+/*.accepted-user-announcement-reservations-container::-webkit-scrollbar-track{*/
+/*    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;*/
+/*    border-radius: 10px;*/
+/*    background-color: #dddddd !important;*/
+/*}*/
+/*.unaccepted-reservation-container::-webkit-scrollbar-thumb,  .accepted-reservation-container::-webkit-scrollbar-thumb,*/
+/*.expired-reservation-container::-webkit-scrollbar-thumb, .unaccepted-user-announcement-reservations-container::-webkit-scrollbar-thumb,*/
+/*.accepted-user-announcement-reservations-container::-webkit-scrollbar-thumb{*/
+/*    background-color: white !important;*/
+/*}*/
+.margin-top-1rem {
+    margin-top: 1rem;
+}

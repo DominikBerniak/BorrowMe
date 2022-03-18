@@ -13,7 +13,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 const UserInfoDropdown = ({ hideDropDownMenu }) => {
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const authUser = useSelector(state => state.authUser.value);
     const style = {
         position: 'absolute',
@@ -147,18 +147,18 @@ const UserInfoDropdown = ({ hideDropDownMenu }) => {
         if (response.ok) {
             if (!isEmailChanged) {
                 setWrongAuthenticationMessage("Dane zmienione pomyślnie. zaraz nastąpi przekierowanie do strony użytkownika.");
-                setTimeout(() => { 
-                    navigate(`/`); 
-                    navigate(`Users/${authUser.userId}`); 
+                setTimeout(() => {
+                    navigate(`/`);
+                    navigate(`Users/${authUser.userId}`);
                     handleClose();
                     hideDropDownMenu()
                 }, 3000);
             }
             else {
                 setWrongAuthenticationMessage("Dane zmienione pomyślnie. Zmieniono adres email, zaraz nastąpi wylogowanie.");
-                setTimeout(() => { 
+                setTimeout(() => {
                     handleLogout();
-                    setTimeout(() => { 
+                    setTimeout(() => {
                         navigate("/login");
                     }, 500);
                 }, 3000);
@@ -208,7 +208,6 @@ const UserInfoDropdown = ({ hideDropDownMenu }) => {
                 fajnie, że jesteś!
             </div>
             <Link to={`Users/${authUser.userId}`} className="list-group-item">Mój profil</Link>
-            <Link to="/" className="list-group-item">Moje ogłoszenia</Link>
             <Link to="/announcement/new" className="list-group-item">Dodaj ogłoszenie</Link>
             <Link to="/chat" className="list-group-item">Wiadomości</Link>
             <p className="list-group-item mb-0 cursor-pointer" onClick={handleOpen}>Ustawienia</p>

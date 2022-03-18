@@ -16,5 +16,7 @@ namespace Core.Services
         // DELETE
         Task<Reservation> DeleteReservation(Guid id);
         
+        // PATCH
+        Task<Reservation> UpdateIsAcceptedReservation(Guid id, bool isAccepted);
     }
 }

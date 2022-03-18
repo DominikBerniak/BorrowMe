@@ -39,5 +39,10 @@ namespace Services.Implementations
         {
             return await _reservationRepository.Delete(await _reservationRepository.GetById(id));
         }
+
+        public async Task<Reservation> UpdateIsAcceptedReservation(Guid id, bool isAccepted)
+        {
+            return await _reservationRepository.UpdateIsAcceptedReservation(id, isAccepted);
+        }
     }
 }

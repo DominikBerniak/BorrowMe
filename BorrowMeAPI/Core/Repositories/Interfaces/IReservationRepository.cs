@@ -11,4 +11,5 @@ public interface IReservationRepository : IRepository<Reservation>
     Task<List<Reservation>> GetReservationsByAnnouncementIdIncludeUser(Guid announcementId);
     Task<Reservation> AddNewReservation(CreateReservationDto reservationDto);
     Task<Reservation> GetReservationById(Guid id);
+    Task<Reservation> UpdateIsAcceptedReservation(Guid id, bool isAccepted);
 }

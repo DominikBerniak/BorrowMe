@@ -1,7 +1,29 @@
-
-
-
 # BorrowMe
+
+## Table of Contents
+* [About the App](#about-the-app)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Story](#story)
+* [Team](#team)
+
+
+## About the App
+BorrowMe is a website where users can borrow items from each other. Users can post announcements containing information about the item they want to lend. Other users can then reserve the item for specific days. The website allows users to comunicate through a live chat with each other.
+
+## Technologies
+This projects backend is build with:
+* ASP.NET Core 6.0
+* Microsoft SQL Server 2019
+* Microsoft Entity Framework Core 6.0.3
+* ASP.NET Core Identity
+* ASP.NET Core SignalR
+
+This projects frontend is build with:
+* React.JS 17.0.2
+* Redux 4.1.2
+* Material UI 5.4.0
+* Bootstrap 5.1.3
 
 ## Setup
 1. Set multiple startup projects
@@ -44,3 +66,9 @@
 ## Story
 Let's assume that you have just bought an apartament at a bargain price. It was cheaper for one, simple reason - it is whole for renovation. You still want to save as much money as possible, so you ask your handyman uncle to help. He readily agrees, but there's one problem. He doesn't have any tools. So, where to get them? You're not going to buy it, duuuuh...
 What if you borrowed them?
+
+## Team
+Our developers:
+* [Dominik Berniak](https://github.com/DominikBerniak)
+* [Pola Jędrecka](https://github.com/PolaJedrecka)
+* [Paweł Kamiński](https://github.com/Pawel-Kaminski404)

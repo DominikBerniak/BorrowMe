@@ -13,9 +13,9 @@ using Services.Implementations;
 
 namespace Api
 {
-    public class ConfigureStartup
+    public static class ConfigureStartup
     {
-        public static void ConfigureSwagger(IServiceCollection services)
+        public static void ConfigureSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {

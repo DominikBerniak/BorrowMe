@@ -128,7 +128,7 @@
     outline: none;
     color: black;
 }
-#message-receiver-info-inner-container .react-calendar__tile, .react-calendar__navigation{
+#message-receiver-info-inner-container .react-calendar__tile, #message-receiver-info-inner-container .react-calendar__navigation{
     pointer-events: none;
 }
 #message-receiver-info-inner-container .react-calendar
@@ -159,7 +159,7 @@
     z-index: 10;
     border-radius: initial;
 }
-#message-receiver-info-inner-container .react-calendar__tile--active, .react-calendar__tile--hasActive{
+#message-receiver-info-inner-container .react-calendar__tile--active, #message-receiver-info-inner-container .react-calendar__tile--hasActive{
     background-color: #818181;
     color: white !important;
     border-radius: initial;

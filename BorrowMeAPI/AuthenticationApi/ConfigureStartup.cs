@@ -16,16 +16,16 @@ using Services.Implementations;
 
 namespace AuthenticationApi
 {
-    public class ConfigureStartup
+    public static class ConfigureStartup
     {
-        public static void ConfigureIdentity(IServiceCollection services)
+        public static void ConfigureIdentity(this IServiceCollection services)
         {
             var b = services.AddIdentityCore<BorrowMeAuthUser>(q => q.User.RequireUniqueEmail = true);
             b = new IdentityBuilder(b.UserType, typeof(IdentityRole), services);
             b.AddRoles<IdentityRole>();
             b.AddEntityFrameworkStores<BorrowMeAuthContext>().AddDefaultTokenProviders();
         }
-        public static void ConfigureSwagger(IServiceCollection services)
+        public static void ConfigureSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
@@ -53,7 +53,7 @@ namespace AuthenticationApi
             }});
                     });
         }
-        public static void AddAuthentication(WebApplicationBuilder builder)
+        public static void AddAuthentication(this WebApplicationBuilder builder)
         {
             var jwtSettings = builder.Configuration.GetSection("Jwt");
             var key = builder.Configuration.GetSection("Jwt").GetSection("Key").Value;
@@ -84,10 +84,9 @@ namespace AuthenticationApi
             });
 
         }
-        public static void InjectServices(IServiceCollection services)
+        public static void InjectServices(this IServiceCollection services)
         {
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
-            services.AddScoped<DataDbContext, DataDbContext>();
             services.AddScoped<IRepository<User>, Repository<User>>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();

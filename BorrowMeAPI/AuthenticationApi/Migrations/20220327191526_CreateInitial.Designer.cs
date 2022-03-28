@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthenticationApi.Migrations
 {
     [DbContext(typeof(BorrowMeAuthContext))]
-    [Migration("20220310130044_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220327191526_CreateInitial")]
+    partial class CreateInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -122,15 +122,15 @@ namespace AuthenticationApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b27206e6-2596-4abc-8d29-c5007415dcaf",
-                            ConcurrencyStamp = "efa20d97-137d-4dd8-a7cc-302535957995",
+                            Id = "5b50a6b3-5068-4fc5-83a8-65bca05cc491",
+                            ConcurrencyStamp = "944bc00b-585f-4724-9e6d-535b7ff0927f",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "331b5f44-5155-4acd-af84-2b349c873d19",
-                            ConcurrencyStamp = "58c79313-b4c4-48ae-ae32-9fb92d4f4f95",
+                            Id = "8c6bfa2a-fc07-41ac-a3fb-893eab093981",
+                            ConcurrencyStamp = "88c248ed-6e6a-4874-9c79-cb83af2e2f35",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

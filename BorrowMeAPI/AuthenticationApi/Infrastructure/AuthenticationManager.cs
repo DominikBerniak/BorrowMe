@@ -76,6 +76,8 @@ namespace AuthenticationApi.Infrastructure
         {
             _user = await _userManager.FindByEmailAsync(userDto.Email);
 
+            if (!_user.EmailConfirmed) return false;
+
             return ( _user != null && await _userManager.CheckPasswordAsync(_user, userDto.Password) );
         }
 

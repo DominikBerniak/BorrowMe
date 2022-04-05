@@ -24,6 +24,7 @@ namespace AuthenticationApi
             b = new IdentityBuilder(b.UserType, typeof(IdentityRole), services);
             b.AddRoles<IdentityRole>();
             b.AddEntityFrameworkStores<BorrowMeAuthContext>().AddDefaultTokenProviders();
+            
         }
         public static void ConfigureSwagger(this IServiceCollection services)
         {
@@ -92,6 +93,7 @@ namespace AuthenticationApi
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
+            services.AddScoped<IEmailService, EmailService>();
         }
     }
 

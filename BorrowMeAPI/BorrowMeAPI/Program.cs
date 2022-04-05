@@ -28,16 +28,17 @@ builder.Services.AddDbContext<DataDbContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 
 //Configure swagger
-ConfigureStartup.ConfigureSwagger(builder.Services);
+builder.Services.ConfigureSwagger();
+//ConfigureStartup.ConfigureSwagger(builder.Services);
 
 // Add services to the container.
-ConfigureStartup.InjectServices(builder.Services);
+builder.Services.InjectServices();
 
 //Add automapper
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 //Add Authentication
-ConfigureStartup.AddAuthentication(builder);
+builder.AddAuthentication();
 
 //Add signalR
 builder.Services.AddSignalR();

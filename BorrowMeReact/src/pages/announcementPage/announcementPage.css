@@ -3,15 +3,18 @@
     padding-right: 2%;
 }
 .announcement-top {
-    height: 60px;
-    border-radius: 4px;
-    margin-bottom: 15px;
+    height: 5rem;
+    color: white;
+    background-color: #4d4d4d;
+    border-radius: 0.3rem;
+    margin-bottom: 1.5rem;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 .announcement-middle {
     display: grid;
-    gap: 15px;
+    gap: 2rem;
     grid-template-columns: 0.75fr 0.8fr 0.8fr ;
     grid-template-rows: 270px 310px;
     grid-template-areas:
@@ -35,50 +38,71 @@
 }
 .announcement-picture-container {
     grid-area: picture;
+    height: 100%;
+    border-radius: 0.3rem;
+    background-color: #f6f6f6;
 }
 .announcement-picture {
-    border-radius: 4px;
-    max-width: 350px;
-    max-height: 260px;
+    height: 100%;
+    width: 25rem;
+    object-fit: contain;
+    object-position: center;
+}
+.announcement-picture:hover{
+    cursor: pointer;
 }
 .announcement-description {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    /*box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;*/
     grid-area: description;
     background-color: #f4f4f4;
-    border-radius: 4px;
-    height: 260px;
-}
-.description-text {
-    margin: 1em;
+    border-radius: 0.3rem;
+    overflow-wrap: break-word;
+    height: 100%;
 }
 .owner-announcement-container {
     grid-area: owner;
 }
 .city-announcement-container {
     grid-area: city;
-    text-align: center;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /*box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;*/
     background-color: white;
-    border-radius: 3px;
-}
-#localization-label {
-    margin: 1em;
+    border-radius: 0.3rem;
 }
 .calendar-container {
     grid-area: calendar;
+    border-radius: 0.3rem !important;
 }
 .choosing-date-form {
     grid-area: form;
     display: flex;
     justify-content: center;
+    background-color: white;
+    width: 25rem;
+    align-items: center;
+    border-radius: 0.3rem;
 }
 .publish-date {
     grid-area: date;
     display: flex;
 }
 .image-buttons {
+    background-color: #f4f4f4;
+    outline: none;
+    border: none;
+    width: 2.6rem;
+}
+.image-buttons:hover{
     background-color: white;
-    height: 260px
+}
+.image-buttons-previous{
+    border-radius: 0.3rem 0 0 0.3rem;
+}
+.image-buttons-next{
+    border-radius: 0 0.3rem 0.3rem 0;
 }
 .center {
     display: flex;
@@ -92,7 +116,7 @@ label {
     margin-left: 5px;
 }
 .reservation-price-container {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    /*box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;*/
     margin-top: 15px;
     background-color: white;
     width: 15em;
@@ -101,8 +125,12 @@ label {
     text-align: center;
     height: 5em;
 }
-.reservation-button-container {
-    margin-top: 15px;
+.reservation-button-container button{
+    background-color: #595959;
+    color: white;
+    border-radius: 0.4rem;
+    border: none;
+    outline: none;
 }
 #link-to-user-page {
     text-decoration: none;

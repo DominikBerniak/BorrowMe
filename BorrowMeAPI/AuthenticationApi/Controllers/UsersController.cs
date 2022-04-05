@@ -7,6 +7,7 @@ using Domain.Entieties;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Services.Implementations;
 using System.Security.Claims;
 using System.Text;
 
@@ -22,10 +23,11 @@ namespace BorrowMeAuth.Controllers
         private readonly IAuthenticationManager _authenticationManager;
         private readonly IUserService _userService;
         private readonly IConfiguration config;
+        private readonly IEmailService _emailService;
 
         public UsersController(ILogger<UsersController> logger, IMapper mapper,
             UserManager<BorrowMeAuthUser> userManager, IAuthenticationManager authenticationManager,
-            IUserService userService, IConfiguration config)
+            IUserService userService, IConfiguration config, IEmailService emailService)
         {
             _logger = logger;
             _mapper = mapper;
@@ -33,6 +35,7 @@ namespace BorrowMeAuth.Controllers
             _authenticationManager = authenticationManager;
             _userService = userService;
             this.config = config;
+            _emailService = emailService;
         }
 
 
@@ -65,6 +68,9 @@ namespace BorrowMeAuth.Controllers
 
                 return BadRequest(ModelState);
             }
+            string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            await _emailService.SendConfirmationEmail(user.Id, user.Email, token);
+
             return Created($"/api/Users/{businessUser.Id}", businessUser);
         }
 
@@ -215,5 +221,13 @@ namespace BorrowMeAuth.Controllers
             return Ok();
         }
 
+        [HttpGet("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery] string userId, [FromQuery] string token)
+        {
+            token = token.Replace(' ', '+');
+            var user = await _userManager.FindByIdAsync(userId);
+            var response = await _userManager.ConfirmEmailAsync(user, token);
+            return Ok();
+        }
     }
 }

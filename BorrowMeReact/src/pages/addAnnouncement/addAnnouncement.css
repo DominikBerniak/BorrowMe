@@ -142,7 +142,7 @@
 #add-announcement-cost-container{
     height: 28rem;
 }
-.add-announcement-cost-type-button{
+.add-announcementPage-cost-type-button{
     border: 0.1rem solid #b2b2b2;
 }
 #cost-type-money,#cost-type-free, #cost-type-other{

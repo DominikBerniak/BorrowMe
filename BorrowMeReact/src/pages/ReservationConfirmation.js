@@ -28,6 +28,15 @@ const ReservationConfirmation = () => {
                 console.log(data)
             })
     }, [])
+
+    let setCorrectOtherPaymentType = (otherPaymentType) => {
+        if (otherPaymentType === null){
+            return "darmo";
+        } else {
+            return otherPaymentType;
+        }
+    }
+
     return (
         <div className="reservation-confirmation-container">
             {reservation ?

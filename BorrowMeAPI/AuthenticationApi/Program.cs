@@ -22,19 +22,19 @@ builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
                 }));
 
 //Configure Identity
-ConfigureStartup.ConfigureIdentity(builder.Services);
+builder.Services.ConfigureIdentity();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 //Configure Swagger
-ConfigureStartup.ConfigureSwagger(builder.Services);
+builder.Services.ConfigureSwagger();
 
 //Configure authentication
-ConfigureStartup.AddAuthentication(builder);
+builder.AddAuthentication();
 
 //Inject services
-ConfigureStartup.InjectServices(builder.Services);
+builder.Services.InjectServices();
 
 //Add AutoMapper
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());

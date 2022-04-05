@@ -21,49 +21,66 @@ const UserPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {userId} = useParams();
-    const [firstBoxValue, setFirstBoxValue] = useState("1");
-    const [secondBoxValue, setSecondBoxValue] = useState("1");
     const [dummyState, setDummyState] = useState(false);
     const [userDetails, setDetails] = useState();
-    const [unacceptedReservations, setUnacceptedReservations] = useState([]);
-    const [acceptedReservations, setAcceptedReservations] = useState([]);
-    const [expiredReservations, setExpiredReservations] = useState([]);
-    const [unacceptedAnnouncementReservations, setUnacceptedAnnouncementReservations] = useState([]);
-    const [acceptedAnnouncementReservations, setAcceptedAnnouncementReservations] = useState([]);
+    const [userReservations, setUserReservations] = useState({
+        unaccepted: [],
+        accepted: [],
+        expired: []
+    });
+    const [announcementsReservations, setAnnouncementsReservations] = useState({
+        unaccepted: [],
+        accepted: []
+    });
+    const clearArrays = () => {
+        setAnnouncementsReservations({unaccepted: [], accepted: []});
+        setUserReservations({unaccepted: [], accepted: [], expired: []});
+    }
+    let startBoxValues = () => {
+        if (userReservations.unaccepted.length===0 && userReservations.accepted.length!==0)
+        {
+            return "2";
+        } else if (userReservations.unaccepted.length===0 && userReservations.accepted.length===0)
+        {
+            return "3";
+        }
+        return "1";
+    }
+    let startSecondBoxValues = () => {
+        if (announcementsReservations.unaccepted.length===0)
+        {
+            return "2";
+        }
+        return "1";
+    }
+    const [boxValues, setBoxValues] = useState({
+        firstBox: startBoxValues(),
+        secondBox: startSecondBoxValues()
+    })
     const handleFirstContainerChange = (event, newValue) => {
-        setFirstBoxValue(newValue);
+        setBoxValues({...boxValues, firstBox: newValue});
     }
     const handleSecondContainerChange = (event, newValue) => {
-        setSecondBoxValue(newValue)
-    }
-    let clearArrays = () => {
-        setAcceptedAnnouncementReservations([])
-        setUnacceptedAnnouncementReservations([])
-        setExpiredReservations([])
-        setAcceptedReservations([])
-        setUnacceptedReservations([])
+        setBoxValues({...boxValues, secondBox: newValue});
     }
     let setCorrectReservations = (reservation, isAnnouncementReservation = false) => {
-        if (!reservation.isAccepted && new Date(reservation.reservationEndDay) > new Date())
-        {
+        if (!reservation.isAccepted && new Date(reservation.reservationEndDay) > new Date()) {
             if (isAnnouncementReservation)
             {
-                setUnacceptedAnnouncementReservations(unacceptedAnnouncementReservations => unacceptedAnnouncementReservations.concat(reservation))
+                setAnnouncementsReservations({...announcementsReservations, unaccepted: [...announcementsReservations.unaccepted, reservation]})
             } else
-            setUnacceptedReservations(unacceptedReservations => unacceptedReservations.concat(reservation))
-        }
-        else if (reservation.isAccepted && new Date(reservation.reservationEndDay) > new Date()) {
-
+                setUserReservations({...userReservations, unaccepted: [...userReservations.unaccepted, reservation]})
+        } else if (reservation.isAccepted && new Date(reservation.reservationEndDay) > new Date()) {
             if (isAnnouncementReservation)
             {
-                setAcceptedAnnouncementReservations(acceptedAnnouncementReservations => acceptedAnnouncementReservations.concat(reservation))
+                setAnnouncementsReservations({...announcementsReservations, accepted: [...announcementsReservations.accepted, reservation]});
             } else
-            setAcceptedReservations(acceptedReservations => acceptedReservations.concat(reservation))
-        }
-        else if (reservation.isAccepted && new Date(reservation.reservationEndDay) < new Date()) {
-            setExpiredReservations(expiredReservations => expiredReservations.concat(reservation))
+                setUserReservations({...userReservations, accepted: [...userReservations.accepted, reservation]});
+        } else if (reservation.isAccepted && new Date(reservation.reservationEndDay) < new Date()) {
+            setUserReservations({...userReservations, expired: [...userReservations.expired, reservation]});
         }
     }
+
 
     useEffect(() => {
         getAuthUser()
@@ -165,17 +182,17 @@ const UserPage = () => {
                                     {userDetails.userReservations.length > 0 ?
                                         <>
                                             <Box className="margin-top-1rem" sx={{ width: '100%', justifyContent: "center" }}>
-                                                <TabContext value={firstBoxValue}>
+                                                <TabContext value={boxValues.firstBox}>
                                                     <Box>
                                                         <TabList onChange={handleFirstContainerChange} TabIndicatorProps={{ style: { display: "none" } }} textColor="primary" centered>
-                                                            <Tab label="Niezaakceptowane" value="1" disabled={unacceptedReservations.length === 0} />
-                                                            <Tab label="Zaakceptowane" value="2" disabled={acceptedReservations.length === 0} />
-                                                            <Tab label="Wygaśnięte" value="3" disabled={expiredReservations.length === 0} />
+                                                            <Tab label="Niezaakceptowane" value="1" disabled={userReservations.unaccepted.length === 0} />
+                                                            <Tab label="Zaakceptowane" value="2" disabled={userReservations.accepted.length === 0} />
+                                                            <Tab label="Wygaśnięte" value="3" disabled={userReservations.expired.length === 0} />
                                                         </TabList>
                                                     </Box>
                                                     <TabPanel value="1">
                                                         <div className="unaccepted-reservations-container">
-                                                            {unacceptedReservations.map(reservation => {
+                                                            {userReservations.unaccepted.map(reservation => {
                                                                 return <ReservationTile key={reservation.id} reservation={reservation}
                                                                     classNames="unaccepted-reservation-tile-container" isAccepted={false} state={dummyState} setState={setDummyState}/>
                                                             })}
@@ -183,7 +200,7 @@ const UserPage = () => {
                                                     </TabPanel>
                                                     <TabPanel value="2">
                                                         <div className="accepted-reservations-container">
-                                                            {acceptedReservations.map(reservation => {
+                                                            {userReservations.accepted.map(reservation => {
                                                                 return <ReservationTile key={reservation.id} reservation={reservation}
                                                                     classNames="accepted-reservation-tile-container" state={dummyState} setState={setDummyState}/>
                                                             })}
@@ -191,7 +208,7 @@ const UserPage = () => {
                                                     </TabPanel>
                                                     <TabPanel value="3">
                                                         <div className="expired-reservation-tiles-container">
-                                                            {expiredReservations.map(reservation => {
+                                                            {userReservations.expired.map(reservation => {
                                                                 return <ReservationTile key={reservation.id} reservation={reservation}
                                                                     classNames="disable-reservation-tile-container" isExpired={true} state={dummyState} setState={setDummyState}/>
                                                             })}
@@ -205,16 +222,16 @@ const UserPage = () => {
                                     <label className="center">Rezerwacje do twoich ogłoszeń:</label>
                                     {userDetails.announcementReservations.length > 0 ?
                                         <Box className='margin-top-1rem' sx={{ width: '100%', justifyContent: "center" }}>
-                                            <TabContext value={secondBoxValue}>
+                                            <TabContext value={boxValues.secondBox}>
                                                 <Box>
                                                     <TabList onChange={handleSecondContainerChange} TabIndicatorProps={{ style: { display: "none" } }} textColor="primary" centered>
-                                                        <Tab label="Niezaakceptowane" value="1" disabled={unacceptedAnnouncementReservations.length === 0} />
-                                                        <Tab label="Zaakceptowane" value="2" disabled={acceptedAnnouncementReservations.length === 0} />
+                                                        <Tab label="Niezaakceptowane" value="1" disabled={announcementsReservations.unaccepted.length === 0} />
+                                                        <Tab label="Zaakceptowane" value="2" disabled={announcementsReservations.accepted.length === 0} />
                                                     </TabList>
                                                 </Box>
                                                 <TabPanel value="1">
                                                     <div className="unaccepted-user-announcement-reservations-container">
-                                                        {unacceptedAnnouncementReservations.map(reservation => {
+                                                        {announcementsReservations.unaccepted.map(reservation => {
                                                             return <ReservationTile key={reservation.id} reservation={reservation}
                                                                 classNames="unaccepted-reservation-tile-container" isAccepted={false} isUserReservation={false} state={dummyState} setDummyState={setDummyState}/>
                                                         })}
@@ -222,7 +239,7 @@ const UserPage = () => {
                                                 </TabPanel>
                                                 <TabPanel value="2">
                                                     <div className="accepted-user-announcement-reservations-container">
-                                                        {acceptedAnnouncementReservations.map(reservation => {
+                                                        {announcementsReservations.accepted.map(reservation => {
                                                             return <ReservationTile key={reservation.id} reservation={reservation}
                                                                 classNames="accepted-reservation-tile-container" isUserReservation={false} state={dummyState} setState={setDummyState}/>
                                                         })}

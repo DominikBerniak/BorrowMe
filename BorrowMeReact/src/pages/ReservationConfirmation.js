@@ -8,6 +8,14 @@ const ReservationConfirmation = () => {
     const {reservationId} = useParams();
     const [reservation, setData] = useState();
 
+    let setCorrectOtherPaymentType = (otherPaymentType) => {
+        if (otherPaymentType === null){
+            return "darmo";
+        } else {
+            return otherPaymentType;
+        }
+    }
+
     let countPrice = (price) => {
         let differenceInTime = new Date(reservation.reservationEndDay).getTime() - new Date(reservation.reservationStartDay).getTime();
         let differenceInDays = differenceInTime / (1000 * 3600 * 24);
@@ -44,7 +52,7 @@ const ReservationConfirmation = () => {
                                 <label>Zarezerwowane do:</label>
                                 <p>{new Date(reservation.reservationEndDay).toLocaleDateString()}</p>
                                 <label>Cena rezerwacji:</label>
-                                <p>{reservation.announcement.paymentType ? countPrice(reservation.announcement.price) : "Za "+reservation.announcement.otherPaymentType} zł</p>
+                                <p>{reservation.announcement.paymentType===1 ? countPrice(reservation.announcement.price) : "Za "+setCorrectOtherPaymentType(reservation.announcement.otherPaymentType)}</p>
                                 <label id="confirmation-info-label">Na swoją pocztę dostaniesz powiadomienie,
                                     gdy ogłoszeniodawca zatwierdzi Twoją rezerwację.</label>
                             </div>

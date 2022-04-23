@@ -37,6 +37,8 @@
     margin-right: 15px;
 }
 .announcement-picture-container {
+    display: flex;
+    justify-content: space-between;
     grid-area: picture;
     height: 100%;
     border-radius: 0.3rem;

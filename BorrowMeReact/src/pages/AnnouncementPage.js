@@ -118,7 +118,7 @@ const AnnouncementPage = () => {
                         <div className="announcement-description p-4">
                             <p className="description-text">{announcementData.description}</p>
                         </div>
-                        <div className="announcement-picture-container center">
+                        <div className="announcement-picture-container">
                             {imageDirectory !== "" ?
                                 <>
                                     {announcementData.pictureLocations.length > 1 &&
@@ -128,7 +128,7 @@ const AnnouncementPage = () => {
                                         </button>
                                     }
                                     <ImageAPI imageDirectory={imageDirectory} imageName={imageName}
-                                              classNames="announcement-picture"/>
+                                              classNames="announcement-picture mx-auto"/>
                                     {announcementData.pictureLocations.length > 1 &&
                                         <button type="button" onClick={handleNextImage}
                                                 className="image-buttons image-buttons-next">
@@ -183,6 +183,11 @@ const AnnouncementPage = () => {
                             <p>Opublikowano {new Date(announcementData.publishDate).toLocaleDateString()} o
                                 godzinie {announcementData.publishDate.slice(11, 16)}</p>
                         </div>
+                    </div>
+                    <div>
+                        <iframe width="600" height="450" loading="lazy" allowFullScreen
+                                src="https://www.google.com/maps/embed/v1/search?q=Krak%C3%B3w%2C%20Polska&key=AIzaSyCmHTRPQwLsdLHU-MHsi-c3Ps80rpCinJY">
+                        </iframe>
                     </div>
                 </>
                 :

@@ -5,8 +5,6 @@
     background-color: #f1f1f1;
 }
 #links-header{
-    /*background-color: pink;*/
-    /*border-radius: 0.7rem 0.7rem 0 0 !important;*/
     font-size: 1.5rem;
 }
 #links-header a{
@@ -38,7 +36,7 @@
     box-shadow: 0 0 0 0.1rem #949494;
     /*border: 0.1rem solid #ff0000;*/
 }
-#authentication-form input:focus ~.password-eye-button{
+input#password-input:focus ~.password-eye-button{
     /*outline: 0.1rem solid #949494;*/
     box-shadow: 0.1rem 0 0 0 #949494,
                 0 0.1rem 0 0 #949494,
@@ -49,7 +47,7 @@ input#password-input{
     border-left: 0.1rem solid #b2b2b2;
     border-top: 0.1rem solid #b2b2b2;
     border-bottom: 0.1rem solid #b2b2b2;
-    border-right: none;
+    border-right: none !important;
     border-radius: 0.25rem 0 0 0.25rem !important;
 }
 .password-eye-button{
@@ -116,4 +114,11 @@ input#password-input.incorrect-password:focus{
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.3);
+}
+
+#forgot-password-link{
+    color: #212529;
+}
+#forgot-password-link:hover{
+    color: #0a58ca;
 }

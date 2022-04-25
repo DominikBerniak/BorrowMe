@@ -14,6 +14,8 @@ import AddAnnouncement from "./pages/AddAnnouncement";
 import ReservationConfirmation from "./pages/ReservationConfirmation";
 import RequireAuth from "./components/RequireAuth";
 import Chat from "./pages/Chat";
+import ForgotPassword from "./pages/ForgotPassword";
+import ChangeForgottenPassword from "./pages/ChangeForgottenPassword";
 
 function App() {
     return (
@@ -30,6 +32,8 @@ function App() {
                 <Route path="announcement/:announcementId" element={<AnnouncementPage/>}/>
                 <Route path="login" element={<Authentication pageType="login"/>}/>
                 <Route path="register" element={<Authentication pageType="register"/>}/>
+                <Route path="forgot-password" element={<ForgotPassword />}/>
+                <Route path="forgot-password-update" element={<ChangeForgottenPassword />}/>
                 <Route path="users/:userId" element={<UserPage/>}/>
                 <Route path="announcement/new" element={
                     <RequireAuth>

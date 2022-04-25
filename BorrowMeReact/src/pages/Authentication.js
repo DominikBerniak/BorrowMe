@@ -12,8 +12,8 @@ import Spinner from "../components/Spinner";
 const Authentication = ({pageType}) => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("dominik@gmail.com");
-    const [password, setPassword] = useState("Admin123!");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const [passwordInputTimeout, setPasswordInputTimeout] = useState(null);
 
@@ -40,15 +40,14 @@ const Authentication = ({pageType}) => {
     useEffect(() => {
         if (authUser.userId !== "") {
             navigate("/")
-            return;
         }
-
     }, [authUser])
 
     useEffect(() => {
-        //Na potrzebe demo zakomentowane
         setIsSubmitDisabled(pageType==="register");
-        //setPassword("");
+        setWrongAuthenticationMessage("");
+        setIsPasswordCorrect(true);
+        setPassword("");
     }, [pageType])
 
     useEffect(() => {
@@ -136,8 +135,17 @@ const Authentication = ({pageType}) => {
                     navigate(state?.path || "/")
                 })
         } else {
-            setIsAuthenticationInProgress(false);
-            setWrongAuthenticationMessage("Błędny email lub hasło.")
+            await response.text()
+                .then(responseMessage=>{
+                    if (responseMessage == "EmailSend not confirmed")
+                    {
+                        setWrongAuthenticationMessage("Potwierdź swój email.");
+                    }
+                    else {
+                        setWrongAuthenticationMessage("Błędny email lub hasło.");
+                    }
+                    setIsAuthenticationInProgress(false);
+                })
         }
     }
 
@@ -219,8 +227,13 @@ const Authentication = ({pageType}) => {
                         </div>
                     </div>
                 </label>
+                {pageType === "login" &&
+                    <label>
+                        <Link id="forgot-password-link" to={"/forgot-password"} className="text-decoration-none">Nie pamiętam hasła</Link>
+                    </label>
+                }
                 <div id="password-check-message" className="text-center user-select-none">
-                    {!isPasswordCorrect &&
+                    {!isPasswordCorrect && pageType === "register" &&
                         <>
                             {password.length < 8 ?
                                 <div>Hasło musi zawierać przynajmniej 8 znaków.</div>

@@ -181,9 +181,10 @@ const AnnouncementPage = () => {
                             </div>
                         </div>
                         <div className="city-announcement-container p-3">
-                            <label>Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</label>
-                            <ImageAPI imageDirectory="site-images" imageName="krakow.png"
-                                      classNames="announcement-picture"/>
+                            <label className="mb-3">Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</label>
+                            <iframe width="600" height="500" id="gmap_canvas" loading="lazy"
+                                    src={`https://maps.google.com/maps?q=${announcementData.city.name}&z=14&output=embed`}>
+                            </iframe>
                         </div>
                     </div>
                     <div className="announcement-bottom">
@@ -196,11 +197,6 @@ const AnnouncementPage = () => {
                             <p>Opublikowano {new Date(announcementData.publishDate).toLocaleDateString()} o
                                 godzinie {announcementData.publishDate.slice(11, 16)}</p>
                         </div>
-                    </div>
-                    <div>
-                        <iframe width="600" height="450" loading="lazy" allowFullScreen
-                                src="https://www.google.com/maps/embed/v1/search?q=Krak%C3%B3w%2C%20Polska&key=AIzaSyCmHTRPQwLsdLHU-MHsi-c3Ps80rpCinJY">
-                        </iframe>
                     </div>
                 </>
                 :

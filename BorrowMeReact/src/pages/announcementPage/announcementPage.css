@@ -163,9 +163,7 @@ label {
 #announcement-picture-gallery-modal
 {
     border-radius: 0.7rem !important;
-    /*min-height: 38rem;*/
     height: 80vh;
-    /*max-width: 80vw;*/
     width: 80vw;
     background-color: white;
 }

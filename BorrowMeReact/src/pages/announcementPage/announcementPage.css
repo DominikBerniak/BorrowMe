@@ -146,3 +146,31 @@ label {
 #confirmation-info-label {
     font-weight: bold;
 }
+
+
+#announcement-picture-gallery-main-container{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+#announcement-picture-gallery-modal
+{
+    border-radius: 0.7rem !important;
+    /*min-height: 38rem;*/
+    height: 80vh;
+    /*max-width: 80vw;*/
+    width: 80vw;
+    background-color: white;
+}
+.announcement-gallery-picture{
+    height: 95%;
+    object-fit: contain;
+    object-position: center;
+}

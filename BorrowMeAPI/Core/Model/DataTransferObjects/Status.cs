@@ -7,4 +7,10 @@
         NotFound,
         BadRequest
     }
+    public enum AuthenticationStatus
+    {
+        LoggedIn,
+        Unauthorized,
+        EmailNotConfirmed
+    }
 }

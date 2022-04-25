@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Core.Model.DataTransferObjects;
 
 namespace AuthenticationApi.Infrastructure
 {
@@ -72,13 +73,22 @@ namespace AuthenticationApi.Infrastructure
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
-        public async Task<bool> ValidateApiUser(LoginApiUserDto userDto)
+        public async Task<AuthenticationStatus> ValidateApiUser(LoginApiUserDto userDto)
         {
             _user = await _userManager.FindByEmailAsync(userDto.Email);
-
-            if (!_user.EmailConfirmed) return false;
-
-            return ( _user != null && await _userManager.CheckPasswordAsync(_user, userDto.Password) );
+            if (_user is null )
+            {
+                return AuthenticationStatus.Unauthorized;
+            }
+            if (!_user.EmailConfirmed)
+            {
+                return AuthenticationStatus.EmailNotConfirmed;
+            }
+            if (!await _userManager.CheckPasswordAsync(_user, userDto.Password))
+            {
+                return AuthenticationStatus.Unauthorized;
+            }
+            return AuthenticationStatus.LoggedIn;
         }
 
         public JwtSecurityToken Verify(string jtw)

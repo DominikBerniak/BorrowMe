@@ -137,7 +137,7 @@ const Authentication = ({pageType}) => {
         } else {
             await response.text()
                 .then(responseMessage=>{
-                    if (responseMessage == "EmailSend not confirmed")
+                    if (responseMessage == "Email not confirmed")
                     {
                         setWrongAuthenticationMessage("Potwierdź swój email.");
                     }

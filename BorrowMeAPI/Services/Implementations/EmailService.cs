@@ -30,48 +30,50 @@ namespace Services.Implementations
                 From = new EmailAddress("borrowmebot@gmail.com", "BorrowMe"),
                 Subject = "Potwierdź adres email",
                 HtmlContent =
-                    "<div style=\"background-color: #e7e7e7; user-select: none; padding: 1px 0 20px 0;\">" +
-                        "<h1 style=\"margin-top: 30px; text-align: center;\">BorrowMe</h1>" +
+                    "<div style=\"background-color: #e7e7e7; user-select: none; padding: 1rem 0 5rem 0;\">" +
+                        "<h1 style=\"margin-top: 2rem; text-align: center;\">BorrowMe</h1>" +
                         "<div style=\"" +
-                            "width: 40%; " +
+                            "width: 45%; " +
                             "background-color: #fff; " +
-                            "margin: 20px auto 20px auto; " +
-                            "border-radius: 15px 15px 15px 15px;\">" +
+                            "margin: 0 auto; " +
+                            "border-radius: 1rem 1rem 1rem 1rem;\">" +
                             "<div style=\"" +
-                                "padding: 10px; " +
+                                "padding: 0.5rem; " +
                                 "text-align: center; " +
-                                "border-bottom: 5px solid #dee2e6; " +
+                                "border-bottom: 0.3rem solid #dee2e6; " +
                                 "background-color: #676767; " +
                                 "color: #fff; " +
                                 "border-color: #2d2d2d; " +
-                                "border-radius: 15px 15px 0 0; " +
-                                "font-size: 24px;\"> Potwierdzenie rejestracji</div>" +
+                                "border-radius: 1rem 1rem 0 0; " +
+                                "font-size: 1.5rem;\"> Potwierdzenie rejestracji</div>" +
                             "<div style=\"" +
-                                "margin-top: 30px; " +
-                                "font-size: 20px; " +
+                                "margin-top: 1.7rem; " +
+                                "font-size: 1.3rem; " +
+                                "padding: 0 1rem; " +
                                 "text-align: center;\">Witaj w BorrowMe!</div>" +
                             "<div style=\"" +
-                                "margin-top: 20px; " +
-                                "font-size: 20px; " +
-                                "text-align: center;\">Aby potwierdzić swój adres email klinij w poniższy przycisk:</div>" +
+                                "margin-top: 1rem; " +
+                                "font-size: 1.3rem; " +
+                                "padding: 0 1rem; " +
+                                "text-align: center;\">Aby potwierdzić swój adres email kliknij w poniższy przycisk:</div>" +
                             $"<a href=\"{link}\" style=\"" +
                                 "display: block; " +
                                 "text-decoration: none; " +
                                 "text-align: center; " +
-                                "margin: 30px auto 0 auto; " +
+                                "margin: 2rem auto 0 auto; " +
                                 "cursor: pointer; " +
                                 "background-color: #676767; " +
                                 "color: #fff; " +
-                                "font-size: 20px; " +
-                                "border-radius: 7px; " +
+                                "font-size: 1.3rem; " +
+                                "border-radius: 0.5rem; " +
                                 "border: none; " +
-                                "padding: 10px; " +
-                                "width: 250px; \">Potwierdź email</a>" +
+                                "padding: 0.5rem; " +
+                                "width: 50%; \">Potwierdź email</a>" +
                             "<div style=\"" +
                                 "text-align: center; " +
-                                "margin-top: 50px; " +
-                                "padding-bottom: 25px; " +
-                                "color: #6e6e6e;\">Jeśli to nie Ty zakładałeś konto BorroMe, możesz zignorować tą wiadomość.</div>" +
+                                "margin-top: 3rem; " +
+                                "padding-bottom: 1.5rem; " +
+                                "color: #6e6e6e;\">Jeśli to nie Ty zakładałeś konto w BorroMe, możesz zignorować tą wiadomość.</div>" +
                     "</div>" +
                 "</div>"
             };
@@ -90,47 +92,49 @@ namespace Services.Implementations
                 From = new EmailAddress("borrowmebot@gmail.com", "BorrowMe"),
                 Subject = "Zresetuj swoje hasło BorrowMe",
                 HtmlContent =
-                    "<div style=\"background-color: #e7e7e7; user-select: none; padding: 1px 0 20px 0;\">" +
-                        "<h1 style=\"margin-top: 30px; text-align: center;\">BorrowMe</h1>" +
+                    "<div style=\"background-color: #e7e7e7; user-select: none; padding: 1rem 0 5rem 0;\">" +
+                        "<h1 style=\"margin-top: 2rem; text-align: center;\">BorrowMe</h1>" +
                         "<div style=\""+
-                            "width: 40%; "+
+                            "width: 45%; "+
                             "background-color: #fff; "+
-                            "margin: 20px auto 20px auto; "+
-                            "border-radius: 15px 15px 15px 15px;\">"+
+                            "margin: 0 auto; "+
+                            "border-radius: 1rem 1rem 1rem 1rem;\">"+
                             "<div style=\"" +
-                                "padding: 10px; "+
+                                "padding: 0.5rem; "+
                                 "text-align: center; "+
-                                "border-bottom: 5px solid #dee2e6; "+
+                                "border-bottom: 0.3rem solid #dee2e6; "+
                                 "background-color: #676767; "+
                                 "color: #fff; "+
                                 "border-color: #2d2d2d; "+
-                                "border-radius: 15px 15px 0 0; "+
-                                "font-size: 24px;\"> Resetowanie hasła</div>"+
+                                "border-radius: 1rem 1rem 0 0; "+
+                                "font-size: 1.5rem;\"> Resetowanie hasła</div>"+
                             "<div style=\"" +
-                                "margin-top: 30px; "+
-                                "font-size: 20px; "+
-                                "text-align: center;\">Otrzymaliśmy prośbę o zresetowanie hasła Twojego konta BorrowMe.</div>"+
+                                "margin-top: 1.7rem; "+
+                                "font-size: 1.3rem; "+
+                                "padding: 0 1rem; " +
+                                "text-align: center;\">Otrzymaliśmy prośbę o zresetowanie hasła Twojego konta BorrowMe.</div>" +
                             "<div style=\"" +
-                                "margin-top: 20px; " +
-                                "font-size: 20px; "+
+                                "margin-top: 1rem; " +
+                                "font-size: 1.3rem; " +
+                                "padding: 0 1rem; " +
                                 "text-align: center;\">Kliknij poniższy przycisk aby zresetować hasło:</div>" +
                             $"<a href=\"{link}\" style=\"" +
                                 "display: block; " +
                                 "text-decoration: none; " +
                                 "text-align: center; " +
-                                "margin: 30px auto 0 auto; " +
+                                "margin: 2rem auto 0 auto; " +
                                 "cursor: pointer; " +
                                 "background-color: #676767; " +
                                 "color: #fff; " +
-                                "font-size: 20px; "+
-                                "border-radius: 7px; " +
+                                "font-size: 1.3rem; " +
+                                "border-radius: 0.5rem; " +
                                 "border: none; "+
-                                "padding: 10px; "+
-                                "width: 250px; \">Resetuj hasło</a>"+
+                                "padding: 0.5rem; "+
+                                "width: 50%; \">Resetuj hasło</a>"+
                             "<div style=\"" +
                                 "text-align: center; "+
-                                "margin-top: 50px; " +
-                                "padding-bottom: 25px; " +
+                                "margin-top: 3rem; " +
+                                "padding-bottom: 1.5rem; " +
                                 "color: #6e6e6e;\">Jeśli nie prosiłeś o zresetowanie hasła, możesz zignorować tą wiadomość.</div>"+
                     "</div>"+
                 "</div>"

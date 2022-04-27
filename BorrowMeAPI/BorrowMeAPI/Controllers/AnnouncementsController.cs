@@ -88,7 +88,7 @@ namespace Api.Controllers
                 Announcement = announcement,
                 Reservations = reservations
             };
-        return Ok(announcementData);
+            return Ok(announcementData);
         }
 
         // /api/Announcements/ PUT

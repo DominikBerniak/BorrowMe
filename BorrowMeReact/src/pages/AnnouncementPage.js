@@ -17,6 +17,7 @@ import NoImage from "../components/NoImage";
 import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
 import {Helmet} from "react-helmet";
 import {useSelector} from "react-redux";
+import AnnouncementPictureGallery from "./announcementPage/AnnouncementPictureGallery";
 
 const AnnouncementPage = () => {
     const [date, setDate] = useState();
@@ -29,13 +30,13 @@ const AnnouncementPage = () => {
     const {announcementId} = useParams();
     const navigate = useNavigate();
     const user = useSelector(state => state.user.value);
+    const [isGalleryVisible, setIsGalleryVisible] = useState(false);
 
     let handleSubmit = () => {
         if (user.userId === "") {
             navigate("/login")
-            return;
         } else if (date !== null) {
-            let response = postData(`/api/Reservations`, {
+            postData(`/api/Reservations`, {
                 announcementId: announcementId,
                 userId: user.userId,
                 startDate: date[0],
@@ -103,6 +104,16 @@ const AnnouncementPage = () => {
             });
     }, [count])
 
+    const showGallery = () => {
+        setIsGalleryVisible(true);
+        document.body.style.overflow = "hidden";
+        window.scrollTo(0, 0);
+    }
+    const hideGallery = () => {
+        setIsGalleryVisible(false);
+        document.body.style.overflow = "auto";
+    }
+
     return (
         <div className="announcement-container">
             {announcementData ?
@@ -118,7 +129,7 @@ const AnnouncementPage = () => {
                         <div className="announcement-description p-4">
                             <p className="description-text">{announcementData.description}</p>
                         </div>
-                        <div className="announcement-picture-container center">
+                        <div className="announcement-picture-container">
                             {imageDirectory !== "" ?
                                 <>
                                     {announcementData.pictureLocations.length > 1 &&
@@ -127,8 +138,10 @@ const AnnouncementPage = () => {
                                             <ArrowPrevious/>
                                         </button>
                                     }
-                                    <ImageAPI imageDirectory={imageDirectory} imageName={imageName}
-                                              classNames="announcement-picture"/>
+                                    <div onClick={showGallery} className="mx-auto">
+                                        <ImageAPI imageDirectory={imageDirectory} imageName={imageName}
+                                                  classNames="announcement-picture"/>
+                                    </div>
                                     {announcementData.pictureLocations.length > 1 &&
                                         <button type="button" onClick={handleNextImage}
                                                 className="image-buttons image-buttons-next">
@@ -168,9 +181,10 @@ const AnnouncementPage = () => {
                             </div>
                         </div>
                         <div className="city-announcement-container p-3">
-                            <label>Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</label>
-                            <ImageAPI imageDirectory="site-images" imageName="krakow.png"
-                                      classNames="announcement-picture"/>
+                            <label className="mb-3">Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</label>
+                            <iframe width="600" height="500" id="gmap_canvas" loading="lazy"
+                                    src={`https://maps.google.com/maps?q=${announcementData.city.name}&z=14&output=embed`}>
+                            </iframe>
                         </div>
                     </div>
                     <div className="announcement-bottom">
@@ -187,6 +201,10 @@ const AnnouncementPage = () => {
                 </>
                 :
                 <Spinner/>
+            }
+            {isGalleryVisible &&
+                <AnnouncementPictureGallery hideGallery={hideGallery} title={announcementData.title}
+                                            pictureLocations={announcementData.pictureLocations}/>
             }
         </div>
     )

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Services.Implementations;
+using System;
 using System.Security.Claims;
 using System.Text;
 
@@ -24,10 +25,11 @@ namespace BorrowMeAuth.Controllers
         private readonly IUserService _userService;
         private readonly IConfiguration config;
         private readonly IEmailService _emailService;
+        private readonly IConfiguration _configuration;
 
         public UsersController(ILogger<UsersController> logger, IMapper mapper,
             UserManager<BorrowMeAuthUser> userManager, IAuthenticationManager authenticationManager,
-            IUserService userService, IConfiguration config, IEmailService emailService)
+            IUserService userService, IConfiguration config, IEmailService emailService, IConfiguration configuration)
         {
             _logger = logger;
             _mapper = mapper;
@@ -36,6 +38,7 @@ namespace BorrowMeAuth.Controllers
             _userService = userService;
             this.config = config;
             _emailService = emailService;
+            _configuration = configuration;
         }
 
 
@@ -69,6 +72,7 @@ namespace BorrowMeAuth.Controllers
                 return BadRequest(ModelState);
             }
             string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            _logger.LogInformation("Sending email confirmation");
             await _emailService.SendConfirmationEmail(user.Id, user.Email, token);
 
             return Created($"/api/Users/{businessUser.Id}", businessUser);
@@ -84,10 +88,16 @@ namespace BorrowMeAuth.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            if (!await _authenticationManager.ValidateApiUser(userDto))
+            var authenticationStatus = await _authenticationManager.ValidateApiUser(userDto);
+            if (authenticationStatus == AuthenticationStatus.EmailNotConfirmed)
             {
-                return Unauthorized(userDto);
+                _logger.LogInformation("User email not confirmed.");
+                return Unauthorized("Email not confirmed");
+            }
+            if (authenticationStatus == AuthenticationStatus.Unauthorized)
+            {
+                _logger.LogInformation("Wrong login data");
+                return Unauthorized("Wrong login data");
             }
             _logger.LogInformation("Login successful");
             var jwt = await _authenticationManager.CreateJwtToken();
@@ -227,7 +237,45 @@ namespace BorrowMeAuth.Controllers
             token = token.Replace(' ', '+');
             var user = await _userManager.FindByIdAsync(userId);
             var response = await _userManager.ConfirmEmailAsync(user, token);
-            return Ok();
+            var clientUrl = _configuration.GetSection("Client").GetSection("Url").Value;
+            return Redirect($"{clientUrl}/login");
+        }
+
+        [HttpPost("SendResetPasswordEmail")]
+        public async Task SendResetPasswordEmail([FromBody]string userEmail)
+        {
+            _logger.LogInformation($"Forgot password request received for email: {userEmail}");
+            var user = await _userManager.FindByEmailAsync(userEmail);
+            if (user is null)
+            {
+                return;
+            }
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            _logger.LogInformation($"Generated token: {token}");
+            await _emailService.SendResetPasswordEmail(userEmail, token);
+        }
+
+        [HttpPost("ResetForgottenPassword")]
+        public async Task<IActionResult> ResetForgottenPassword(ResetPasswordDto data)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var user = await _userManager.FindByEmailAsync(data.Email);
+            if (user is null)
+            {
+                return BadRequest();
+            }
+            _logger.LogInformation($"Trying to change password for user: {user.Email}");
+            var token = data.Token.Replace(' ', '+');
+            var result = await _userManager.ResetPasswordAsync(user, token, data.NewPassword);
+            if (result.Succeeded)
+            {
+                _logger.LogInformation($"Password successfully changed for user {data.Email}");
+                return Ok();
+            }
+            return BadRequest(result);
         }
     }
 }

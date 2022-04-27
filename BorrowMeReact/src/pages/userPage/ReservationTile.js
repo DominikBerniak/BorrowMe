@@ -1,11 +1,11 @@
 import "./reservationTile.css"
 import {useNavigate} from "react-router-dom";
-import XIcon from "../../components/XIcon";
-import DoneIcon from "../../components/DoneIcon";
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import MessageIcon from "../../components/MessageIcon";
-import StarIcon from "../../components/StarIcon";
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import {patchData} from "../../services/apiFetch";
+import {useEffect} from "react";
 
 const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired = false, isUserReservation = true, state, setDummyState}) => {
     const startDay = new Date(reservation.reservationStartDay);
@@ -22,6 +22,9 @@ const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired 
             })
         setDummyState(!state)
     }
+    useEffect(()=>{
+        console.log(`isAccepted: ${isAccepted} isExpired: ${isExpired} isUserReservation: ${isUserReservation}`)
+    },[])
 
     return (
         <div className={classNames}>
@@ -35,12 +38,14 @@ const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired 
             </div>
             <div className="delete-reservation-button">
                 {!isAccepted && !isExpired && !isUserReservation &&
-                    <button type="button" className="btn btn-success btn-sm accept-button" onClick={handleAccept}>Akceptuj <DoneIcon/></button>}
+                    <button type="button" className="btn btn-success btn-sm accept-button" onClick={handleAccept}>Akceptuj <DoneOutlinedIcon/></button>}
                 {isAccepted && !isExpired && isUserReservation &&
-                    <button type="button" className="btn btn-sm contact-button">Skontaktuj się <MessageIcon/></button>}
+                    <button type="button" className="btn btn-sm contact-button">Skontaktuj się <EmailOutlinedIcon/></button>}
                 {isExpired &&
-                    <button type="button" className="btn btn-info btn-sm rate-button"><div className="me-1">Oceń</div> <StarIcon/></button>}
-                <button type="button" className="btn delete-button" onClick={handleDeleteReservation}><XIcon/></button>
+                    <button type="button" className="btn btn-info btn-sm rate-button"><div className="me-1">Oceń</div>
+                        <StarBorderOutlinedIcon/>
+                    </button>}
+                <button type="button" className="btn delete-button" onClick={handleDeleteReservation}><ClearOutlinedIcon/></button>
             </div>
         </div>
     )

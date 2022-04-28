@@ -53,7 +53,7 @@ const ReservationConfirmation = () => {
                                 <label>Zarezerwowane do:</label>
                                 <p>{new Date(reservation.reservationEndDay).toLocaleDateString()}</p>
                                 <label>Cena rezerwacji:</label>
-                                <p>{reservation.announcement.paymentType===1 ? countPrice(reservation.announcement.price) : "Za "+setCorrectOtherPaymentType(reservation.announcement.otherPaymentType)}</p>
+                                <p>{reservation.announcement.paymentType===1 ? countPrice(reservation.announcement.price) + " zł" : "Za "+setCorrectOtherPaymentType(reservation.announcement.otherPaymentType)}</p>
                                 <label id="confirmation-info-label">Na swoją pocztę dostaniesz powiadomienie,
                                     gdy ogłoszeniodawca zatwierdzi Twoją rezerwację.</label>
                             </div>

@@ -42,7 +42,7 @@ const ReservationConfirmation = () => {
                             <div className="confirmation-details-container">
                                 <label>Rezerwujesz:</label>
                                 <p><Link className="reference-link"
-                                         to={"/announcementPage/" + reservation.announcement.id}>{reservation.announcement.title}</Link>
+                                         to={"/announcement/" + reservation.announcement.id}>{reservation.announcement.title}</Link>
                                 </p>
                                 <label>Od użytkownika:</label>
                                 <p><Link className="reference-link"

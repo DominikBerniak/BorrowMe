@@ -22,9 +22,6 @@ const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired 
             })
         setDummyState(!state)
     }
-    useEffect(()=>{
-        console.log(`isAccepted: ${isAccepted} isExpired: ${isExpired} isUserReservation: ${isUserReservation}`)
-    },[])
 
     return (
         <div className={classNames}>

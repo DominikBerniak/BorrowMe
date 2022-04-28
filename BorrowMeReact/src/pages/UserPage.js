@@ -28,6 +28,8 @@ const UserPage = () => {
     const [userReservationsExpired, setUserExpired] = useState([]);
     const [announcementsReservationsUnaccepted, setAnnouncementUnaccepted] = useState([]);
     const [announcementsReservationsAccepted, setAnnouncementAccepted] = useState([]);
+    const [firstBox, setFirstBoxValue] = useState(userReservationsUnaccepted.length===0 ? (userReservationsAccepted.length===0 ? "3" : "2") : "1")
+    const [secondBox, setSecondBoxValue] = useState(announcementsReservationsUnaccepted.length===0 ? "2" : "1")
 
     const clearArrays = () => {
         setUserUnaccepted([]);
@@ -36,33 +38,38 @@ const UserPage = () => {
         setAnnouncementUnaccepted([]);
         setAnnouncementAccepted([]);
     }
-    const [boxValues, setBoxValues] = useState({
-        firstBox: userReservationsUnaccepted.length!==0 ? (userReservationsAccepted.length===0 ? "3" : "2") : "1",
-        secondBox: announcementsReservationsUnaccepted.length!==0 ? "2" : "1"
-    })
-    const handleFirstContainerChange = (event, newValue) => {
-        setBoxValues({...boxValues, firstBox: newValue});
+
+    let onChangeFirstBox = (event, value) => {
+        setFirstBoxValue(value);
     }
-    const handleSecondContainerChange = (event, newValue) => {
-        setBoxValues({...boxValues, secondBox: newValue});
+
+    let onChangeSecondBox = (event, value) => {
+        setSecondBoxValue(value);
     }
-    let setCorrectReservations = (reservation, isAnnouncementReservation = false) => {
+
+    let setUserReservations = (reservation) => {
         if (!reservation.isAccepted && new Date(reservation.reservationEndDay) > new Date()) {
-            if (isAnnouncementReservation)
-            {
-                setAnnouncementUnaccepted(announcementsReservationsUnaccepted.concat(reservation))
-            } else
-                setUserUnaccepted(userReservationsUnaccepted.concat(reservation))
+            setUserUnaccepted(userReservationsUnaccepted => userReservationsUnaccepted.concat(reservation))
         } else if (reservation.isAccepted && new Date(reservation.reservationEndDay) > new Date()) {
-            if (isAnnouncementReservation)
-            {
-                setAnnouncementAccepted(announcementsReservationsUnaccepted.concat(reservation));
-            } else
-                setUserAccepted(userReservationsAccepted.concat(reservation))
+            setUserAccepted(userReservationsAccepted => userReservationsAccepted.concat(reservation))
         } else if (reservation.isAccepted && new Date(reservation.reservationEndDay) < new Date()) {
-            setUserExpired(userReservationsExpired.concat(reservation));
+            setUserExpired(userReservationsExpired => userReservationsExpired.concat(reservation));
         }
     }
+
+    let setAnnouncementReservations = (reservation) => {
+        if (!reservation.isAccepted && new Date(reservation.reservationEndDay) > new Date()) {
+            setAnnouncementUnaccepted(announcementsReservationsUnaccepted => announcementsReservationsUnaccepted.concat(reservation))
+        } else if (reservation.isAccepted && new Date(reservation.reservationEndDay) > new Date()) {
+            setAnnouncementAccepted(announcementsReservationsAccepted=>announcementsReservationsAccepted.concat(reservation));
+        }
+    }
+
+    useEffect(() => {
+        setFirstBoxValue(userReservationsUnaccepted.length===0 ? (userReservationsAccepted.length===0 ? "3" : "2") : "1");
+        setSecondBoxValue(announcementsReservationsUnaccepted.length===0 ? "2" : "1");
+    }, [userReservationsUnaccepted.length, userReservationsAccepted.length, announcementsReservationsUnaccepted.length])
+
 
     useEffect(() => {
         getAuthUser()
@@ -108,13 +115,15 @@ const UserPage = () => {
                 .then(data => {
                     setDetails(data);
                     clearArrays()
+                    console.log(data.userReservations)
                     data.userReservations.map(reservation => {
-                        setCorrectReservations(reservation)
+                        setUserReservations(reservation)
                     })
+                    console.log(data.announcementReservations)
                     for (let i = 0; i < data.announcementReservations.length; i++)
                     {
                         data.announcementReservations[i].map(reservation => {
-                            setCorrectReservations(reservation, true)
+                            setAnnouncementReservations(reservation)
                         })
                     }
                 })
@@ -164,9 +173,9 @@ const UserPage = () => {
                                     {userDetails.userReservations.length > 0 ?
                                         <>
                                             <Box className="margin-top-1rem" sx={{ width: '100%', justifyContent: "center" }}>
-                                                <TabContext value={boxValues.firstBox}>
+                                                <TabContext value={firstBox}>
                                                     <Box>
-                                                        <TabList onChange={handleFirstContainerChange} TabIndicatorProps={{ style: { display: "none" } }} textColor="primary" centered>
+                                                        <TabList onChange={onChangeFirstBox} TabIndicatorProps={{ style: { display: "none" } }} textColor="primary" centered>
                                                             <Tab label="Niezaakceptowane" value="1" disabled={userReservationsUnaccepted.length === 0} />
                                                             <Tab label="Zaakceptowane" value="2" disabled={userReservationsAccepted.length === 0} />
                                                             <Tab label="Wygaśnięte" value="3" disabled={userReservationsExpired.length === 0} />
@@ -204,9 +213,9 @@ const UserPage = () => {
                                     <label className="center">Rezerwacje do twoich ogłoszeń:</label>
                                     {userDetails.announcementReservations.length > 0 ?
                                         <Box className='margin-top-1rem' sx={{ width: '100%', justifyContent: "center" }}>
-                                            <TabContext value={boxValues.secondBox}>
+                                            <TabContext value={secondBox}>
                                                 <Box>
-                                                    <TabList onChange={handleSecondContainerChange} TabIndicatorProps={{ style: { display: "none" } }} textColor="primary" centered>
+                                                    <TabList onChange={onChangeSecondBox} TabIndicatorProps={{ style: { display: "none" } }} textColor="primary" centered>
                                                         <Tab label="Niezaakceptowane" value="1" disabled={announcementsReservationsUnaccepted.length === 0} />
                                                         <Tab label="Zaakceptowane" value="2" disabled={announcementsReservationsAccepted.length === 0} />
                                                     </TabList>

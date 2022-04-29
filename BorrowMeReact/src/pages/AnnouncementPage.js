@@ -10,8 +10,10 @@ import '../styles/Custom-calendar.css';
 import '../styles/Custom-DatePicker.css';
 import CaretNext from "../components/CaretNext";
 import CaretPrevious from "../components/CaretPrevious";
-import ArrowPrevious from "../components/ArrowPrevious";
-import ArrowNext from "../components/ArrowNext";
+// import ArrowPrevious from "../components/ArrowPrevious";
+// import ArrowNext from "../components/ArrowNext";
+import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
+import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import {getCorrectPaymentElem, isWithinRanges} from "../services/announcementUtils";
 import NoImage from "../components/NoImage";
 import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
@@ -135,7 +137,7 @@ const AnnouncementPage = () => {
                                     {announcementData.pictureLocations.length > 1 &&
                                         <button type="button" onClick={handlePreviousImage}
                                                 className="image-buttons image-buttons-previous">
-                                            <ArrowPrevious/>
+                                            <ArrowBackIosNewOutlinedIcon/>
                                         </button>
                                     }
                                     <div onClick={showGallery} className="mx-auto">
@@ -145,7 +147,7 @@ const AnnouncementPage = () => {
                                     {announcementData.pictureLocations.length > 1 &&
                                         <button type="button" onClick={handleNextImage}
                                                 className="image-buttons image-buttons-next">
-                                            <ArrowNext/>
+                                            <ArrowForwardIosOutlinedIcon/>
                                         </button>
                                     }
                                 </>
@@ -153,8 +155,8 @@ const AnnouncementPage = () => {
                             }
                         </div>
                         <div className="calendar-container center">
-                            <Calendar locale="pl-PL" onChange={onChange} value={date} nextLabel={<ArrowNext/>}
-                                      prevLabel={<ArrowPrevious/>} next2Label={<CaretNext/>}
+                            <Calendar locale="pl-PL" onChange={onChange} value={date} nextLabel={<ArrowForwardIosOutlinedIcon/>}
+                                      prevLabel={<ArrowBackIosNewOutlinedIcon/>} next2Label={<CaretNext/>}
                                       prev2Label={<CaretPrevious/>} tileDisabled={tileDisabled} minDate={new Date()}
                                       selectRange={true} returnValue="range"/>
                         </div>
@@ -182,7 +184,7 @@ const AnnouncementPage = () => {
                         </div>
                         <div className="city-announcement-container p-3">
                             <label className="mb-3">Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</label>
-                            <iframe width="600" height="500" id="gmap_canvas" loading="lazy"
+                            <iframe id="announcement-page-map" loading="lazy"
                                     src={`https://maps.google.com/maps?q=${announcementData.city.name}&z=14&output=embed`}>
                             </iframe>
                         </div>

@@ -3,6 +3,7 @@ import {getData} from "../services/apiFetch";
 import {Link, useParams} from "react-router-dom";
 import "./reservationConfirmation/reservationConfirmation.css";
 import Spinner from "../components/Spinner";
+import {Helmet} from "react-helmet";
 
 const ReservationConfirmation = () => {
     const {reservationId} = useParams();
@@ -31,6 +32,9 @@ const ReservationConfirmation = () => {
 
     return (
         <div className="reservation-confirmation-container">
+            <Helmet>
+                <title>Potwierdzenie rezerwacji | BorrowMe</title>
+            </Helmet>
             {reservation ?
                 <>
                     <div className="confirmation-top center">

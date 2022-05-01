@@ -15,6 +15,7 @@ import { Box, Link, Tab } from "@mui/material";
 import TabPanel from '@mui/lab/TabPanel';
 import { TabContext, TabList } from "@mui/lab";
 import "./userPage/userPage.css"
+import {Helmet} from "react-helmet";
 
 const UserPage = () => {
     const authUser = useSelector(state => state.authUser.value);
@@ -150,6 +151,9 @@ const UserPage = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Strona użytkownika {userDetails.user.firstName} | BorrowMe</title>
+            </Helmet>
             {userDetails ?
                 <>
                     <div className="user-page-container">

@@ -64,8 +64,8 @@
     grid-row-start: 3;
     font-size: xx-large;
 }
-.unaccepted-reservations-container, .accepted-reservation-container, .expired-reservation-container,
-.unaccepted-user-announcement-reservations-container, .accepted-user-announcement-reservations-container{
+.unaccepted-reservations-container, .accepted-reservations-container, .expired-reservations-container,
+.unaccepted-announcement-reservations-container, .accepted-announcement-reservations-container, .expired-announcement-reservations-container{
     max-height: 22rem;
     overflow-y: auto;
 }

@@ -3,10 +3,19 @@ import {getData} from "../services/apiFetch";
 import {Link, useParams} from "react-router-dom";
 import "./reservationConfirmation/reservationConfirmation.css";
 import Spinner from "../components/Spinner";
+import {Helmet} from "react-helmet";
 
 const ReservationConfirmation = () => {
     const {reservationId} = useParams();
     const [reservation, setData] = useState();
+
+    let setCorrectOtherPaymentType = (otherPaymentType) => {
+        if (otherPaymentType === null){
+            return "darmo";
+        } else {
+            return otherPaymentType;
+        }
+    }
 
     let countPrice = (price) => {
         let differenceInTime = new Date(reservation.reservationEndDay).getTime() - new Date(reservation.reservationStartDay).getTime();
@@ -21,16 +30,11 @@ const ReservationConfirmation = () => {
             })
     }, [])
 
-    let setCorrectOtherPaymentType = (otherPaymentType) => {
-        if (otherPaymentType === null){
-            return "darmo";
-        } else {
-            return otherPaymentType;
-        }
-    }
-
     return (
         <div className="reservation-confirmation-container">
+            <Helmet>
+                <title>Potwierdzenie rezerwacji | BorrowMe</title>
+            </Helmet>
             {reservation ?
                 <>
                     <div className="confirmation-top center">
@@ -42,7 +46,7 @@ const ReservationConfirmation = () => {
                             <div className="confirmation-details-container">
                                 <label>Rezerwujesz:</label>
                                 <p><Link className="reference-link"
-                                         to={"/announcementPage/" + reservation.announcement.id}>{reservation.announcement.title}</Link>
+                                         to={"/announcement/" + reservation.announcement.id}>{reservation.announcement.title}</Link>
                                 </p>
                                 <label>Od użytkownika:</label>
                                 <p><Link className="reference-link"
@@ -53,7 +57,7 @@ const ReservationConfirmation = () => {
                                 <label>Zarezerwowane do:</label>
                                 <p>{new Date(reservation.reservationEndDay).toLocaleDateString()}</p>
                                 <label>Cena rezerwacji:</label>
-                                <p>{reservation.announcement.paymentType===1 ? countPrice(reservation.announcement.price) : "Za "+setCorrectOtherPaymentType(reservation.announcement.otherPaymentType)}</p>
+                                <p>{reservation.announcement.paymentType===1 ? countPrice(reservation.announcement.price) + " zł" : "Za "+setCorrectOtherPaymentType(reservation.announcement.otherPaymentType)}</p>
                                 <label id="confirmation-info-label">Na swoją pocztę dostaniesz powiadomienie,
                                     gdy ogłoszeniodawca zatwierdzi Twoją rezerwację.</label>
                             </div>

@@ -151,11 +151,11 @@ const UserPage = () => {
 
     return (
         <>
-            <Helmet>
-                <title>Strona użytkownika {userDetails.user.firstName} | BorrowMe</title>
-            </Helmet>
             {userDetails ?
                 <>
+                    <Helmet>
+                        <title>Strona użytkownika {userDetails.user.firstName} | BorrowMe</title>
+                    </Helmet>
                     <div className="user-page-container">
                         <div className="user-info">
                             <div className="avatar">

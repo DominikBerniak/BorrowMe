@@ -58,11 +58,11 @@
     background-color: rgba(238, 130, 238, 0.85);
 }
 .contact-button:hover {
-    transform: scale(110%);
+    transform: scale(105%);
     background-color: rgba(234, 106, 234, 0.85);
 }
 .delete-button:hover {
-    transform: scale(120%);
+    transform: scale(1.1);
 }
 #reservation-details-label {
     font-size: small;

@@ -5,8 +5,6 @@ import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import {patchData} from "../../services/apiFetch";
-import {useEffect} from "react";
-import {Helmet} from "react-helmet";
 
 const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired = false, isUserReservation = true, state, setDummyState}) => {
     const startDay = new Date(reservation.reservationStartDay);

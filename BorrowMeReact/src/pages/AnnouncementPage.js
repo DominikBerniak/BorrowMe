@@ -27,10 +27,10 @@ const AnnouncementPage = () => {
     const [announcementData, setAnnouncementData] = useState();
     const [reservations, setReservations] = useState([]);
     const [quantity, setQuantity] = useState(0);
-    const [isGalleryVisible, setIsGalleryVisible] = useState(false);
     const {announcementId} = useParams();
     const navigate = useNavigate();
     const user = useSelector(state => state.user.value);
+    const [isGalleryVisible, setIsGalleryVisible] = useState(false);
 
     let handleSubmit = () => {
         if (user.userId === "") {
@@ -182,7 +182,7 @@ const AnnouncementPage = () => {
                         </div>
                         <div className="city-announcement-container p-3">
                             <label className="mb-3">Lokalizacja: {announcementData.city.name}, {announcementData.voivodeship.name}</label>
-                            <iframe width="420" height="500" id="gmap_canvas" loading="lazy"
+                            <iframe id="announcement-page-map" loading="lazy"
                                     src={`https://maps.google.com/maps?q=${announcementData.city.name}&z=14&output=embed`}>
                             </iframe>
                         </div>

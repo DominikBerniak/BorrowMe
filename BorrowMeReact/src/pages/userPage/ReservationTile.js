@@ -15,32 +15,8 @@ const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired 
     const navigate = useNavigate();
     const [isModalVisible, setModalVisible] = useState(false);
     const [modalType, setModalType] = useState("accept");
-    const [message, setMessage] = useState("");
-    const [title, setTitle] = useState("");
     let handleClick = () => {
         navigate(`/announcement/${reservation.announcement.id}`)
-    }
-    let setMessageType = () => {
-        if (modalType === "delete")
-        {
-            return "Czy na pewno chcesz usunąć te rezerwację?";
-        } else if (modalType === "accept")
-        {
-            return "Czy na pewno chcesz zaakceptować te rezerwację?";
-        } else if (modalType === "unaccept") {
-            return "Czy na pewno chcesz usunąć akceptację tej rezerwacji?";
-        }
-    }
-    let setTitleType = () => {
-        if (modalType === "delete")
-        {
-            return "Usuwanie rezerwacji";
-        } else if (modalType === "accept")
-        {
-            return "Akceptowanie rezerwacji";
-        } else if (modalType === "unaccept") {
-            return "Usuwanie akceptacji rezerwacji";
-        }
     }
     let deleteReservation = () => {
         let response = deleteData(`/api/Reservations/${reservation.id}`)
@@ -79,14 +55,10 @@ const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired 
         setModalType("unaccept")
         setModalVisible(true);
     }
-    useEffect(() => {
-        setTitle(setTitleType())
-        setMessage(setMessageType())
-    }, [modalType])
 
     return (
         <div className={classNames}>
-            {/*<ConfirmModal type={modalType} showModal={false} confirmModal={modalType === "delete" ? deleteReservation : (modalType === "accept" ? acceptReservation : unacceptReservation)} hideModal={hideModal}/>*/}
+            <ConfirmModal type={modalType} showModal={isModalVisible} confirmModal={modalType === "delete" ? deleteReservation : (modalType === "accept" ? acceptReservation : unacceptReservation)} hideModal={hideModal}/>
             <label id="reservation-details-label">Szczegóły rezerwacji:</label>
             <div className="announcement-title-reservation-dates">
                     <span onClick={handleClick}
@@ -108,20 +80,6 @@ const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired 
                     </button>}
                 <button type="button" className="btn delete-button" onClick={handleDelete}><ClearOutlinedIcon/></button>
             </div>
-            <Modal show={isModalVisible} onHide={hideModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{title}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body><div className={modalType === "delete" ? "alert alert-danger" : (modalType === "accept" ? "alert alert-success" : "alert alert-secondary")}>{message}</div></Modal.Body>
-                <Modal.Footer>
-                    <Button variant="default" onClick={hideModal}>
-                        Nie
-                    </Button>
-                    <Button variant={modalType === "delete" ? "danger" : (modalType === "accept" ? "success" : "secondary")} onClick={modalType === "delete" ? deleteReservation : (modalType === "accept" ? acceptReservation : unacceptReservation)}>
-                        Tak
-                    </Button>
-                </Modal.Footer>
-            </Modal>
         </div>
     )
 }

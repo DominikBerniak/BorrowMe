@@ -1,6 +1,6 @@
 .unaccepted-reservation-tile-container {
     height: 100px;
-    background-color: rgba(118, 186, 255, 0.73);
+    background-color: rgba(151, 186, 224, 0.73);
     padding: 10px;
     border-radius: 3px;
     margin-top: 1rem;
@@ -9,7 +9,7 @@
 }
 .accepted-reservation-tile-container {
     height: 100px;
-    background-color: #dddddd;
+    background-color: #a5d278;
     padding: 10px;
     border-radius: 3px;
     margin-top: 1rem;
@@ -18,7 +18,7 @@
 }
 .disable-reservation-tile-container {
     height: 100px;
-    background-color: rgba(85, 85, 85, 0.69);
+    background-color: rgba(140, 140, 140, 0.69);
     padding: 10px;
     border-radius: 3px;
     margin-top: 1rem;
@@ -31,11 +31,11 @@
     display: flex;
     align-items: center;
 }
-.delete-reservation-button, .accept-reservation-button, .rate-reservation-button, .contact-owner-button {
+.reservation-tile-buttons, .accept-reservation-button, .rate-reservation-button, .contact-owner-button {
     display: flex;
     align-items: center;
 }
-.delete-reservation-button {
+.reservation-tile-buttons {
     width: 10.5rem;
     justify-content: end;
 }
@@ -52,6 +52,13 @@
     display: flex;
     align-items: center;
 }
+.unaccept-button {
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+    background-color: #e0546f;
+    color: white;
+}
 .contact-button {
     transition: 0.5s;
     color: black;
@@ -62,6 +69,9 @@
     background-color: rgba(234, 106, 234, 0.85);
 }
 .delete-button:hover {
+    transform: scale(1.1);
+}
+.unaccept-button:hover {
     transform: scale(1.1);
 }
 #reservation-details-label {

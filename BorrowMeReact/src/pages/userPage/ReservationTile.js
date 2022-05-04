@@ -5,9 +5,8 @@ import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import {deleteData, patchData} from "../../services/apiFetch";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import ConfirmModal from "../../components/ConfirmModal";
-import {Button, Modal} from "react-bootstrap";
 
 const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired = false, isUserReservation = true, reservationAccept, setReservationAccept, reservationDelete, setReservationDelete}) => {
     const startDay = new Date(reservation.reservationStartDay);

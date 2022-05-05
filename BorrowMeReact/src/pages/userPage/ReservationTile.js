@@ -20,6 +20,7 @@ const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired 
     let deleteReservation = () => {
         let response = deleteData(`/api/Reservations/${reservation.id}`)
             .then(response => {
+                console.log(response)
             })
         setReservationDelete(!reservationDelete)
         setModalVisible(false)
@@ -27,6 +28,7 @@ const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired 
     let acceptReservation = () => {
         let response = patchData(`/api/Reservations/${reservation.id}/accept`, true)
             .then(response => {
+                console.log(response)
             })
         setReservationAccept(!reservationAccept);
         setModalVisible(false)
@@ -34,6 +36,7 @@ const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired 
     let unacceptReservation = () => {
         let response = patchData(`/api/Reservations/${reservation.id}/accept`, false)
             .then(response => {
+                console.log(response)
             })
         setReservationAccept(!reservationAccept);
         setModalVisible(false)

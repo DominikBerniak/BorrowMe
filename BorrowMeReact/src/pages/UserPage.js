@@ -162,7 +162,7 @@ const UserPage = () => {
                         </div>
                     </div>
                     <div className="user-details-container">
-                        <div className="user-announcements-container center">
+                        <div className="user-announcements-container center flex-wrap">
                             {userDetails.announcements.length > 0 ?
                                 <>
                                     {userDetails.announcements.map((announcement) => {
@@ -174,7 +174,7 @@ const UserPage = () => {
                                 : <label className="margin-top-1rem center text-secondary">{authUser.userId === userId ? "Nie posiadasz żadnych ogłoszeń" : "Użytkownik nie posiada żadnych ogłoszeń"}</label>}
                         </div>
                         {authUser.userId === userId &&
-                            <>
+                            <div className="all-reservations-container margin-top-1rem">
                                 <div className="user-reservations-container margin-top-1rem">
                                     <h5 className="center">Twoje rezerwacje:</h5>
                                     {userReservationsUnaccepted.length > 0 || userReservationsAccepted.length > 0 || userReservationsExpired.length > 0 ?
@@ -255,7 +255,7 @@ const UserPage = () => {
                                             </TabContext>
                                         </Box> : <label className="margin-top-1rem center text-secondary">{userDetails.announcements.length > 0 ? "Nikt niczego jeszcze od Ciebie nie zarezerwował." : "Nie posiadasz żadnych ogłoszeń."}</label>}
                                 </div>
-                            </>}
+                            </div>}
                         <div className="back-home-button-container center">
                             <button className="btn homepage-button" onClick={() => navigate("/")}>Wróć do strony głównej
                             </button>

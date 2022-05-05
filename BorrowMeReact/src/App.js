@@ -40,6 +40,11 @@ function App() {
                         <AddAnnouncement/>
                     </RequireAuth>
                 }/>
+                <Route path="announcement/:announcementId/edit" element={
+                    <RequireAuth>
+                        <AddAnnouncement isEditing={true}/>
+                    </RequireAuth>
+                }/>
                 <Route path="chat" element={
                     <RequireAuth>
                         <Chat/>

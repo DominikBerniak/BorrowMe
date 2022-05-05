@@ -68,6 +68,8 @@ namespace Api
             services.AddScoped<IMessageService, MessageService>();
             services.AddSingleton<IUserIdProvider, UserEmailProvider>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRepository<PicturePath>, Repository<PicturePath>>();
+            services.AddScoped<IEmailService, EmailService>();
         }
         public static void AddAuthentication(this WebApplicationBuilder builder)
         {

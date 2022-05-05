@@ -7,12 +7,12 @@ const ConfirmModal = ({type, showModal, confirmModal, hideModal}) => {
     if (type === "delete")
     {
         title = "Usuwanie rezerwacji";
-        message = "Czy na pewno chcesz usunąć te rezerwację?";
+        message = "Czy na pewno chcesz usunąć tę rezerwację?";
         classnames = "alert alert-danger"
     } else if (type === "accept")
     {
         title = "Akceptowanie rezerwacji";
-        message = "Czy na pewno chcesz zaakceptować te rezerwację?";
+        message = "Czy na pewno chcesz zaakceptować tę rezerwację?";
         classnames = "alert alert-success";
     } else if (type === "unaccept") {
         title = "Usuwanie akceptacji rezerwacji";

@@ -87,6 +87,39 @@
     align-items: center;
     border-radius: 0.3rem;
 }
+.announcement-reservations-table-container{
+    background-color: white;
+    grid-area: calendar / calendar / calendar / form;
+    border-radius: 0.3rem;
+}
+.announcement-reservations-table {
+    width: 95%;
+    margin: 0 auto;
+    overflow: scroll;
+}
+.announcement-options{
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    grid-area: city;
+    border-radius: 0.3rem;
+}
+.announcement-options-buttons{
+    margin: 1rem 0;
+    width: 50%;
+    background-color: #595959;
+    color: white;
+    padding: 0.6rem;
+    border-radius: 0.25rem;
+    border: none;
+    text-decoration: none;
+    text-align: center;
+}
+.announcement-options-buttons:hover{
+    outline: 0.15rem solid #595959;
+    background-color: white;
+    color: black;
+}
 .publish-date {
     grid-area: date;
     display: flex;

@@ -3,9 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
-using System.Drawing;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Services.Implementations
 {
@@ -139,6 +136,69 @@ namespace Services.Implementations
                     "</div>"+
                 "</div>"
             };
+            msg.AddTo(new EmailAddress(email, email));
+            await client.SendEmailAsync(msg);
+        }
+
+        public async Task SendReservationConfirmationEmail(Reservation reservation)
+        {
+            var apiKey = _configuration.GetSection("SendGridKey").GetSection("Key").Value;
+            var client = new SendGridClient(apiKey);
+            var clientUrl = _configuration.GetSection("Client").GetSection("Url").Value;
+            string link = $"{clientUrl}/chat";
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress("borrowmebot@gmail.com", "BorrowMe"),
+                Subject = "Potwierdzenie rezerwacji",
+                HtmlContent =
+                    "<div style=\"background-color: #e7e7e7; user-select: none; padding: 1rem 0 5rem 0;\">" +
+                        "<h1 style=\"margin-top: 2rem; text-align: center;\">BorrowMe</h1>" +
+                        "<div style=\"" +
+                            "width: 60%; " +
+                            "background-color: #fff; " +
+                            "margin: 0 auto; " +
+                            "border-radius: 1rem 1rem 1rem 1rem;\">" +
+                            "<div style=\"" +
+                                "padding: 0.5rem; " +
+                                "text-align: center; " +
+                                "border-bottom: 0.3rem solid #dee2e6; " +
+                                "background-color: #676767; " +
+                                "color: #fff; " +
+                                "border-color: #2d2d2d; " +
+                                "border-radius: 1rem 1rem 0 0; " +
+                                $"font-size: 1.5rem;\"> Potwierdzenie rezerwacji \"{reservation.Announcement.Title}\"</div>" +
+                            "<div style=\"" +
+                                "margin-top: 1.7rem; " +
+                                "font-size: 1.3rem; " +
+                                "padding: 0 1rem; " +
+                                $"text-align: center;\">Z przyjemnością informujemy, że Twoja rezerwacja do ogłoszenia \"{reservation.Announcement.Title}\" została zaakceptowana.</div>" +
+                            "<div style=\"" +
+                                "margin-top: 1rem; " +
+                                "font-size: 1.3rem; " +
+                                "padding: 0 1rem; " +
+                                "text-align: center;\">Kliknij poniższy przycisk aby przejść do czatu i uzgodnić pozostałe warunki rezerwacji:</div>" +
+                            $"<a href=\"{link}\" style=\"" +
+                                "display: block; " +
+                                "text-decoration: none; " +
+                                "text-align: center; " +
+                                "margin: 2rem auto 0 auto; " +
+                                "cursor: pointer; " +
+                                "background-color: #676767; " +
+                                "color: #fff; " +
+                                "font-size: 1.3rem; " +
+                                "border-radius: 0.5rem; " +
+                                "border: none; " +
+                                "padding: 0.5rem; " +
+                                "width: 50%; \">Czat</a>" +
+                            "<div style=\"" +
+                                "text-align: center; " +
+                                "margin-top: 3rem; " +
+                                "padding-bottom: 1rem; " +
+                                "color: #6e6e6e;\"></div>" +
+                    "</div>" +
+                "</div>"
+            };
+            var email = reservation.User.Email;
             msg.AddTo(new EmailAddress(email, email));
             await client.SendEmailAsync(msg);
         }

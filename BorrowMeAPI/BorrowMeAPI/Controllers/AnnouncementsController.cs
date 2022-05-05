@@ -91,21 +91,27 @@ namespace Api.Controllers
             return Ok(announcementData);
         }
 
-        // /api/Announcements/ PUT
-        [HttpPut]
-        [Authorize(Roles = "User")]
-        public async Task<ActionResult<Announcement>> EditWholeAnnouncement(Announcement announcement)
-        {
-            _logger.LogInformation($"Edit announcement attempt. Id = '{announcement.Id}'");
-            return Ok(await _announcementService.UpdateAnnouncement(announcement));
-        }
-
         // /api/Announcements/{id} PATCH
-        [HttpPatch("{id:int}")]
+        [HttpPatch("{id}")]
         [Authorize(Roles = "User")]
-        public IActionResult EditOneInAnnouncement(Guid id)
+        public async Task<ActionResult> EditAnnouncement(Guid id, [FromForm] CreateAnnouncementDto announcementData)
         {
-            return Ok("Not Implemented");
+            if (!ModelState.IsValid)
+            {
+                _logger.LogInformation("Model state is not valid");
+                return BadRequest();
+            }
+            _logger.LogInformation($"Edit announcement with id: {id} attempt.");
+            try
+            {
+                var announcement = await _announcementService.UpdateAnnouncement(announcementData, id);
+                return Ok(announcement);
+            }
+            catch (Exception e)
+            {
+                _logger.LogInformation(e.Message);
+                return BadRequest();
+            }
         }
 
         // /api/Announcements/{id} DELETE

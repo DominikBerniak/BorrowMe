@@ -143,5 +143,24 @@ namespace Persistance.Repositories
                 .Include(a=>a.Voivodeship)
                 .ToListAsync();
         }
+
+        public async Task<Announcement> EditAnnouncement(Announcement announcement, CreateAnnouncementDto announcementData)
+        {
+            if (announcement.SubCategory.Id != announcementData.SubCategoryId)
+            {
+                announcement.SubCategory = await _dbContext.SubCategories.FindAsync(announcementData.SubCategoryId);
+            }
+            if (announcement.City.Name != announcementData.CityName)
+            {
+                announcement.City = await _dbContext.Cities.FirstOrDefaultAsync(c => c.Name == announcementData.CityName);
+            }
+            if (announcement.Voivodeship.Name != announcementData.VoivodeshipName)
+            {
+                announcement.Voivodeship = await _dbContext.Voivodeships.FirstOrDefaultAsync(v => v.Name == announcementData.VoivodeshipName);
+            }
+            _dbContext.Announcements.Update(announcement);
+            await _dbContext.SaveChangesAsync();
+            return announcement;
+        }
     }
 }

@@ -15,12 +15,15 @@ namespace Api.Controllers
         private readonly ILogger _logger;
         private readonly IReservationService _reservationService;
         private readonly IMapper _mapper;
+        private readonly IEmailService _emailService;
 
-        public ReservationsController(ILogger<ReservationsController> logger, IReservationService reservationService, IMapper mapper)
+        public ReservationsController(ILogger<ReservationsController> logger, 
+            IReservationService reservationService, IMapper mapper, IEmailService emailService)
         {
             _logger = logger;
             _reservationService = reservationService;
             _mapper = mapper;
+            _emailService = emailService;
         }
 
         // /api/Reservations POST
@@ -56,6 +59,10 @@ namespace Api.Controllers
         {
             _logger.LogInformation($"Patch reservation attempt. Id = '{id}'");
             var updatedReservation = await _reservationService.UpdateIsAcceptedReservation(id, isAccepted);
+            if (isAccepted)
+            {
+                await _emailService.SendReservationConfirmationEmail(updatedReservation);
+            }
             return Ok(updatedReservation);
         }
 

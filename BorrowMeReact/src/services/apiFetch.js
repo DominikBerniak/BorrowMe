@@ -40,6 +40,18 @@ export async function postFormData(url, formData) {
     }
 }
 
+export async function patchFormData(url, formData) {
+    const response = await fetch(url, {
+        method: 'PATCH',
+        body: formData,
+    })
+    if (response.ok) {
+        return await response.json();
+    } else {
+        return response.statusText
+    }
+}
+
 export async function patchData(url, data) {
     const response = await fetch(url, {
         method: 'PATCH',

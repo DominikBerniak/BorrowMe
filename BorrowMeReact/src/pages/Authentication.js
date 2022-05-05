@@ -12,8 +12,8 @@ import Spinner from "../components/Spinner";
 const Authentication = ({pageType}) => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("dominik@gmail.com");
+    const [password, setPassword] = useState("Admin123!");
 
     const [passwordInputTimeout, setPasswordInputTimeout] = useState(null);
 
@@ -47,7 +47,7 @@ const Authentication = ({pageType}) => {
         setIsSubmitDisabled(pageType==="register");
         setWrongAuthenticationMessage("");
         setIsPasswordCorrect(true);
-        setPassword("");
+        // setPassword("");
     }, [pageType])
 
     useEffect(() => {

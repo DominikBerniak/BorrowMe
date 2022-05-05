@@ -2,7 +2,7 @@ import {useDetectClickOutside} from "react-detect-click-outside";
 import {useEffect, useRef} from "react";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 
-const ConfirmModal = ({handleFormSubmit, hideModal, announcementTile, hasSubmitFailed}) => {
+const ConfirmModal = ({handleFormSubmit, hideModal, announcementTile, hasSubmitFailed, isEditing}) => {
     const confirmModalRef = useDetectClickOutside({onTriggered: hideModal});
     const confirmModalContainerRef = useRef();
     useEffect(() => {
@@ -13,7 +13,7 @@ const ConfirmModal = ({handleFormSubmit, hideModal, announcementTile, hasSubmitF
         <div id="add-announcement-confirm-modal-container" ref={confirmModalContainerRef}>
             <div id="add-announcement-confirm-modal" ref={confirmModalRef}>
                 <div className="d-flex w-100 align-items-center mt-4">
-                    <h3 className="mx-auto ps-4">{hasSubmitFailed ? "Ups! Coś poszło nie tak :(" : "Potwierdź dodanie ogłoszenia"}</h3>
+                    <h3 className="mx-auto ps-4">{hasSubmitFailed ? "Ups! Coś poszło nie tak :(" : (`Potwierdź ${!isEditing ? "dodanie" : "aktualizację"} ogłoszenia`)}</h3>
                     <div className="pe-4 cursor-pointer">
                         <ClearOutlinedIcon onClick={hideModal} sx={{fontSize: 30, color: "#8c8c8c"}}/>
                     </div>
@@ -22,7 +22,7 @@ const ConfirmModal = ({handleFormSubmit, hideModal, announcementTile, hasSubmitF
                     {hasSubmitFailed ?
                         <div className="d-flex flex-column align-items-center">
                             <div className="">
-                                Podczas dodawania ogłoszenia wystąpił błąd.
+                                Podczas {!isEditing? "dodawania" : "aktualizacji"} ogłoszenia wystąpił błąd.
                             </div>
                             <div>
                                 Najprawdopodobniej dodane zdjęcie ma złe rozszerzenie.
@@ -33,7 +33,7 @@ const ConfirmModal = ({handleFormSubmit, hideModal, announcementTile, hasSubmitF
                         </div>
                         :
                         <>
-                            <div className="">Czy na pewno chcesz dodać ogłoszenie o tytule:</div>
+                            <div className="">Czy na pewno chcesz {!isEditing? "dodać" : "zaktualizować"} ogłoszenie o tytule:</div>
                             <div className="h4 py-3">{announcementTile}</div>
                         </>
                     }
@@ -50,7 +50,7 @@ const ConfirmModal = ({handleFormSubmit, hideModal, announcementTile, hasSubmitF
                     <div className="d-flex w-40 mt-4 mx-auto justify-content-between">
                         <button className="add-announcement-confirm-modal-button-confirm rounded px-3 py-2"
                                 onClick={handleFormSubmit}
-                        >Dodaj
+                        >{!isEditing? "Dodaj" : "Aktualizuj"}
                         </button>
                         <button className="add-announcement-confirm-modal-button-cancel rounded px-3 py-2"
                                 onClick={hideModal}

@@ -2,15 +2,15 @@ import {Helmet} from "react-helmet";
 import {useEffect, useRef, useState} from "react";
 import "./addAnnouncement/addAnnouncement.css"
 import CategoriesModal from "./addAnnouncement/CategoriesModal";
-import {getData, postData, postFormData} from "../services/apiFetch";
+import {getData, patchFormData, postData, postFormData} from "../services/apiFetch";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import AddedImage from "./addAnnouncement/AddedImage";
 import CostTypesButtons from "./addAnnouncement/CostTypesButtons";
 import ConfirmModal from "./addAnnouncement/ConfirmModal";
 import {useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
-const AddAnnouncement = () => {
+const AddAnnouncement = ({isEditing = false}) => {
     const [isCategoriesModalVisible, setIsCategoriesModalVisible] = useState(false);
 
     const [announcementTitle, setAnnouncementTitle] = useState("");
@@ -45,7 +45,78 @@ const AddAnnouncement = () => {
     const ownerId = useSelector(state=>state.user.value).userId;
     const [hasSubmitFailed, setHasSubmitFailed] = useState(false);
 
+    const {announcementId} = useParams();
+    const [announcementData, setAnnouncementData] = useState();
+
+    const allCategories = useSelector(state => state.allCategories.value)
+
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        if (isEditing && !announcementData)
+        {
+            getData(`/api/Announcements/${announcementId}`)
+                .then(data=>{
+                    let announcement = data.announcement;
+                    setAnnouncementData(announcement);
+                    setAnnouncementTitle(announcement.title);
+                    setAnnouncementDescription(announcement.description);
+                    setCategoryInfo(announcement)
+                    setLocation({
+                        city: announcement.city.name,
+                        voivodeship: announcement.voivodeship.name,
+                        inputValue: `${announcement.city.name}, ${announcement.voivodeship.name}`
+                    });
+                    setAnnouncementCostInfo(announcement)
+                    setAnnouncementPictures(announcement)
+                })
+        }
+    },[])
+
+    const setAnnouncementCostInfo = (announcement) => {
+        setSelectedCostType(getCorrectPaymentTypeFromNumber(announcement.paymentType))
+        if (announcement.paymentType === 1)
+        {
+            setAnnouncementCost(announcement.price);
+        }
+        else if (announcement.paymentType === 2)
+        {
+            setAnnouncementCostOther(announcement.otherPaymentType);
+        }
+    }
+
+    const setAnnouncementPictures = async (announcement) => {
+        let newImages = [...images];
+        let newFormImages = [...formImages];
+        for (let i = 0; i < newImages.length; i++) {
+            if (!announcement.pictureLocations[i])
+            {
+                break;
+            }
+            newImages[i] = `/api/StaticFiles/${announcement.pictureLocations[i].directoryName}/${announcement.pictureLocations[i].fileName}`;
+            await fetch(`/api/StaticFiles/${announcement.pictureLocations[i].directoryName}/${announcement.pictureLocations[i].fileName}`)
+                .then(response=>response.blob())
+                .then(blob=>{
+                    let file = new File([blob], announcement.pictureLocations[i].fileName, { lastModified: new Date().getTime(), type: blob.type });
+                    newImages[i] = URL.createObjectURL(file);
+                    newFormImages[i] = file;
+                })
+
+        }
+        setImages(newImages);
+        setFormImages(newFormImages);
+    }
+
+    const setCategoryInfo = (announcement) => {
+        let mainCategory = allCategories.find(category=>category.subCategories.find(subCategory=>subCategory.id===announcement.subCategory.id))
+        let subCategory = mainCategory.subCategories.find(subCategory=>subCategory.id===announcement.subCategory.id);
+        setCategory({
+            mainCategoryName: mainCategory.name,
+            mainCategoryId: mainCategory.id,
+            subCategoryName: subCategory.name,
+            subCategoryId: subCategory.id
+        });
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -73,18 +144,34 @@ const AddAnnouncement = () => {
         {
             formData.append("otherPaymentType", announcementCostOther);
         }
-        postFormData("/api/Announcements",formData)
-            .then(data=>{
-                hideConfirmModal();
-                if (data === "Bad Request")
-                {
-                    setHasSubmitFailed(true);
-                    showConfirmModal()
-                    return;
-                }
-                console.log(`Pomyślnie dodano ogłoszenie o id: ${data.id}.`);
-                navigate(`/announcement/${data.id}`)
-            })
+        if (!isEditing)
+        {
+            postFormData("/api/Announcements",formData)
+                .then(data=>{
+                    hideConfirmModal();
+                    if (data === "Bad Request")
+                    {
+                        setHasSubmitFailed(true);
+                        showConfirmModal()
+                        return;
+                    }
+                    navigate(`/announcement/${data.id}`)
+                })
+        }
+        else
+        {
+            patchFormData(`/api/Announcements/${announcementId}`,formData)
+                .then(data=>{
+                    hideConfirmModal();
+                    if (data === "Bad Request")
+                    {
+                        setHasSubmitFailed(true);
+                        showConfirmModal()
+                        return;
+                    }
+                    navigate(`/announcement/${data.id}`)
+                })
+        }
     }
     const getCorrectPaymentTypeNumber = () => {
         switch (selectedCostType)
@@ -95,6 +182,18 @@ const AddAnnouncement = () => {
                 return 1;
             case "other":
                 return 2;
+        }
+    }
+
+    const getCorrectPaymentTypeFromNumber = (number) => {
+        switch (number)
+        {
+            case 0:
+                return "free";
+            case 1:
+                return "money";
+            case 2:
+                return "other";
         }
     }
 
@@ -172,6 +271,7 @@ const AddAnnouncement = () => {
                 break;
             }
         }
+        console.log(image)
         setImages(newImages);
         setFormImages(newFormImages);
     }
@@ -226,9 +326,11 @@ const AddAnnouncement = () => {
         <div id="add-announcement-main-container"
              className="d-flex flex-column align-items-center w-70 mx-auto user-select-none mb-5">
             <Helmet>
-                <title>Dodaj ogłoszenie | BorrowMe</title>
+                <title>
+                    {!isEditing ? "Dodaj ogłoszenie" : "Edytuj ogłoszenie"} | BorrowMe
+                </title>
             </Helmet>
-            <h2 className="mt-5">Dodaj nowe ogłoszenie</h2>
+            <h2 className="mt-5">{!isEditing ? "Dodaj nowe ogłoszenie" : "Edytuj swoje ogłoszenie"}</h2>
             <form id="add-announcement-form" className="d-flex flex-column align-items-center w-85" spellCheck="false"
                   onSubmit={handleSubmit}
             >
@@ -338,7 +440,9 @@ const AddAnnouncement = () => {
                 {isFormFilled &&
                     <div className="d-flex w-100 mb-5 p-5 rounded justify-content-end bg-white">
                         <button id="add-announcement-submit-button" type="button"
-                                className="rounded px-4 py-2" onClick={showConfirmModal}>Dodaj ogłoszenie</button>
+                                className="rounded px-4 py-2" onClick={showConfirmModal}>
+                            {!isEditing ? "Dodaj ogłoszenie" : "Uaktualnij ogłoszenie"}
+                        </button>
                     </div>
                 }
             </form>
@@ -346,7 +450,7 @@ const AddAnnouncement = () => {
                 <CategoriesModal handleCategorySelect={handleCategorySelect} hideModal={hideCategoriesModal}/>
             }
             {isConfirmModalVisible &&
-                <ConfirmModal handleFormSubmit={handleSubmit} hideModal={hideConfirmModal}
+                <ConfirmModal handleFormSubmit={handleSubmit} hideModal={hideConfirmModal} isEditing={isEditing}
                               announcementTile={announcementTitle} hasSubmitFailed={hasSubmitFailed}/>
             }
         </div>

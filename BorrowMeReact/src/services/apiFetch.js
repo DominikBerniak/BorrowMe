@@ -66,3 +66,17 @@ export async function patchData(url, data) {
         return response.statusText
     }
 }
+
+export async function deleteData(url) {
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    if (response.ok) {
+        return await response.json();
+    } else {
+        return response.statusText
+    }
+}

@@ -4,26 +4,61 @@ import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
-import {patchData} from "../../services/apiFetch";
+import {deleteData, patchData} from "../../services/apiFetch";
+import {useEffect, useState} from "react";
+import ConfirmModal from "../../components/ConfirmModal";
+import {Button, Modal} from "react-bootstrap";
 
-const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired = false, isUserReservation = true, state, setDummyState}) => {
+const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired = false, isUserReservation = true, reservationAccept, setReservationAccept, reservationDelete, setReservationDelete}) => {
     const startDay = new Date(reservation.reservationStartDay);
     const endDay = new Date(reservation.reservationEndDay);
     const navigate = useNavigate();
+    const [isModalVisible, setModalVisible] = useState(false);
+    const [modalType, setModalType] = useState("accept");
     let handleClick = () => {
         navigate(`/announcement/${reservation.announcement.id}`)
     }
-    let handleDeleteReservation = () => {
+    let deleteReservation = () => {
+        let response = deleteData(`/api/Reservations/${reservation.id}`)
+            .then(response => {
+            })
+        setReservationDelete(!reservationDelete)
+        setModalVisible(false)
     }
-    let handleAccept = () => {
+    let acceptReservation = () => {
         let response = patchData(`/api/Reservations/${reservation.id}/accept`, true)
             .then(response => {
             })
-        setDummyState(!state)
+        setReservationAccept(!reservationAccept);
+        setModalVisible(false)
+    }
+    let unacceptReservation = () => {
+        let response = patchData(`/api/Reservations/${reservation.id}/accept`, false)
+            .then(response => {
+            })
+        setReservationAccept(!reservationAccept);
+        setModalVisible(false)
+    }
+    let hideModal = () => {
+        setModalVisible(false)
+    }
+    let handleDelete = () => {
+        setModalType("delete");
+        setModalVisible(true);
+    }
+    let handleAccept = () => {
+        setModalType("accept")
+        setModalVisible(true);
+
+    }
+    let handleUnaccept = () => {
+        setModalType("unaccept")
+        setModalVisible(true);
     }
 
     return (
         <div className={classNames}>
+            <ConfirmModal type={modalType} showModal={isModalVisible} confirmModal={modalType === "delete" ? deleteReservation : (modalType === "accept" ? acceptReservation : unacceptReservation)} hideModal={hideModal}/>
             <label id="reservation-details-label">Szczegóły rezerwacji:</label>
             <div className="announcement-title-reservation-dates">
                     <span onClick={handleClick}
@@ -32,16 +67,18 @@ const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired 
                 <label>Daty: {startDay.toLocaleDateString()} - {endDay.toLocaleDateString()}</label>
             </div>
             </div>
-            <div className="delete-reservation-button">
+            <div className="reservation-tile-buttons">
                 {!isAccepted && !isExpired && !isUserReservation &&
-                    <button type="button" className="btn btn-success btn-sm accept-button" onClick={handleAccept}>Akceptuj <DoneOutlinedIcon/></button>}
+                    <button type="button" className="btn btn-success btn-sm accept-button" onClick={handleAccept}>Akceptuj <DoneOutlinedIcon fontSize="small"/></button>}
+                {isAccepted && !isExpired && !isUserReservation &&
+                    <button type="button" className="btn btn-sm unaccept-button" onClick={handleUnaccept}>Usuń akceptację</button>}
                 {isAccepted && !isExpired && isUserReservation &&
-                    <button type="button" className="btn btn-sm contact-button">Skontaktuj się <EmailOutlinedIcon/></button>}
+                    <button type="button" className="btn btn-sm contact-button">Skontaktuj się <EmailOutlinedIcon fontSize="small"/></button>}
                 {isExpired &&
                     <button type="button" className="btn btn-info btn-sm rate-button"><div className="me-1">Oceń</div>
-                        <StarBorderOutlinedIcon/>
+                        <StarBorderOutlinedIcon fontSize="small"/>
                     </button>}
-                <button type="button" className="btn delete-button" onClick={handleDeleteReservation}><ClearOutlinedIcon/></button>
+                <button type="button" className="btn delete-button" onClick={handleDelete}><ClearOutlinedIcon/></button>
             </div>
         </div>
     )

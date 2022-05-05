@@ -3,6 +3,7 @@ using Core.Repositories;
 using Core.Services.Interfaces;
 using Domain.Entieties;
 using System.ComponentModel.DataAnnotations;
+using Core.Repositories.Interfaces;
 
 namespace Services.Implementations
 {
@@ -10,11 +11,13 @@ namespace Services.Implementations
     {
         private readonly IAnnouncementRepository _announcementRepository;
         private readonly IRepository<PicturePath> _pictureRepository;
+        private readonly IReservationRepository _reservationRepository;
 
-        public AnnouncementService(IAnnouncementRepository announcementRepository, IRepository<PicturePath> pictureRepository)
+        public AnnouncementService(IAnnouncementRepository announcementRepository, IRepository<PicturePath> pictureRepository, IReservationRepository reservationRepository)
         {
             _announcementRepository = announcementRepository;
             _pictureRepository = pictureRepository;
+            _reservationRepository = reservationRepository;
         }
 
         public async Task<CreateAnnouncementStatusDto> AddAnnouncement(CreateAnnouncementDto announcementData)
@@ -75,7 +78,43 @@ namespace Services.Implementations
 
         public async Task<Announcement> DeleteAnnouncement(Guid id)
         {
-            return await _announcementRepository.Delete(await _announcementRepository.GetById(id));
+            try
+            {
+                var announcement = await _announcementRepository.GetAnnouncementById(id);
+                if (announcement is null)
+                {
+                    throw new ArgumentException();
+                }
+                var userId = announcement.Owner.Id.ToString();
+                var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Images", "user-images", userId, announcement.Id.ToString());
+                var picturesToDelete = new List<PicturePath>();
+                foreach (var pictureLocation in announcement.PictureLocations)
+                {
+                    picturesToDelete.Add(pictureLocation);
+                }
+
+                if (picturesToDelete.Count > 0)
+                {
+                    foreach (var picture in picturesToDelete)
+                    {
+                        announcement.PictureLocations.Remove(picture);
+                        File.Delete(Path.Combine(directoryPath, picture.FileName));
+                        await _pictureRepository.Delete(picture);
+                    }
+                }
+
+                var reservations = await _reservationRepository.GetReservationsByAnnouncementId(id);
+                foreach (var reservation in reservations)
+                {
+                    await _reservationRepository.Delete(await _reservationRepository.GetReservationById(reservation.Id));
+                }
+                
+                return await _announcementRepository.Delete(await _announcementRepository.GetAnnouncementById(id));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public async Task<Announcement> GetAnnouncement(Guid announcementId)

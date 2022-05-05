@@ -1,7 +1,7 @@
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import ImageAPI from "../components/ImageAPI";
-import {getData, postData} from "../services/apiFetch";
+import {deleteData, getData, postData} from "../services/apiFetch";
 import "./announcementPage/announcementPage.css"
 import Spinner from "../components/Spinner";
 import {useNavigate} from "react-router-dom";
@@ -19,6 +19,7 @@ import {Helmet} from "react-helmet";
 import {useSelector} from "react-redux";
 import AnnouncementPictureGallery from "./announcementPage/AnnouncementPictureGallery";
 import Avatar from "@mui/material/Avatar";
+import ConfirmModal from "../components/ConfirmModal";
 
 const AnnouncementPage = () => {
     const [date, setDate] = useState();
@@ -37,6 +38,7 @@ const AnnouncementPage = () => {
     const [isOwnAnnouncement, setIsOwnAnnouncement] = useState(false);
     const [reservationPageNumber, setReservationPageNumber] = useState(1);
     const [numberOfReservationPages, setNumberOfReservationPages] = useState(1);
+    const [isModalVisible, setModalVisible] = useState(false);
 
     const userId = useSelector(state => state.user.value).userId;
 
@@ -96,6 +98,19 @@ const AnnouncementPage = () => {
             return isWithinRanges(date, reservations);
         }
     }
+    let hideModal = () => {
+        setModalVisible(false);
+    }
+    let handleDeleteAnnouncementButton = () => {
+        setModalVisible(true);
+    }
+    let deleteAnnouncement = () => {
+        let response = deleteData(`/api/Announcements/${announcementId}`)
+            .then(response => {
+                navigate(`/`);
+            })
+    }
+
     useEffect(() => {
         getData(`/api/Announcements/${announcementId}`)
             .then(data => {
@@ -327,7 +342,7 @@ const AnnouncementPage = () => {
                                     <h5 className="text-center mt-4">Opcje Twojego ogłoszenia</h5>
                                     <div className="d-flex flex-column h-70 justify-content-center align-items-center">
                                         <Link to={`/announcement/${announcementData.id}/edit`} className="announcement-options-buttons">Edytuj ogłoszenie</Link>
-                                        <button className="announcement-options-buttons">Usuń ogłoszenie</button>
+                                        <button className="announcement-options-buttons" onClick={handleDeleteAnnouncementButton}>Usuń ogłoszenie</button>
                                     </div>
                                 </div>
                             </>
@@ -356,6 +371,7 @@ const AnnouncementPage = () => {
                 <AnnouncementPictureGallery hideGallery={hideGallery} title={announcementData.title}
                                             pictureLocations={announcementData.pictureLocations}/>
             }
+            <ConfirmModal showModal={isModalVisible} hideModal={hideModal} confirmModal={deleteAnnouncement} type="delete announcement"/>
         </div>
     );
 }

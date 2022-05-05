@@ -38,8 +38,9 @@ public class ReservationRepository : Repository<Reservation>, IReservationReposi
     {
         return await _dbContext.Reservations
             .Where(r => r.Announcement.Id == id)
-            .Include(r => r.User)
             .Include(r => r.Announcement)
+            .Include(r => r.User)
+            .ThenInclude(u => u.PictureLocation)
             .ToListAsync();
     }
 

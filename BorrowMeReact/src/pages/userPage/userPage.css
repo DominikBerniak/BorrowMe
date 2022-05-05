@@ -8,14 +8,23 @@
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
             "announcements announcements"
-            "reservations announcements-reservations"
+            "reservations reservations"
             "home home";
 }
 .user-announcements-container {
     grid-area: announcements;
 }
-.user-reservations-container {
+.all-reservations-container {
     grid-area: reservations;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 15px;
+    grid-template-areas:
+        "user-reservations announcements-reservations";
+    border-top: 2px solid rgba(117, 114, 114, 0.53);
+}
+.user-reservations-container {
+    grid-area: user-reservations;
 }
 .user-announcements-reservations {
     grid-area: announcements-reservations;

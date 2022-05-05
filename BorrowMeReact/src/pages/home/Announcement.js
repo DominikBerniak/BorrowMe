@@ -12,7 +12,7 @@ const Announcement = ({ announcement }) => {
     }
     
     return (
-        <div className='announcement' onClick={() => handleAnnouncementClick(announcement.id)}>
+        <div className='announcement flex-20' onClick={() => handleAnnouncementClick(announcement.id)}>
             <div className="title">
                 <b>{announcement.title}</b>
             </div>

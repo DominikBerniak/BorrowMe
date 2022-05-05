@@ -115,7 +115,7 @@ namespace Api.Controllers
         }
 
         // /api/Announcements/{id} DELETE
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id}")]
         [Authorize(Roles = "User")]
         public async Task<IActionResult> DeleteAnnouncement(Guid id)
         {

@@ -5,22 +5,22 @@ import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import {deleteData, patchData} from "../../services/apiFetch";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import ConfirmModal from "../../components/ConfirmModal";
-import {Button, Modal} from "react-bootstrap";
 
 const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired = false, isUserReservation = true, reservationAccept, setReservationAccept, reservationDelete, setReservationDelete}) => {
     const startDay = new Date(reservation.reservationStartDay);
     const endDay = new Date(reservation.reservationEndDay);
     const navigate = useNavigate();
     const [isModalVisible, setModalVisible] = useState(false);
-    const [modalType, setModalType] = useState("accept");
+    const [modalType, setModalType] = useState("accept reservation");
     let handleClick = () => {
         navigate(`/announcement/${reservation.announcement.id}`)
     }
     let deleteReservation = () => {
         let response = deleteData(`/api/Reservations/${reservation.id}`)
             .then(response => {
+                console.log(response)
             })
         setReservationDelete(!reservationDelete)
         setModalVisible(false)
@@ -28,6 +28,7 @@ const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired 
     let acceptReservation = () => {
         let response = patchData(`/api/Reservations/${reservation.id}/accept`, true)
             .then(response => {
+                console.log(response)
             })
         setReservationAccept(!reservationAccept);
         setModalVisible(false)
@@ -43,22 +44,22 @@ const ReservationTile = ({reservation, classNames, isAccepted = true, isExpired 
         setModalVisible(false)
     }
     let handleDelete = () => {
-        setModalType("delete");
+        setModalType("delete reservation");
         setModalVisible(true);
     }
     let handleAccept = () => {
-        setModalType("accept")
+        setModalType("accept reservation")
         setModalVisible(true);
 
     }
     let handleUnaccept = () => {
-        setModalType("unaccept")
+        setModalType("unaccept reservation")
         setModalVisible(true);
     }
 
     return (
         <div className={classNames}>
-            <ConfirmModal type={modalType} showModal={isModalVisible} confirmModal={modalType === "delete" ? deleteReservation : (modalType === "accept" ? acceptReservation : unacceptReservation)} hideModal={hideModal}/>
+            <ConfirmModal type={modalType} showModal={isModalVisible} confirmModal={modalType === "delete reservation" ? deleteReservation : (modalType === "accept reservation" ? acceptReservation : unacceptReservation)} hideModal={hideModal}/>
             <label id="reservation-details-label">Szczegóły rezerwacji:</label>
             <div className="announcement-title-reservation-dates">
                     <span onClick={handleClick}

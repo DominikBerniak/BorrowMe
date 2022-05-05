@@ -84,7 +84,10 @@ public class ReservationRepository : Repository<Reservation>, IReservationReposi
 
     public async Task<Reservation> UpdateIsAcceptedReservation(Guid id, bool isAccepted)
     {
-        var reservation = await _dbContext.Reservations.SingleOrDefaultAsync(r => r.Id == id);
+        var reservation = await _dbContext.Reservations
+            .Where(r => r.Id == id)
+            .Include(r => r.User)
+            .Include(r => r.Announcement).SingleOrDefaultAsync();
         if (reservation != null)
         {
             reservation.IsAccepted = isAccepted;
